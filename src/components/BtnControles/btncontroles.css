@@ -1,0 +1,30 @@
+.container-controles
+{
+    position: absolute;
+    bottom: 20px;
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 60px);
+}
+
+.btn-controles
+{
+    width: 105px;
+    height: 90px;
+    box-shadow: 0px 0px 30px #00000033;
+    color: var(--negro);
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-volver
+{
+
+    background-color: white;
+}
+
+.btn-continuar
+{
+    background-color: var(--principal); 
+}

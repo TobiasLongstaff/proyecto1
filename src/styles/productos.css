@@ -1,0 +1,22 @@
+.container-info-productos
+{
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.container-info-productos div
+{
+    width: calc(100% - 10px);
+}
+
+.textbox-date
+{
+    width: 10em;
+}
+
+.textbox-peso
+{
+    width: 80px;
+}

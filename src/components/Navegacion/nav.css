@@ -1,0 +1,21 @@
+.nav-app
+{
+    color: white;
+    background-color: var(--principal);
+    height: 46vh;
+    align-items: baseline;
+    font-size: 22px;
+}
+
+.container-titulo
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-right: 46px;
+}
+
+.container-titulo h1
+{
+    margin: 0;
+}
