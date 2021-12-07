@@ -1,12 +1,15 @@
 <?php
+
     header("Access-Control-Allow-Origin: http://localhost:3000");
     header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
+    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
     require 'conexion.php';
 
-    // iniciar sesion
+    // iniciar sesio
+
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
+        header("HTTP/1.1 200 OK");
         $datos = json_decode(file_get_contents('php://input'));
         if($datos != null)
         {
@@ -20,33 +23,49 @@
             {
                 $filas = mysqli_fetch_array($resultado);
                 $tipo_usuario = $filas['tipo'];
+                $nombre = $filas['nombre_apellido'];
+                $id = $filas['id'];
     
                 if($tipo_usuario == 'estandar' || $tipo_usuario == 'admin')
                 {
-                    header("HTTP/1.1 200 OK");
-                    echo '1';            
+                    $json[] = array(
+                        'error' => '0',
+                        'mensaje' => 'Bien',
+                        'tipo' => $tipo_usuario,
+                        'nombre' => $nombre,
+                        'id' => $id
+                    );           
                 }
                 else
                 {
-                    header("HTTP/1.1 200 OK");
-                    echo 'Su cuenta está pendiente de aprobación';
+                    $json[] = array(
+                        'error' => '0',
+                        'mensaje' => 'Su cuenta está pendiente de aprobación'
+                    );
                 }
             }
             else
             {
-                header("HTTP/1.1 200 OK");
-                echo 'Usuario o Contraseña incorrectos';
+                $json[] = array(
+                    'error' => '0',
+                    'mensaje' => 'Usuario o Contraseña incorrectos'
+                );
             }     
         }
         else
         {
-            header("HTTP/1.1 400 Bad Request");
-            echo 'error2';
+            $json[] = array(
+                'error' => '1',
+                'mensaje' => 'Error'
+            );
         }
+        $jsonstring = json_encode($json);
+        echo $jsonstring;
     }
     else
     {
-        header("HTTP/1.1 400 Bad Request");
+        
         echo 'error1';
     }
+
 ?>

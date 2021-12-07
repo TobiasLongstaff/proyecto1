@@ -1,5 +1,4 @@
 <?php
-
     $conexion = mysqli_connect('localhost', 'root', '', 'proyecto1');
     if (mysqli_connect_errno())
     {

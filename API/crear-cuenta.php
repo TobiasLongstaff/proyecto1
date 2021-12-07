@@ -1,4 +1,5 @@
 <?php
+
     header("Access-Control-Allow-Origin: http://localhost:3000");
     header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
@@ -7,6 +8,7 @@
     // iniciar sesion
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
+        header("HTTP/1.1 200 OK");
         $datos = json_decode(file_get_contents('php://input'));
         if($datos != null)
         {
@@ -20,7 +22,10 @@
             $resultado = mysqli_query($conexion, $sql);
             if(mysqli_num_rows($resultado) > 0)
             {
-                echo 'El mail ya estan asociados a una cuenta';
+                $json[] = array(
+                    'error' => '0',
+                    'mensaje' => 'El mail ya estan asociados a una cuenta'
+                );
             }
             else
             {
@@ -31,7 +36,10 @@
                     $resultado = mysqli_query($conexion, $sql);
                     if(!$resultado)
                     {
-                        echo 'Error al cargar los datos, consultar con soporte';
+                        $json[] = array(
+                            'error' => '0',
+                            'mensaje' => 'Error al cargar los datos, consultar con soporte'
+                        );
                     }
                     else
                     { 
@@ -229,20 +237,22 @@
                 }
                 else
                 {
-                    echo 'Las contraseñas no son iguales';
+                    $json[] = array(
+                        'error' => '0',
+                        'mensaje' => 'Las contraseñas no son iguales'
+                    );
                 }
             }
 
         }
         else
         {
-            header("HTTP/1.1 400 Bad Request");
-            echo 'error2';
+            $json[] = array(
+                'error' => '1',
+                'mensaje' => 'error2'
+            );
         }
-    }
-    else
-    {
-        header("HTTP/1.1 400 Bad Request");
-        echo 'error1';
+        $jsonstring = json_encode($json);
+        echo $jsonstring;
     }
 ?>
