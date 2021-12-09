@@ -1,11 +1,10 @@
 .container-controles
 {
     position: absolute;
-    bottom: 20px;
-    margin: 0 30px;
+    top: 410px;
     display: flex;
     justify-content: space-between;
-    width: calc(100% - 60px);
+    width: 100%;
 }
 
 .btn-controles

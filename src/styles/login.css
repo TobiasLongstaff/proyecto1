@@ -50,6 +50,12 @@
     height: 41px;
 }
 
+.textbox-escanear-codigo
+{
+    font-weight: bold;
+    text-align: center;
+}
+
 ::placeholder 
 {
     color: var(--negro);

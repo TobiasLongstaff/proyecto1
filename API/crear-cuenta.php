@@ -5,7 +5,7 @@
     header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
     require 'conexion.php';
 
-    // iniciar sesion
+    // crear cuenta
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         header("HTTP/1.1 200 OK");
@@ -233,6 +233,10 @@
                         // {
                         //     echo '1';   
                         // } 
+                        $json[] = array(
+                            'error' => '0',
+                            'mensaje' => 'Cuenta creada'
+                        );
                     }
                 }
                 else

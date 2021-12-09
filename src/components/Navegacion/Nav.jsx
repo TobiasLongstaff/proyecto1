@@ -1,15 +1,14 @@
 import React from 'react'
 import { UilSignout } from '@iconscout/react-unicons'
 import '../Navegacion/nav.css'
+import BtnCerrarSesion from '../BtnCerrarSesion/BtnCerrarSesion'
 
 const Nav = ({titulo}) =>
 {
     return(
         <header className="nav-app">
             <nav>
-                <button type="button" className="btn-nav-menu">
-                    <UilSignout size="32" color="white"/>
-                </button>
+                <BtnCerrarSesion color="white" />
                 <div className="container-titulo">
                     <h1>{titulo}</h1>
                 </div>
