@@ -16,14 +16,19 @@ const Recepcion = () =>
     let navigate = useNavigate()
     const [ form, setForm ] = useState({num_doc: '', fecha_doc: '', fecha_llegada: cookies.get('fecha_actual'), observacion: '', id_user: cookies.get('IdSession')})
     const idsession = cookies.get('IdSession')
+    const textboxCodigo = React.createRef()
 
     useEffect(() =>
     {
         if(idsession == null)
-        { 
+        {
             navigate('/')
         }
-        fecha_actual()
+        else
+        {
+            fecha_actual()
+            textboxCodigo.current.focus()
+        }
     })
 
     const handelSubmit = async e =>
@@ -116,7 +121,7 @@ const Recepcion = () =>
                 <main className="container-body">
                     <form className="container-form" onSubmit={handelSubmit}>
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" className="textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
+                        <input type="text" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
                         <div>
                             <label>Fecha del documento</label>
                             <input type="date" className="textbox-genegal" name="fecha_doc" onChange={handelChange} value={form.fecha_doc} required/>                    
@@ -129,7 +134,7 @@ const Recepcion = () =>
                         <footer className="container-controles">
                             <BtnControles volver="/menu"/>
                             <button type="submit" className="btn-continuar btn-controles"></button> 
-                        </footer>          
+                        </footer>
                     </form>
                 </main>
             </article>
