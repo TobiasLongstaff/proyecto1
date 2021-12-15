@@ -13,7 +13,7 @@
         if($datos != null)
         {
             $codigo_caja = $datos->cod_caja;
-            //$id_recepcion = $datos->id_recepcion;
+            $id_recepcion = $datos->id_recepcion;
 
             $sql_cod_veri = "SELECT * FROM cajas WHERE codigo = '$codigo_caja'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
@@ -25,7 +25,7 @@
                 $numero_fila = mysqli_num_rows($resultado);
                 if($numero_fila == '1')
                 {
-                    $sql_update="UPDATE cajas SET activa = '1' WHERE codigo = '$codigo_caja' AND activa = '0'";
+                    $sql_update="UPDATE cajas SET activa = '1', id_recepcion = '$id_recepcion' WHERE codigo = '$codigo_caja' AND activa = '0'";
                     $resultado_update = mysqli_query($conexion, $sql_update);
                     if(!$resultado_update)
                     {
@@ -39,6 +39,7 @@
                         $filas = mysqli_fetch_array($resultado);
                         $json[] = array(
                             'error' => '0',
+                            'id_caja' => $filas['id'],
                             'mensaje' => 'Caja abierta',
                             'descripcion' => $filas['descripcion'],
                             'kilos' => $filas['kilos'],

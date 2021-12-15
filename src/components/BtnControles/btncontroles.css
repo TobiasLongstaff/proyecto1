@@ -1,7 +1,7 @@
 .container-controles
 {
     position: absolute;
-    top: 410px;
+    top: 430px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -19,11 +19,15 @@
 
 .btn-volver
 {
-
     background-color: white;
 }
 
 .btn-continuar
 {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
     background-color: var(--principal); 
 }

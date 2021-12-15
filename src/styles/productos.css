@@ -20,3 +20,31 @@
 {
     width: 80px;
 }
+
+.container-contador-productos
+{
+    align-items: center;
+    display: flex;
+}
+
+.container-contador-caja-abierta
+{
+    position: absolute;
+    bottom: 27px;
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+}
+
+.container-contador-caja-productos 
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-contador-caja-productos img
+{
+    width: 80px;
+    fill: var(--negro);
+}

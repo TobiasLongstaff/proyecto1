@@ -27,33 +27,16 @@ const Recepcion = () =>
         else
         {
             fecha_actual()
-            textboxCodigo.current.focus()
+            if(textboxCodigo.current.value == '')
+            {
+                textboxCodigo.current.focus()
+            }
         }
-    })
+    }),[]
 
     const handelSubmit = async e =>
     {
         e.preventDefault()
-        Swal.fire(
-        {
-            title: '¿Cargar recepción?',
-            text: "¿Estás seguro que queres cargar la recepción?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#00C3E3',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Cargar'
-        }).then((result) => 
-        {
-            if(result.isConfirmed) 
-            {
-                EnviarForm()
-            }
-        })
-    }
-
-    const EnviarForm = async e =>
-    {
         try
         {
             let config =
@@ -71,7 +54,7 @@ const Recepcion = () =>
             console.log(infoPost[0])
             if(infoPost[0].mensaje == 'Recepcion creada')
             {
-                cookies.set('codigo_recep', form.num_doc, {path: '/'})
+                cookies.set('id_recepcion', infoPost[0].id_recepcion, {path: '/'})
                 navigate('/cajas')
             }
             else
@@ -133,7 +116,7 @@ const Recepcion = () =>
                         <textarea className="textbox-genegal textarea-general" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
                         <footer className="container-controles">
                             <BtnControles volver="/menu"/>
-                            <button type="submit" className="btn-continuar btn-controles"></button> 
+                            <button type="submit" className="btn-continuar btn-controles">Continuar</button> 
                         </footer>
                     </form>
                 </main>

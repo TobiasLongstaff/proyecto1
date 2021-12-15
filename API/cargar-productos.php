@@ -5,33 +5,36 @@
     header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
     require 'conexion.php';
 
-    // recepcion
+    // cargar cajas
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         header("HTTP/1.1 200 OK");
         $datos = json_decode(file_get_contents('php://input'));
         if($datos != null)
         {
-            $fecha_de_documento = $datos->fecha_doc;
-            $fecha_de_llegada = $datos->fecha_llegada;
-            $documento = $datos->num_doc;
-            $observacion = $datos->observacion;
-            $id_usuario = $datos->id_user;
+            date_default_timezone_set('America/Buenos_Aires');
+            $fecha_actual = date('Y-m-d');
 
-            $sql_cod_veri = "SELECT * FROM recepcion WHERE documento = '$documento'";
+            $codigo_caja = $datos->cod_caja;
+            $codigo_producto = $datos->cod_producto;
+            $fecha_vencimiento = $datos->fecha_ven;
+            $peso = $datos->peso;
+            $descripcion = $datos->descripcion;
+
+            $sql_cod_veri = "SELECT * FROM productos WHERE codigo = '$codigo_producto'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
                 $json[] = array(
                     'error' => '1',
-                    'mensaje' => 'Ya existe una recepcion con este codigo de documento',
+                    'mensaje' => 'Este producto ya se encuentra cargado',
                 );
             }
             else
             {
-                $sql = "INSERT INTO recepcion (fecha_de_documento, fecha_de_llegada, documento, observacion, id_usuario) 
-                VALUES ('$fecha_de_documento', '$fecha_de_llegada', '$documento', '$observacion', '$id_usuario')";
+                $sql = "INSERT INTO productos (codigo, descripcion, kilos, vencimiento, activo, fecha, stock, id_caja) 
+                VALUES ('$codigo_producto', '$descripcion', '$peso', '$fecha_vencimiento', '1', '$fecha_actual', '1', '$codigo_caja')";
                 $resultado = mysqli_query($conexion, $sql);
                 if(!$resultado)
                 {
@@ -42,19 +45,19 @@
                 }
                 else
                 {
-                    $sql = "SELECT id FROM recepcion";
-                    $resultado = mysqli_query($conexion, $sql);
-                    while($filas = mysqli_fetch_array($resultado))
+                    $sql_cantidad = "SELECT COUNT(id) AS cantidad FROM productos WHERE id_caja = '$codigo_caja'";
+                    $resultado_cantidad = mysqli_query($conexion, $sql_cantidad);
+                    if($filas = mysqli_fetch_array($resultado_cantidad, MYSQLI_ASSOC))
                     {
-                        $id_recepcion = $filas['id'];
+                        $json[] = array(
+                            'error' => '0',
+                            'cantidad_cargados' => $filas['cantidad'],
+                            'mensaje' => 'Producto Cargado'
+                        );
                     }
-                    $json[] = array(
-                        'error' => '0',
-                        'id_recepcion' => $id_recepcion,
-                        'mensaje' => 'Recepcion creada'
-                    );
                 }
             }
+
 
             $jsonstring = json_encode($json);
             echo $jsonstring;
