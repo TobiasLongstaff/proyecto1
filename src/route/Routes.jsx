@@ -6,6 +6,8 @@ import Registro from '../pages/Registro'
 import Recepcion from '../pages/Recepcion'
 import Cajas from '../pages/Cajas'
 import Productos from '../pages/Productos'
+import SubMenuRecepcion from '../pages/SubMenuRecepcion'
+import Pallets from '../pages/Pallets'
 
 function Rutas() 
 {
@@ -13,10 +15,12 @@ function Rutas()
         <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={<Login/>} />
-                <Route exact path="menu" element={<Menu/>} />     
+                <Route exact path="menu" element={<Menu/>} /> 
+                <Route exact path="opciones-recepcion" element={<SubMenuRecepcion/>} />    
                 <Route exact path="registrarse" element={<Registro/>} /> 
                 <Route exact path="recepcion" element={<Recepcion/>} />
                 <Route exact path="cajas" element={<Cajas/>} />
+                <Route exact path="pallets" element={<Pallets/>} />
                 <Route exact path="productos" element={<Productos/>} />
             </Routes>
         </BrowserRouter>

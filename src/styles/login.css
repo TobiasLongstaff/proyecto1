@@ -61,7 +61,7 @@
     color: var(--negro);
 }
 
-.btn-general-login, .btn-general-registro
+.btn-general-login, .btn-general-registro, .btn-general-cargar
 {
     width: 100%;
     text-transform: uppercase;
@@ -79,6 +79,11 @@
     color: white;
     background-color: var(--principal);
 
+}
+
+.btn-general-cargar
+{
+    background-color: var(--verde);
 }
 
 .btn-registrarse, .btn-volver-registro

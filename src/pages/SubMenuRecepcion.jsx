@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { UilSetting, UilTruckLoading, UilShoppingCartAlt } from '@iconscout/react-unicons'
+import { UilSetting, UilTruckLoading, UilBox } from '@iconscout/react-unicons'
 import { Link, useNavigate } from 'react-router-dom'
 import '../styles/menu.css'
 import BtnCerrarSesion from '../components/BtnCerrarSesion/BtnCerrarSesion'
@@ -8,7 +8,7 @@ import Loading from '../components/Loading/Loading'
 
 const cookies = new Cookies()
 
-const Menu = () =>
+const SubMenuRecepcion = () =>
 {
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
@@ -26,22 +26,24 @@ const Menu = () =>
             <article>
                 <nav>
                     <BtnCerrarSesion color="#252A34"/>
-                    <h1>Menu</h1>
+                    <h1>Opciones</h1>
                     <button type="button" className="btn-nav-menu">
-                        <UilSetting size="32" color="#252A34"/>
+                        {/* <UilSetting size="32" color="#252A34"/> */}
                     </button>
                 </nav>
                 <main className="container-menu-options">
-                    <Link to="/recepcion"> 
+                    <Link to="/pallets"> 
                         <button type="button" className="btn-menu">
                             <UilTruckLoading size="50" color="#252A34"/><br/>
-                            <label>Recepcion</label>
+                            <label>Cargar Pallets</label>
                         </button>
                     </Link>
-                    <button type="button" className="btn-menu">
-                        <UilShoppingCartAlt  size="50" color="#252A34"/><br/>
-                        <label>Preparacion</label>
-                    </button>
+                    <Link to="/cajas">
+                        <button type="button" className="btn-menu">
+                            <UilBox size="50" color="#252A34"/><br/>
+                            <label>Cargar Cajas</label>
+                        </button>
+                    </Link>
                 </main>
             </article>
         )
@@ -50,4 +52,4 @@ const Menu = () =>
     )
 }
 
-export default Menu
+export default SubMenuRecepcion

@@ -55,7 +55,7 @@ const Recepcion = () =>
             if(infoPost[0].mensaje == 'Recepcion creada')
             {
                 cookies.set('id_recepcion', infoPost[0].id_recepcion, {path: '/'})
-                navigate('/cajas')
+                navigate('/opciones-recepcion')
             }
             else
             {
