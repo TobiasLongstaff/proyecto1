@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
+import BtnControles from '../components/BtnControles/BtnControles'
 
 const cookies = new Cookies()
 
@@ -18,7 +19,7 @@ const Pallets = () =>
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
     const [form, setForm] = useState({ cod_pallet: cookies.get('cod_pallet') })
-    const [infoCaja, setCaja] = useState({ cantidad: cookies.get('cantidad_caja') }) 
+    const [infoCaja, setCaja] = useState({ cantidad: cookies.get('cantidad_caja_pallet') }) 
 
     useEffect(() =>
     {
@@ -62,7 +63,7 @@ const Pallets = () =>
 
                 cookies.set('cod_pallet', form.cod_pallet, {path: '/'})
                 cookies.set('id_pallet', infoPost[0].id_pallet, {path: '/'})
-                cookies.set('cantidad_caja', infoPost[0].cantidades, {path: '/'})
+                cookies.set('cantidad_caja_pallet', infoPost[0].cantidades, {path: '/'})
             }
             else
             {
@@ -108,7 +109,7 @@ const Pallets = () =>
                 setCaja(
                 {
                     ...infoCaja,
-                    cantidad: 0
+                    cantidad: ''
                 })
 
                 setForm(
@@ -118,7 +119,7 @@ const Pallets = () =>
 
                 cookies.remove('cod_pallet')
                 cookies.remove('id_pallet')
-                cookies.remove('cantidad_caja')
+                cookies.remove('cantidad_caja_pallet')
 
                 Swal.fire(
                 {
@@ -158,36 +159,6 @@ const Pallets = () =>
         })
     }
 
-    const handelClickSalir = () =>
-    {
-        if(cookies.get('id_pallet'))
-        {
-            Swal.fire(
-            {
-                title: '¿Estás seguro que queres volver al menu de opciones?',
-                text: "Todavía no cargaste las cajas del pallet que acabas de escanear ",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#00C3E3',
-                confirmButtonText: 'Salir'
-            }).then((result) => 
-            {
-                if(result.isConfirmed) 
-                {
-                    cookies.remove('cod_pallet')
-                    cookies.remove('id_pallet')
-                    cookies.remove('cantidad_caja')
-                    navigate('/opciones-recepcion')
-                }
-            })
-        }
-        else
-        {
-            navigate('/opciones-recepcion')
-        }
-    }
-
     if(idsession)
         return(
             <article>
@@ -206,12 +177,7 @@ const Pallets = () =>
                         </div>
                         <button className="btn-login btn-general-login" type="submit">Escanear</button>
                         <button className="btn-login btn-general-cargar" onClick={handelClickCargar} type="button">Cargar</button>
-                        <footer className="container-controles">
-                            <button type="button" onClick={handelClickSalir} className="btn-volver btn-controles">
-                                <UilAngleLeft size="80" color="#252A34"/>
-                            </button>
-                            <button className="btn-continuar btn-controles" type="button">Cerrar recepcion</button>   
-                        </footer> 
+                        <BtnControles/>
                     </form>
                 </main>
             </article>

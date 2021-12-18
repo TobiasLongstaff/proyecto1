@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import '../styles/recepcion.css'
 import Nav from '../components/Navegacion/Nav'
-import BtnControles from "../components/BtnControles/BtnControles";
+import BtnVolver from "../components/BtnVolver/BtnVolver";
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
@@ -32,7 +32,7 @@ const Recepcion = () =>
                 textboxCodigo.current.focus()
             }
         }
-    }),[]
+    },[])
 
     const handelSubmit = async e =>
     {
@@ -95,6 +95,11 @@ const Recepcion = () =>
         let year = newDate.getFullYear();
         let fecha = `${year}-${month<10?`0${month}`:`${month}`}-${date<10?`0${date}`:`${date}`}`
         cookies.set('fecha_actual', fecha, {path: '/'})
+        setForm(
+        {
+            ...form,
+            fecha_llegada: fecha
+        })
     }
 
     if(idsession)
@@ -115,7 +120,7 @@ const Recepcion = () =>
                         </div>
                         <textarea className="textbox-genegal textarea-general" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
                         <footer className="container-controles">
-                            <BtnControles volver="/menu"/>
+                            <BtnVolver volver="/menu"/>
                             <button type="submit" className="btn-continuar btn-controles">Continuar</button> 
                         </footer>
                     </form>

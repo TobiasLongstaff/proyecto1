@@ -1,16 +1,101 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { UilAngleLeft } from '@iconscout/react-unicons'
-import '../BtnControles/btncontroles.css'
+import React, { useState } from 'react'
+import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
+import { useNavigate } from 'react-router-dom'
+import BtnVolver from '../BtnVolver/BtnVolver'
+import Cookies from 'universal-cookie'
+import url from '../../services/Settings'
 
-const BtnControles = ({volver}) =>
+const cookies = new Cookies()
+
+const BtnControles = () =>
 {
+    const navigate = useNavigate()
+    const form = 
+    {
+        id_recepcion: cookies.get('id_recepcion')
+    }
+
+    const handelClick = () =>
+    {
+        Swal.fire(
+        {
+            title: '¿Cerrar recepción? ',
+            text: "¿Estás seguro que queres cerrar la recepción?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00C3E3',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Cerrar Sesión'
+        }).then((result) => 
+        {
+            if(result.isConfirmed) 
+            {
+                CerrarRecepcion()
+            }
+        })
+    }
+
+    const CerrarRecepcion = async () =>
+    {
+        try
+        {
+            let config =
+            {
+                method: 'POST',
+                headers: 
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            }
+            let res = await fetch(url+'cerrar-recepcion.php', config)
+            let infoPost = await res.json()
+            console.log(infoPost[0])
+            if(infoPost[0].error == '0')
+            {
+                Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Recepcion cerrada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                cookies.remove('id_recepcion')
+                cookies.remove('cod_caja')
+                cookies.remove('cod_pallet_caja')
+                cookies.remove('id_caja')
+                cookies.remove('descripcion_caja')
+                cookies.remove('kilos_caja')
+                cookies.remove('vencimiento_caja')
+                cookies.remove('cantidad_caja')
+                navigate('/menu')
+            }
+            else
+            {
+                Swal.fire(
+                    'Error',
+                    infoPost[0].mensaje,
+                    'error'
+                )
+            }
+        }
+        catch(error)
+        {
+            console.error(error)
+            Swal.fire(
+                'Error',
+                'Error al cargar recepcion intentar mas tarde',
+                'error'
+            )
+        }
+    }
+
     return(
-        <Link to={volver}>
-            <button className="btn-volver btn-controles">
-                <UilAngleLeft size="80" color="#252A34"/>
-            </button>
-        </Link>
+        <footer className="container-controles">
+            <BtnVolver volver="/opciones-recepcion"/>
+            <button onClick={handelClick} className="btn-continuar btn-controles" type="button">Cerrar recepcion</button>   
+        </footer> 
     )
 }
 

@@ -19,6 +19,10 @@ const Menu = () =>
         { 
             navigate('/')
         }
+        else if(cookies.get('id_recepcion'))
+        {
+            navigate('/opciones-recepcion')
+        }
     })
 
     if(idsession)

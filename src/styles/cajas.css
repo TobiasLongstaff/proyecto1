@@ -29,14 +29,26 @@
 .container-form-cajas
 {
     margin: 30px;
+    margin-bottom: 0;
     width: calc(100% - 60px);
     background-color: white;
     position: absolute;
     border-radius: 10px;
     box-shadow: 0px 0px 30px #00000033;
     padding: 25px;
-    top: 65px;
+    top: 55px;
     display: inline-grid;
     gap: 15px;
+    max-width: 420px;
     box-sizing: border-box;
+}
+
+.container-cantidad
+{
+    display: flex;
+}
+
+.container-cantidad label
+{
+    width: 0;
 }

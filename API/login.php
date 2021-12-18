@@ -58,10 +58,5 @@
         $jsonstring = json_encode($json);
         echo $jsonstring;
     }
-    else
-    {
-        
-        echo 'error1';
-    }
 
 ?>
