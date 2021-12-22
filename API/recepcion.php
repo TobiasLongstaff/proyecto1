@@ -15,42 +15,55 @@
             $observacion = $datos->observacion;
             $id_usuario = $datos->id_user;
 
-            $sql_cod_veri = "SELECT * FROM recepcion WHERE documento = '$documento'";
+            $sql_cod_veri = "SELECT id FROM recepcion WHERE documento = '$documento'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $json[] = array(
-                    'error' => '1',
-                    'mensaje' => 'Ya existe una recepcion con este codigo de documento',
-                );
-            }
-            else
-            {
-                $sql = "INSERT INTO recepcion (fecha_de_documento, fecha_de_llegada, documento, observacion, id_usuario) 
-                VALUES ('$fecha_de_documento', '$fecha_de_llegada', '$documento', '$observacion', '$id_usuario')";
-                $resultado = mysqli_query($conexion, $sql);
-                if(!$resultado)
+                $sql_cod_car = "SELECT id, cantidad FROM recepcion WHERE documento = '$documento' AND cargado = '0'";
+                $resultado_cod_car = mysqli_query($conexion, $sql_cod_car);
+                $numero_fila_cod_car = mysqli_num_rows($resultado_cod_car);
+                if($numero_fila_cod_car== '1')
                 {
-                    $json[] = array(
-                        'error' => '1',
-                        'mensaje' => 'Error al cargar los datos, consultar con soporte',
-                    );
+                    $filas = mysqli_fetch_array($resultado_cod_car);
+                    $id_recepcion = $filas['id'];
+                    $cantidad_pallets = $filas['cantidad'];
+    
+                    $sql_update="UPDATE recepcion SET fecha_de_documento = '$fecha_de_documento', 
+                    fecha_de_llegada = '$fecha_de_llegada', observacion = '$observacion', id_usuario = '$id_usuario' 
+                    WHERE documento = '$documento' AND cargado = '0'";
+                    $resultado_update = mysqli_query($conexion, $sql_update);
+                    if(!$resultado_update)
+                    {
+                        $json[] = array(
+                            'error' => '1',
+                            'mensaje' => 'Error al cargar el pallet',
+                        );
+                    }
+                    else
+                    {
+                        $json[] = array(
+                            'error' => '0',
+                            'id_recepcion' => $id_recepcion,
+                            'cantidad_pallets' => $cantidad_pallets,
+                            'mensaje' => 'Recepcion creada'
+                        );
+                    }
                 }
                 else
                 {
-                    $sql = "SELECT id FROM recepcion";
-                    $resultado = mysqli_query($conexion, $sql);
-                    while($filas = mysqli_fetch_array($resultado))
-                    {
-                        $id_recepcion = $filas['id'];
-                    }
                     $json[] = array(
-                        'error' => '0',
-                        'id_recepcion' => $id_recepcion,
-                        'mensaje' => 'Recepcion creada'
+                        'error' => '1',
+                        'mensaje' => 'Ya fue cargada esta recepcion',
                     );
                 }
+            }
+            else
+            {
+                $json[] = array(
+                    'error' => '1',
+                    'mensaje' => 'No se encontró el número de documento',
+                );
             }
 
             $jsonstring = json_encode($json);

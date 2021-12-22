@@ -12,7 +12,8 @@ const BtnControles = () =>
     const navigate = useNavigate()
     const form = 
     {
-        id_recepcion: cookies.get('id_recepcion')
+        id_recepcion: cookies.get('id_recepcion'),
+        cant_pallets: cookies.get('cantidad_pallets')
     }
 
     const handelClick = () =>
@@ -25,14 +26,74 @@ const BtnControles = () =>
             showCancelButton: true,
             confirmButtonColor: '#00C3E3',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Cerrar Sesión'
+            confirmButtonText: 'Cerrar recepcion'
         }).then((result) => 
         {
             if(result.isConfirmed) 
             {
-                CerrarRecepcion()
+                ChequerRecepcion()
             }
         })
+    }
+
+    const ChequerRecepcion = async () =>
+    {
+        try
+        {
+            let config =
+            {
+                method: 'POST',
+                headers: 
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            }
+            let res = await fetch(url+'chequear-recepcion.php', config)
+            let infoPost = await res.json()
+            console.log(infoPost[0])
+            if(infoPost[0].error == '0')
+            {
+                CerrarRecepcion()
+            }
+            else if(infoPost[0].error == '2')
+            {
+                Swal.fire(
+                {
+                    title: 'Faltan cargar pallets',
+                    text: infoPost[0].mensaje,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#00C3E3',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Cerrar recepcion'
+                }).then((result) => 
+                {
+                    if(result.isConfirmed) 
+                    {
+                        CerrarRecepcion()
+                    }
+                })
+            }
+            else
+            {
+                Swal.fire(
+                    'Error',
+                    infoPost[0].mensaje,
+                    'error'
+                )
+            }
+        }
+        catch(error)
+        {
+            console.error(error)
+            Swal.fire(
+                'Error',
+                'Error al cargar recepcion intentar mas tarde',
+                'error'
+            )
+        }
     }
 
     const CerrarRecepcion = async () =>
@@ -62,13 +123,17 @@ const BtnControles = () =>
                     timer: 1500
                 })
                 cookies.remove('id_recepcion')
-                cookies.remove('cod_caja')
-                cookies.remove('cod_pallet_caja')
+                cookies.remove('id_pallet')
                 cookies.remove('id_caja')
+                cookies.remove('cod_caja')
+                cookies.remove('cod_pallet')
+                cookies.remove('cod_pallet_caja')
+                cookies.remove('cantidad_caja')
+                cookies.remove('cantidad_pallets')
+                cookies.remove('cantidad_caja_pallet')
                 cookies.remove('descripcion_caja')
                 cookies.remove('kilos_caja')
                 cookies.remove('vencimiento_caja')
-                cookies.remove('cantidad_caja')
                 navigate('/menu')
             }
             else

@@ -8,7 +8,6 @@ import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Loading from '../components/Loading/Loading'
 
-
 const cookies = new Cookies()
 
 const Recepcion = () =>
@@ -36,6 +35,7 @@ const Recepcion = () =>
 
     const handelSubmit = async e =>
     {
+        console.log(form)
         e.preventDefault()
         try
         {
@@ -55,6 +55,7 @@ const Recepcion = () =>
             if(infoPost[0].mensaje == 'Recepcion creada')
             {
                 cookies.set('id_recepcion', infoPost[0].id_recepcion, {path: '/'})
+                cookies.set('cantidad_pallets', infoPost[0].cantidad_pallets, {path: '/'})
                 navigate('/opciones-recepcion')
             }
             else
@@ -84,7 +85,6 @@ const Recepcion = () =>
             ...form,
             [e.target.name]: e.target.value
         })
-        console.log(form)
     }
 
     const fecha_actual = () =>

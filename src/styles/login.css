@@ -48,6 +48,7 @@
     padding: 7px 10px;
     font-family: 'Roboto', sans-serif;
     height: 41px;
+    outline-color: var(--principal);
 }
 
 .textbox-escanear-codigo

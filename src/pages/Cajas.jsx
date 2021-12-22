@@ -16,7 +16,7 @@ const Cajas = () =>
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_caja: '', id_recepcion: cookies.get('id_recepcion') })
+    const [form, setForm] = useState({ cod_caja: '', id_recepcion: cookies.get('id_recepcion'), cod_pallet: cookies.get('cod_pallet_caja') })
     const infoCajaInicial =
     { 
         descripcion: cookies.get('descripcion_caja'), 
@@ -39,9 +39,19 @@ const Cajas = () =>
         }
     })
 
-    const handelSubmit = async e =>
+    useEffect(() =>
     {
-        e.preventDefault()
+        if(typeof form.cod_caja !== 'undefined')
+        {
+            if(form.cod_caja.length === 14)
+            {
+                EscanearCaja()
+            }
+        }
+    }, [ form ])
+
+    const EscanearCaja = async () =>
+    {
         textboxCodigo.current.focus()
         textboxCodigo.current.value = ''
         try
@@ -56,10 +66,10 @@ const Cajas = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url+'cargar-cajas.php', config)
+            let res = await fetch(url+'escanear-cajas.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
-            if(infoPost[0].mensaje == 'Caja abierta')
+            if(infoPost[0].error == '0')
             {
                 setCaja(
                 {
@@ -78,11 +88,64 @@ const Cajas = () =>
                 cookies.set('kilos_caja', infoPost[0].kilos, {path: '/'})
                 cookies.set('vencimiento_caja', infoPost[0].vencimiento, {path: '/'})
                 cookies.set('cantidad_caja', infoPost[0].cantidades, {path: '/'})
+            }
+            else
+            {
+                RemoverCoockiesCajas()
+                Swal.fire(
+                    'Error',
+                    infoPost[0].mensaje,
+                    'error'
+                )
+            }
+        }
+        catch(error)
+        {
+            RemoverCoockiesCajas()
+            console.error(error)
+            Swal.fire(
+                'Error',
+                'Error al cargar recepcion intentar mas tarde',
+                'error'
+            )
+        }
+    }
+
+    const handelSubmit = async e =>
+    {
+        e.preventDefault()
+        textboxCodigo.current.focus()
+        textboxCodigo.current.value = ''
+        console.log(form)
+        try
+        {
+            let config =
+            {
+                method: 'POST',
+                headers: 
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            }
+            let res = await fetch(url+'cargar-cajas.php', config)
+            let infoPost = await res.json()
+            console.log(infoPost[0])
+            if(infoPost[0].error == '0')
+            {
+                RemoverCoockiesCajas()
+
+                setForm(
+                {
+                    ...form,
+                    cod_caja: ' '
+                })
 
                 Swal.fire(
                 {
                     icon: 'success',
-                    title: 'Caja abierta correctamente',
+                    title: 'Caja cargada correctamente',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -142,7 +205,7 @@ const Cajas = () =>
                     <form className="container-form-cajas" onSubmit={handelSubmit}>
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
                         <label>Codigo Pallet: {infoCaja.cod_pallet}</label>
-                        <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo" required/>
+                        <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                         <label>Descripcion: {infoCaja.descripcion}</label>
                         <label>Kilos: {infoCaja.kilos}</label>
                         <label>Vencimiento: {infoCaja.vencimiento}</label>
