@@ -79,7 +79,16 @@
 {
     color: white;
     background-color: var(--principal);
+}
 
+.btn-eliminar
+{
+    color: white;
+    background-color: var(--rojo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 .btn-general-cargar

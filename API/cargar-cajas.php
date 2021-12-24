@@ -11,42 +11,42 @@
         {
             $codigo_caja = $datos->cod_caja;
             $id_recepcion = $datos->id_recepcion;
-            $codigo_pallet = $datos->cod_pallet;
+            $codigo_pallet = '';
 
-            $sql_cod_veri = "SELECT id FROM cajas WHERE codigo = '$codigo_caja' AND cargado = '0'";
+            $sql_cod_veri = "SELECT id FROM cajas WHERE codigo = '$codigo_caja'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql_update="UPDATE cajas SET cargado = '1' WHERE codigo = '$codigo_caja' AND cargado = '0'";
-                $resultado_update = mysqli_query($conexion, $sql_update);
-                if(!$resultado_update)
+                $sql_rec_veri = "SELECT cajas.id AS id_cajas FROM cajas INNER JOIN 
+                pallets ON cajas.id_pallet = pallets.id WHERE cajas.codigo = '$codigo_caja' 
+                AND pallets.id_recepcion = '$id_recepcion'";
+                $resultado_rec_veri = mysqli_query($conexion, $sql_rec_veri);
+                $numero_fila_rec_veri = mysqli_num_rows($resultado_rec_veri);
+                if($numero_fila_rec_veri == '1')
                 {
-                    $json[] = array(
-                        'error' => '1',
-                        'mensaje' => 'Error al cargar la caja',
-                    );
-                }
-                else
-                {
-                    $sql="SELECT id, cantidad FROM pallets WHERE codigo = '$codigo_pallet'";
-                    $resultado=mysqli_query($conexion,$sql);
-                    if($filas = mysqli_fetch_array($resultado))
+                    $sql = "SELECT cajas.id AS id_cajas, cajas.codigo AS codigo_cajas, cajas.descripcion, 
+                    cajas.kilos, cajas.cantidades, cajas.vencimiento, cajas.id_pallet, cajas.cargado, pallets.id, 
+                    pallets.codigo AS codigo_pallet FROM cajas LEFT JOIN pallets ON 
+                    cajas.id_pallet = pallets.id WHERE cajas.cargado = '0' AND cajas.codigo = '$codigo_caja'";
+                    $resultado = mysqli_query($conexion, $sql);
+                    $numero_fila = mysqli_num_rows($resultado);
+                    if($numero_fila == '1')
                     {
-                        $id_pallet = $filas['id'];
-                        $cantidad_pallets = $filas['cantidad'];
-                    }
+                        $filas = mysqli_fetch_array($resultado);
+                        $codigo_pallet = $filas['codigo_pallet'];
+                        $id_caja = $filas['id_cajas'];
+                        $descripcion = $filas['descripcion'];
+                        $vencimiento = $filas['vencimiento'];
+                        $cantidades = $filas['cantidades'];
+                        $kilos = $filas['kilos'];
+                        
+                        if(empty($codigo_pallet))
+                        {
+                            $codigo_pallet = 'No asignado';
+                        }
 
-                    $sql="SELECT COUNT(id) AS cantidad_cargados FROM cajas WHERE id_pallet = '$id_pallet' AND cargado != '0'";
-                    $resultado=mysqli_query($conexion,$sql);
-                    if($filas = mysqli_fetch_array($resultado))
-                    {
-                        $cantidad_cargados = $filas['cantidad_cargados'];
-                    }
-
-                    if($cantidad_cargados == $cantidad_pallets)
-                    {
-                        $sql_update="UPDATE pallets SET cargado = '1' WHERE id = '$id_pallet'";
+                        $sql_update="UPDATE cajas SET cargado = '1' WHERE codigo = '$codigo_caja' AND cargado = '0'";
                         $resultado_update = mysqli_query($conexion, $sql_update);
                         if(!$resultado_update)
                         {
@@ -55,11 +55,61 @@
                                 'mensaje' => 'Error al cargar la caja',
                             );
                         }
+                        else
+                        {
+                            $sql="SELECT id, cantidad FROM pallets WHERE codigo = '$codigo_pallet'";
+                            $resultado=mysqli_query($conexion,$sql);
+                            if($filas = mysqli_fetch_array($resultado))
+                            {
+                                $id_pallet = $filas['id'];
+                                $cantidad_pallets = $filas['cantidad'];
+                            }
+        
+                            $sql="SELECT COUNT(id) AS cantidad_cargados FROM cajas WHERE id_pallet = '$id_pallet' AND cargado != '0'";
+                            $resultado=mysqli_query($conexion,$sql);
+                            if($filas = mysqli_fetch_array($resultado))
+                            {
+                                $cantidad_cargados = $filas['cantidad_cargados'];
+                            }
+        
+                            if($cantidad_cargados == $cantidad_pallets)
+                            {
+                                $sql_update="UPDATE pallets SET cargado = '1' WHERE id = '$id_pallet'";
+                                $resultado_update = mysqli_query($conexion, $sql_update);
+                                if(!$resultado_update)
+                                {
+                                    $json[] = array(
+                                        'error' => '1',
+                                        'mensaje' => 'Error al cargar la caja',
+                                    );
+                                }
+                            }
+        
+                            $json[] = array(
+                                'error' => '0',
+                                'id_caja' => $id_caja,
+                                'mensaje' => 'Caja abierta',
+                                'descripcion' => $descripcion,
+                                'kilos' => $kilos,
+                                'vencimiento' => $vencimiento,
+                                'cantidades' => $cantidades,
+                                'cod_pallet' => $codigo_pallet
+                            );
+                        }
                     }
-
+                    else
+                    {
+                        $json[] = array(
+                            'error' => '1',
+                            'mensaje' => 'Esta caja ya se encuentra cargada',
+                        );
+                    }
+                }
+                else
+                {
                     $json[] = array(
-                        'error' => '0',
-                        'mensaje' => 'Caja cargada',
+                        'error' => '1',
+                        'mensaje' => 'Esta caja no pertenece a esta recepción',
                     );
                 }
             }
@@ -67,7 +117,7 @@
             {
                 $json[] = array(
                     'error' => '1',
-                    'mensaje' => 'Esta caja ya se encuentra cargada',
+                    'mensaje' => 'El codigo de caja es incorrecto no existe una caja con ese codigo',
                 );
             }
         }

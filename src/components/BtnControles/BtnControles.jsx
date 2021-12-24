@@ -10,11 +10,12 @@ const cookies = new Cookies()
 const BtnControles = () =>
 {
     const navigate = useNavigate()
-    const form = 
+    const [form, setFrom] = useState(
     {
         id_recepcion: cookies.get('id_recepcion'),
-        cant_pallets: cookies.get('cantidad_pallets')
-    }
+        cant_pallets: cookies.get('cantidad_pallets'),
+        cant_faltante: ''
+    })
 
     const handelClick = () =>
     {
@@ -72,6 +73,11 @@ const BtnControles = () =>
                 {
                     if(result.isConfirmed) 
                     {
+                        setFrom(
+                        {
+                            ...form,
+                            cant_faltante: infoPost[0].cantidad_faltante
+                        })
                         CerrarRecepcion()
                     }
                 })
@@ -98,6 +104,7 @@ const BtnControles = () =>
 
     const CerrarRecepcion = async () =>
     {
+        console.log(form)
         try
         {
             let config =

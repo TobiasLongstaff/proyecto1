@@ -29,6 +29,7 @@
                 {
                     $json[] = array(
                         'error' => '2',
+                        'cantidad_faltante' => $pallets_faltantes,
                         'mensaje' => '¿Todavía tienes '.$pallets_faltantes.' pallets pendientes de esta recepción deseas cerrar la recepción igualmente?',
                     );
                 }

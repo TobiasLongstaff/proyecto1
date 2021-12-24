@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Nav from '../components/Navegacion/Nav'
 import SvgBox from '../img/box-solid.svg'
 import '../styles/cajas.css'
@@ -8,6 +8,7 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
+import { UilRedo } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
@@ -16,7 +17,7 @@ const Cajas = () =>
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_caja: '', id_recepcion: cookies.get('id_recepcion'), cod_pallet: cookies.get('cod_pallet_caja') })
+    const [form, setForm] = useState({ cod_caja: '', id_recepcion: cookies.get('id_recepcion') })
     const infoCajaInicial =
     { 
         descripcion: cookies.get('descripcion_caja'), 
@@ -66,7 +67,7 @@ const Cajas = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url+'escanear-cajas.php', config)
+            let res = await fetch(url+'cargar-cajas.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
             if(infoPost[0].error == '0')
@@ -88,6 +89,14 @@ const Cajas = () =>
                 cookies.set('kilos_caja', infoPost[0].kilos, {path: '/'})
                 cookies.set('vencimiento_caja', infoPost[0].vencimiento, {path: '/'})
                 cookies.set('cantidad_caja', infoPost[0].cantidades, {path: '/'})
+
+                Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Caja cargada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
             else
             {
@@ -111,66 +120,9 @@ const Cajas = () =>
         }
     }
 
-    const handelSubmit = async e =>
+    const handelClick = () =>
     {
-        e.preventDefault()
-        textboxCodigo.current.focus()
-        textboxCodigo.current.value = ''
-        console.log(form)
-        try
-        {
-            let config =
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-            let res = await fetch(url+'cargar-cajas.php', config)
-            let infoPost = await res.json()
-            console.log(infoPost[0])
-            if(infoPost[0].error == '0')
-            {
-                RemoverCoockiesCajas()
 
-                setForm(
-                {
-                    ...form,
-                    cod_caja: ' '
-                })
-
-                Swal.fire(
-                {
-                    icon: 'success',
-                    title: 'Caja cargada correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-
-            }
-            else
-            {
-                RemoverCoockiesCajas()
-                Swal.fire(
-                    'Error',
-                    infoPost[0].mensaje,
-                    'error'
-                )
-            }
-        }
-        catch(error)
-        {
-            RemoverCoockiesCajas()
-            console.error(error)
-            Swal.fire(
-                'Error',
-                'Error al cargar recepcion intentar mas tarde',
-                'error'
-            )
-        }
     }
 
     const handelChange = e =>
@@ -202,8 +154,7 @@ const Cajas = () =>
             <article>
                 <Nav titulo="Cajas"/>
                 <main className="container-body">
-                    <form className="container-form-cajas" onSubmit={handelSubmit}>
-                        <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
+                    <form className="container-form-cajas">
                         <label>Codigo Pallet: {infoCaja.cod_pallet}</label>
                         <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                         <label>Descripcion: {infoCaja.descripcion}</label>
@@ -218,7 +169,7 @@ const Cajas = () =>
                                 </div>
                             </div>
                         </div>
-                        <button className="btn-login btn-general-login" type="submit">Cargar</button>
+                        <button className="btn-eliminar btn-general-login" type="button" onClick={handelClick}><UilRedo size="20" color="white"/>Deshacer</button>
                         <BtnControles/>
                     </form>
                 </main>

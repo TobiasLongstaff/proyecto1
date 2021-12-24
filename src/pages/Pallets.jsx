@@ -8,6 +8,7 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
+import { UilRedo } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
@@ -43,73 +44,6 @@ const Pallets = () =>
         }
     }, [ form ])
 
-    const handelSubmit = async e =>
-    {
-        e.preventDefault()
-        textboxCodigo.current.focus()
-        textboxCodigo.current.value = ''
-        try
-        {
-            config =
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-            let resCargar = await fetch(url+'cargar-pallets.php', config)
-            let infoPostCargar = await resCargar.json()
-            console.log(infoPostCargar[0])
-            if(infoPostCargar[0].error == '0')
-            {
-                setCaja(
-                {
-                    ...infoCaja,
-                    cantidad: ''
-                })
-
-                setForm(
-                {
-                    ...form,
-                    cod_pallet: ' '
-                })
-
-                cookies.remove('cod_pallet')
-                cookies.remove('id_pallet')
-                cookies.remove('cantidad_caja_pallet')
-
-                Swal.fire(
-                {
-                    icon: 'success',
-                    title: 'Cajas cargadas correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-
-            }
-            else
-            {
-                Swal.fire(
-                    'Error',
-                    infoPostCargar[0].mensaje,
-                    'error'
-                )
-            }
-        }
-        catch(error)
-        {
-            console.error(error)
-            Swal.fire(
-                'Error',
-                'Necesitas escanear el pallet para poder cargar las cajas',
-                'error'
-            )
-        }
-    }
-
     const handelChange = e =>
     {
         setForm(
@@ -135,7 +69,7 @@ const Pallets = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url+'escanear-pallets.php', config)
+            let res = await fetch(url+'cargar-pallets.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
             if(infoPost[0].error == '0')
@@ -149,19 +83,18 @@ const Pallets = () =>
                 cookies.set('cod_pallet', form.cod_pallet, {path: '/'})
                 cookies.set('id_pallet', infoPost[0].id_pallet, {path: '/'})
                 cookies.set('cantidad_caja_pallet', infoPost[0].cantidades, {path: '/'})
+
+                Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Pallet cargado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
             else
             {
-                setForm(
-                {
-                    ...form,
-                    cod_pallet: ' '
-                })
-
-                cookies.remove('cod_pallet')
-                cookies.remove('id_pallet')
-                cookies.remove('cantidad_caja_pallet')
-
+                ErrorPallet()
                 Swal.fire(
                     'Error',
                     infoPost[0].mensaje,
@@ -171,6 +104,7 @@ const Pallets = () =>
         }
         catch(error)
         {
+            ErrorPallet()
             console.error(error)
             Swal.fire(
                 'Error',
@@ -180,15 +114,38 @@ const Pallets = () =>
         }
     }
 
+    const handelClick = () =>
+    {
+
+    }
+
+    const ErrorPallet = () =>
+    {
+        cookies.remove('cod_pallet')
+        cookies.remove('id_pallet')
+        cookies.remove('cantidad_caja_pallet')
+
+        setForm(
+        {
+            ...form,
+            cod_pallet: ''
+        })
+
+        setCaja(
+        {
+            ...infoCaja,
+            cantidad: ''
+        })
+    }
+
     if(idsession)
         return(
             <article>
                 <Nav titulo="Pallets"/>
                 <main className="container-body">
-                    <form className="container-form-cajas" onSubmit={handelSubmit}>
+                    <form className="container-form-cajas">
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
                         <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
-                        <label>Codigo Pallet: {form.cod_pallet} </label>
                         <label>Cantitad de cajas:</label>
                         <div className="container-contador-caja">
                             <img src={SvgBox} alt="caja"/>
@@ -196,7 +153,7 @@ const Pallets = () =>
                                 <label>{infoCaja.cantidad}</label>
                             </div>
                         </div>
-                        <button className="btn-login btn-general-login" type="submit">Cargar</button>
+                        <button className="btn-eliminar btn-general-login" type="button" onClick={handelClick}><UilRedo size="20" color="white"/>Deshacer</button>
                         <BtnControles/>
                     </form>
                 </main>
