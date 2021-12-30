@@ -12,12 +12,17 @@ const SubMenuRecepcion = () =>
 {
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
+    const idrecepcion = cookies.get('id_recepcion')
 
     useEffect(() =>
     {
         if(idsession == null)
         { 
             navigate('/')
+        }
+        else if (idrecepcion == null)
+        { 
+            navigate('/menu')
         }
     })
 

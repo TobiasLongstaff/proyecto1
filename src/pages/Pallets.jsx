@@ -8,18 +8,18 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
-import { UilRedo } from '@iconscout/react-unicons'
+import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
 
 const cookies = new Cookies()
 
 const Pallets = () =>
 {
-    let config
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
     const [form, setForm] = useState({ cod_pallet: cookies.get('cod_pallet'), id_recepcion: cookies.get('id_recepcion') })
     const [infoCaja, setCaja] = useState({ cantidad: cookies.get('cantidad_caja_pallet') }) 
+    const [ultimoPallet, setPallet] = useState(cookies.get('cod_pallet'))
 
     useEffect(() =>
     {
@@ -37,7 +37,7 @@ const Pallets = () =>
     {
         if(typeof form.cod_pallet !== 'undefined')
         {
-            if(form.cod_pallet.length === 14)
+            if(form.cod_pallet.length === 14 && textboxCodigo.current.value.length === 14)
             {
                 EscanearPallet()
             }
@@ -59,7 +59,7 @@ const Pallets = () =>
         textboxCodigo.current.value = ''
         try
         {
-            config =
+            let config =
             {
                 method: 'POST',
                 headers: 
@@ -83,6 +83,8 @@ const Pallets = () =>
                 cookies.set('cod_pallet', form.cod_pallet, {path: '/'})
                 cookies.set('id_pallet', infoPost[0].id_pallet, {path: '/'})
                 cookies.set('cantidad_caja_pallet', infoPost[0].cantidades, {path: '/'})
+
+                setPallet(cookies.get('cod_pallet'))
 
                 Swal.fire(
                 {
@@ -114,11 +116,6 @@ const Pallets = () =>
         }
     }
 
-    const handelClick = () =>
-    {
-
-    }
-
     const ErrorPallet = () =>
     {
         cookies.remove('cod_pallet')
@@ -130,6 +127,8 @@ const Pallets = () =>
             ...form,
             cod_pallet: ''
         })
+
+        setPallet('')
 
         setCaja(
         {
@@ -145,7 +144,8 @@ const Pallets = () =>
                 <main className="container-body">
                     <form className="container-form-cajas">
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <label>Pallet cargado: {ultimoPallet}</label>
                         <label>Cantitad de cajas:</label>
                         <div className="container-contador-caja">
                             <img src={SvgBox} alt="caja"/>
@@ -153,7 +153,7 @@ const Pallets = () =>
                                 <label>{infoCaja.cantidad}</label>
                             </div>
                         </div>
-                        <button className="btn-eliminar btn-general-login" type="button" onClick={handelClick}><UilRedo size="20" color="white"/>Deshacer</button>
+                        <BtnDeshacer codigo={form.cod_pallet} pantalla="pallet"/>
                         <BtnControles/>
                     </form>
                 </main>

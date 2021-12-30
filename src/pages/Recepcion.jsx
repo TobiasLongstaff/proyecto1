@@ -109,16 +109,16 @@ const Recepcion = () =>
                 <main className="container-body">
                     <form className="container-form" onSubmit={handelSubmit}>
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
+                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
                         <div>
                             <label>Fecha del documento</label>
-                            <input type="date" className="textbox-genegal" name="fecha_doc" onChange={handelChange} value={form.fecha_doc} required/>                    
+                            <input type="date" autoComplete="off" className="textbox-genegal" name="fecha_doc" onChange={handelChange} value={form.fecha_doc} required/>                    
                         </div>
                         <div>
                             <label>Fecha de llegada</label>
                             <input type="date" className="textbox-genegal" value={cookies.get('fecha_actual')} disabled required/>                    
                         </div>
-                        <textarea className="textbox-genegal textarea-general" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
+                        <textarea autoComplete="off" className="textbox-genegal textarea-general" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>
                             <button type="submit" className="btn-continuar btn-controles">Continuar</button> 

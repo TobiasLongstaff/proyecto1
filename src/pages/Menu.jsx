@@ -42,10 +42,12 @@ const Menu = () =>
                             <label>Recepcion</label>
                         </button>
                     </Link>
-                    <button type="button" className="btn-menu">
-                        <UilShoppingCartAlt  size="50" color="#252A34"/><br/>
-                        <label>Preparacion</label>
-                    </button>
+                    <Link to="/preparacion">
+                        <button type="button" className="btn-menu">
+                            <UilShoppingCartAlt  size="50" color="#252A34"/><br/>
+                            <label>Preparacion</label>
+                        </button>
+                    </Link>
                 </main>
             </article>
         )

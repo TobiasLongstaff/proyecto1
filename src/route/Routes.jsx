@@ -8,6 +8,7 @@ import Cajas from '../pages/Cajas'
 import Productos from '../pages/Productos'
 import SubMenuRecepcion from '../pages/SubMenuRecepcion'
 import Pallets from '../pages/Pallets'
+import PrepararProductos from '../pages/PrepararProductos'
 
 function Rutas() 
 {
@@ -21,7 +22,8 @@ function Rutas()
                 <Route exact path="recepcion" element={<Recepcion/>} />
                 <Route exact path="cajas" element={<Cajas/>} />
                 <Route exact path="pallets" element={<Pallets/>} />
-                <Route exact path="productos" element={<Productos/>} />
+                <Route exact path="preparacion" element={<Productos/>} />
+                <Route exact path="preparar-productos" element={<PrepararProductos/>} />
             </Routes>
         </BrowserRouter>
     )

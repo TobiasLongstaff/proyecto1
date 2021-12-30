@@ -14,6 +14,7 @@
 
             $id_recepcion = $datos->id_recepcion; 
             $cant_faltante = $datos->cant_faltante;
+            $id_usuario = $datos->id_usuario;
 
             $sql_cod_veri = "SELECT id FROM recepcion WHERE id = '$id_recepcion'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
@@ -40,7 +41,7 @@
                 if(!empty($cant_faltante))
                 {
                     //LOG
-                    $sql_log = "INSERT INTO log (fecha, descripcion, id_pantallas, id_usuario) VALUES ('$fecha_actual', 'Se cerró la recepción ".$id_recepcion." con ".$cant_faltante." pallets menos', '6', '1')";
+                    $sql_log = "INSERT INTO log (fecha, descripcion, id_pantallas, id_usuario) VALUES ('$fecha_actual', 'Se cerró la recepción ".$id_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario')";
                     $resultado_log = mysqli_query($conexion, $sql_log);
                 }   
 

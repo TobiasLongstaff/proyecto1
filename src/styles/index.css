@@ -14,3 +14,8 @@ body
     --rojo: #ff7777;
     --verde: #23e780;
 }
+
+textarea 
+{
+    resize: none;
+}

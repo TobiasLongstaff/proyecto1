@@ -8,7 +8,7 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
-import { UilRedo } from '@iconscout/react-unicons'
+import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
 
 const cookies = new Cookies()
 
@@ -17,7 +17,7 @@ const Cajas = () =>
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_caja: '', id_recepcion: cookies.get('id_recepcion') })
+    const [form, setForm] = useState({ cod_caja: cookies.get('cod_caja'), id_recepcion: cookies.get('id_recepcion') })
     const infoCajaInicial =
     { 
         descripcion: cookies.get('descripcion_caja'), 
@@ -44,7 +44,7 @@ const Cajas = () =>
     {
         if(typeof form.cod_caja !== 'undefined')
         {
-            if(form.cod_caja.length === 14)
+            if(form.cod_caja.length === 14 && textboxCodigo.current.value.length === 14)
             {
                 EscanearCaja()
             }
@@ -120,11 +120,6 @@ const Cajas = () =>
         }
     }
 
-    const handelClick = () =>
-    {
-
-    }
-
     const handelChange = e =>
     {
         setForm(
@@ -155,8 +150,9 @@ const Cajas = () =>
                 <Nav titulo="Cajas"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
+                        <label>Codigo Caja: {form.cod_caja}</label>
+                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                         <label>Codigo Pallet: {infoCaja.cod_pallet}</label>
-                        <input ref={textboxCodigo} type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                         <label>Descripcion: {infoCaja.descripcion}</label>
                         <label>Kilos: {infoCaja.kilos}</label>
                         <label>Vencimiento: {infoCaja.vencimiento}</label>
@@ -169,7 +165,7 @@ const Cajas = () =>
                                 </div>
                             </div>
                         </div>
-                        <button className="btn-eliminar btn-general-login" type="button" onClick={handelClick}><UilRedo size="20" color="white"/>Deshacer</button>
+                        <BtnDeshacer pantalla="caja" codigo={form.cod_caja}/>
                         <BtnControles/>
                     </form>
                 </main>

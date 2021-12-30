@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import { useNavigate } from 'react-router-dom'
 import BtnVolver from '../BtnVolver/BtnVolver'
 import Cookies from 'universal-cookie'
 import url from '../../services/Settings'
+import { UilFileCheckAlt } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
@@ -14,8 +15,21 @@ const BtnControles = () =>
     {
         id_recepcion: cookies.get('id_recepcion'),
         cant_pallets: cookies.get('cantidad_pallets'),
-        cant_faltante: ''
     })
+
+    const [formPallet, setFormPallet] = useState(
+    {
+        id_recepcion: cookies.get('id_recepcion'),
+        cant_faltante: '',
+        id_usuario: cookies.get('IdSession')
+    })
+
+    useEffect(() =>
+    {
+        console.log(formPallet)
+        if(formPallet.cant_faltante !== '')
+        CerrarRecepcion()
+    }, [formPallet])
 
     const handelClick = () =>
     {
@@ -73,12 +87,11 @@ const BtnControles = () =>
                 {
                     if(result.isConfirmed) 
                     {
-                        setFrom(
+                        setFormPallet(
                         {
-                            ...form,
+                            ...formPallet,
                             cant_faltante: infoPost[0].cantidad_faltante
                         })
-                        CerrarRecepcion()
                     }
                 })
             }
@@ -104,7 +117,7 @@ const BtnControles = () =>
 
     const CerrarRecepcion = async () =>
     {
-        console.log(form)
+
         try
         {
             let config =
@@ -115,7 +128,7 @@ const BtnControles = () =>
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(form)
+                body: JSON.stringify(formPallet)
             }
             let res = await fetch(url+'cerrar-recepcion.php', config)
             let infoPost = await res.json()
@@ -166,7 +179,7 @@ const BtnControles = () =>
     return(
         <footer className="container-controles">
             <BtnVolver volver="/opciones-recepcion"/>
-            <button onClick={handelClick} className="btn-continuar btn-controles" type="button">Cerrar recepcion</button>   
+            <button onClick={handelClick} className="btn-continuar btn-controles" type="button"><UilFileCheckAlt size="60" color="white"/></button>   
         </footer> 
     )
 }

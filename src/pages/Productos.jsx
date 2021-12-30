@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Nav from '../components/Navegacion/Nav'
-import BtnControles from '../components/BtnControles/BtnControles'
+import BtnVolver from '../components/BtnVolver/BtnVolver'
 import '../styles/productos.css'
 import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
-import SvgOpenBox from '../img/box-open-solid.svg'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
+import { UilAngleRight } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
@@ -16,10 +16,16 @@ const Productos = () =>
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_producto: '', fecha_ven: '', peso: '', descripcion: '', cod_caja: cookies.get('id_caja') })
-    const [cantidad, setCantidad] = useState({ cantidad_restante: cookies.get('cantidad_caja') })
+    const [form, setForm] = useState({ cod_producto: '' })
+    const [producto, setProducto] = useState(
+    { 
+        cod_producto: cookies.get('cod_producto'), 
+        descripcion: cookies.get('descripcion_producto'),
+        vencimiento: cookies.get('vencimiento_producto'),
+        peso: cookies.get('peso_producto')
+    })
 
-    useEffect(()=>
+    useEffect(() =>
     {
         if(idsession == null)
         {
@@ -34,9 +40,18 @@ const Productos = () =>
         }
     })
 
-    const handelSubmit = async e =>
+    useEffect(() =>
     {
-        e.preventDefault()
+        if(form.cod_producto.length === 14 && textboxCodigo.current.value != '')
+        {
+            obtenerProducto()
+        }
+    }, [form])
+
+    const obtenerProducto = async () =>
+    {
+        textboxCodigo.current.value = ''
+        textboxCodigo.current.focus()
         try
         {
             let config =
@@ -49,23 +64,31 @@ const Productos = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url+'cargar-productos.php', config)
+            let res = await fetch(url+'cargar-producto.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
-            if(infoPost[0].mensaje == 'Producto Cargado')
+            if(infoPost[0].error == '0')
             {
+                setProducto(
+                {
+                    ...producto,
+                    cod_producto: form.cod_producto,
+                    descripcion: infoPost[0].descripcion,
+                    vencimiento: infoPost[0].vencimiento,
+                    peso: infoPost[0].kilos
+                })
+
+                cookies.set('cod_producto', form.cod_producto, {path: '/'})
+                cookies.set('descripcion_producto', infoPost[0].descripcion, {path: '/'})
+                cookies.set('vencimiento_producto', infoPost[0].vencimiento, {path: '/'})
+                cookies.set('peso_producto', infoPost[0].kilos, {path: '/'})
+
                 Swal.fire(
                 {
                     icon: 'success',
                     title: 'Producto cargado correctamente',
                     showConfirmButton: false,
                     timer: 1500
-                })
-
-                setCantidad(
-                {
-                    ...cantidad,
-                    cantidad_restante: cookies.get('cantidad_caja') - infoPost[0].cantidad_cargados
                 })
             }
             else
@@ -100,34 +123,24 @@ const Productos = () =>
     if(idsession)
         return(
             <article>
-                <Nav titulo="Productos"/>
+                <Nav titulo="Preparacion"/>
                 <main className="container-body">
-                    <form className="container-form" onSubmit={handelSubmit}>
+                    <div className="container-form-cajas">
                         <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <label>Codigo de Caja: {cookies.get('cod_caja')}</label>
-                        <input type="text" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="cod_producto" value={form.cod_producto} onChange={handelChange} placeholder="Escanear Codigo" required/>
-                        <div className="container-info-productos">
-                            <div>
-                                <label>Fecha Vencimiento</label>
-                                <input type="date" name="fecha_ven" className="textbox-genegal textbox-date" onChange={handelChange} required/>
-                            </div>
-                            <input type="text" name="peso" className="textbox-genegal textbox-peso" placeholder="Peso" onChange={handelChange} required/>
-                        </div>
-                        <textarea name="descripcion" className="textbox-genegal textarea-general" placeholder="Descripcion" onChange={handelChange}></textarea>
-                        <div className="container-contador-productos">
-                            <label>Productos restantes:</label>
-                            <div className="container-contador-caja-productos">
-                                <img src={SvgOpenBox} alt="caja"/>
-                                <div className="container-contador-caja-abierta">
-                                    <label>{cantidad.cantidad_restante}</label>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
+                        <label>Codigo Producto: {producto.cod_producto}</label>
+                        <label>Descripcion: {producto.descripcion}</label>
+                        <label>Fecha Vencimiento: {producto.vencimiento}</label>
+                        <label>Peso: {producto.peso}</label>
                         <footer className="container-controles">
-                            <BtnControles volver="/cajas"/>
-                            <button type="submit" className="btn-continuar btn-controles"></button> 
+                            <BtnVolver volver="/menu"/>
+                            <Link to="/preparar-productos">
+                                <button type="button" className="btn-continuar btn-controles">
+                                    <UilAngleRight size="80" color="white"/>
+                                </button> 
+                            </Link>
                         </footer> 
-                    </form>
+                    </div>
                 </main>
             </article>
         )
