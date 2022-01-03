@@ -64,7 +64,7 @@ const Productos = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url+'cargar-producto.php', config)
+            let res = await fetch(url+'activar-producto.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
             if(infoPost[0].error == '0')

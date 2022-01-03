@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import '../styles/preparacionProductos.css'
 import Cookies from 'universal-cookie'
-import FilasTabla from '../components/FilasTabla/FilasTabla'
+import Tabla from '../components/Tabla/Tabla'
 import url from '../services/Settings'
-import useFetchGET from '../hooks/useFetchGET'
+import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 
 const cookies = new Cookies()
 
@@ -15,7 +15,6 @@ const PrepararProductos = () =>
 {
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
-    const { data } = useFetchGET(`${url+'obtener-productos-activos.php'}`)
 
     useEffect(() =>
     {
@@ -25,6 +24,42 @@ const PrepararProductos = () =>
         }
     },[])
 
+    const cargarProductos = async () =>
+    {
+        try
+        {
+            let res = await fetch(url+'cargar-productos.php')
+            let infoPost = await res.json()
+            console.log(infoPost[0])
+            if(infoPost[0].error == '0')
+            {
+                Swal.fire(
+                    'Productos cargados correctamente',
+                    '',
+                    'success'
+                )
+                cookies.remove('cod_producto')
+                cookies.remove('descripcion_producto')
+                cookies.remove('vencimiento_producto')
+                cookies.remove('peso_producto')
+                navigate('/menu')
+
+            }
+            else
+            {
+                Swal.fire(
+                    'Error',
+                    'Error inesperado volver a intentar mas tarde',
+                    'error'
+                )  
+            }
+        }
+        catch (error)
+        {
+            console.error(error)
+        }
+    }
+
     return(
         <article>
             <Nav titulo="Productos"/>
@@ -32,34 +67,10 @@ const PrepararProductos = () =>
                 <div className="container-form-cajas">
                     <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
                     <label>Productos escaneados:</label>
-                    <div>
-                        <div className="tbl-header">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Descripcion</th>
-                                        <th className="td-btn">Controles</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div className="tbl-content">
-                            <table>
-                                <tbody>
-                                    { data.map((fila) =>
-                                    (
-                                        <FilasTabla
-                                            key={fila.id}
-                                            {...fila}
-                                        />
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>                        
-                    </div>
+                    <Tabla/>
                     <footer className="container-controles">
                         <BtnVolver volver="/preparacion"/>
-                        <button type="button" className="btn-continuar btn-controles">
+                        <button type="button" className="btn-continuar btn-controles" onClick={()=>cargarProductos()}>
                             <UilUploadAlt size="60" color="white"/>
                         </button> 
                     </footer> 
