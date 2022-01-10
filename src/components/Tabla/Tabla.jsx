@@ -3,11 +3,15 @@ import { UilRedo } from '@iconscout/react-unicons'
 import url from '../../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Loading from '../Loading/Loading'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 const Tabla = () =>
 {
     const [ loading, setLoading ] = useState(true)
     const [data, setData] = useState([])
+    const cantidad_escaneados = cookies.get('cantidad_escaneados')
 
     useEffect(() =>
     {
@@ -54,6 +58,9 @@ const Tabla = () =>
 
     const deshacerProducto = async (id) =>
     {
+        cookies.set('cantidad_escaneados', cantidad_escaneados - 1, {path: '/'})
+        console.log(cantidad_escaneados);
+
         try
         {
             let config = 
@@ -87,7 +94,7 @@ const Tabla = () =>
 
     if(!loading)
         return(
-            <div>
+            <div className="animacion-1">
                 <div className="tbl-header">
                     <table>
                         <thead>

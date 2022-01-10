@@ -1,6 +1,7 @@
 <?php
 
     require 'conexion.php';
+    require 'woocommerce.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
@@ -25,6 +26,18 @@
         }
         else
         {
+            // $productos = $woocommerce->get('products');
+            // $prueba = 'S4100001A292231';
+
+            // $producto = buscar_producto($prueba, $productos);
+            // $id_producto = $producto['id'];
+            // $stock_actual = $producto['stock'];
+            // $data = [
+            //     'stock_quantity' => $stock_actual + 1
+            // ];
+            
+            // print_r($woocommerce->put('products/'.$id_producto, $data));
+
             $json[] = array(
                 'error' => '0',
                 'mensaje' => 'Productos cargados',

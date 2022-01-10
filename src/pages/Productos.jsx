@@ -8,6 +8,7 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import { UilAngleRight } from '@iconscout/react-unicons'
+import SvgBox from '../img/box-solid.svg'
 
 const cookies = new Cookies()
 
@@ -22,7 +23,8 @@ const Productos = () =>
         cod_producto: cookies.get('cod_producto'), 
         descripcion: cookies.get('descripcion_producto'),
         vencimiento: cookies.get('vencimiento_producto'),
-        peso: cookies.get('peso_producto')
+        peso: cookies.get('peso_producto'),
+        cantidad: cookies.get('cantidad_escaneados')
     })
 
     useEffect(() =>
@@ -75,13 +77,15 @@ const Productos = () =>
                     cod_producto: form.cod_producto,
                     descripcion: infoPost[0].descripcion,
                     vencimiento: infoPost[0].vencimiento,
-                    peso: infoPost[0].kilos
+                    peso: infoPost[0].kilos,
+                    cantidad: infoPost[0].cantidad_escaneados
                 })
 
                 cookies.set('cod_producto', form.cod_producto, {path: '/'})
                 cookies.set('descripcion_producto', infoPost[0].descripcion, {path: '/'})
                 cookies.set('vencimiento_producto', infoPost[0].vencimiento, {path: '/'})
                 cookies.set('peso_producto', infoPost[0].kilos, {path: '/'})
+                cookies.set('cantidad_escaneados', infoPost[0].cantidad_escaneados, {path: '/'})
 
                 Swal.fire(
                 {
@@ -126,16 +130,23 @@ const Productos = () =>
                 <Nav titulo="Preparacion"/>
                 <main className="container-body">
                     <div className="container-form-cajas">
-                        <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
-                        <label>Codigo Producto: {producto.cod_producto}</label>
-                        <label>Descripcion: {producto.descripcion}</label>
-                        <label>Fecha Vencimiento: {producto.vencimiento}</label>
-                        <label>Peso: {producto.peso}</label>
+                        <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
+                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
+                        <label className="animacion-1">Codigo Producto: {producto.cod_producto}</label>
+                        <label className="animacion-1">Descripcion: {producto.descripcion}</label>
+                        <label className="animacion-1">Fecha Vencimiento: {producto.vencimiento}</label>
+                        <label className="animacion-1">Peso: {producto.peso}</label>
+                        <label className="animacion-1">Cantidad Escaneados: </label>
+                        <div className="container-contador-caja animacion-1">
+                            <img src={SvgBox} alt="carne"/>
+                            <div className="container-contador-producto-text">
+                                <label>{producto.cantidad}</label>
+                            </div>
+                        </div>
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>
                             <Link to="/preparar-productos">
-                                <button type="button" className="btn-continuar btn-controles">
+                                <button type="button" className="btn-continuar btn-controles animacion-3">
                                     <UilAngleRight size="80" color="white"/>
                                 </button> 
                             </Link>

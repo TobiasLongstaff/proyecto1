@@ -19,3 +19,36 @@ textarea
 {
     resize: none;
 }
+
+.animacion-1
+{
+    -webkit-animation: top 1s .1s both;
+    animation: top 1s .1s both;
+}
+
+.animacion-2
+{
+    -webkit-animation: top 1s .3s both;
+    animation: top 1s .2s both;
+}
+
+.animacion-3
+{
+    -webkit-animation: top 1s .5s both;
+    animation: top 1s .3s both;
+}
+
+@keyframes top 
+{
+    0% 
+    {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    
+    100% 
+    {
+        opacity: 1;
+        transform: none;
+    }
+}

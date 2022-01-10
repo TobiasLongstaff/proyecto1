@@ -143,11 +143,11 @@ const Pallets = () =>
                 <Nav titulo="Pallets"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
-                        <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
-                        <label>Pallet cargado: {ultimoPallet}</label>
-                        <label>Cantitad de cajas:</label>
-                        <div className="container-contador-caja">
+                        <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
+                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <label className="animacion-2">Pallet cargado: {ultimoPallet}</label>
+                        <label className="animacion-2">Cantitad de cajas:</label>
+                        <div className="container-contador-caja animacion-2">
                             <img src={SvgBox} alt="caja"/>
                             <div className="container-contador">
                                 <label>{infoCaja.cantidad}</label>

@@ -28,22 +28,22 @@ const Menu = () =>
     if(idsession)
         return(
             <article>
-                <nav>
+                <nav className="animacion-1">
                     <BtnCerrarSesion color="#252A34"/>
                     <h1>Menu</h1>
                     <button type="button" className="btn-nav-menu">
-                        <UilSetting size="32" color="#252A34"/>
+                        <UilSetting size="32" color="white"/>
                     </button>
                 </nav>
                 <main className="container-menu-options">
                     <Link to="/recepcion"> 
-                        <button type="button" className="btn-menu">
+                        <button type="button" className="btn-menu animacion-2">
                             <UilTruckLoading size="50" color="#252A34"/><br/>
                             <label>Recepcion</label>
                         </button>
                     </Link>
                     <Link to="/preparacion">
-                        <button type="button" className="btn-menu">
+                        <button type="button" className="btn-menu animacion-3">
                             <UilShoppingCartAlt  size="50" color="#252A34"/><br/>
                             <label>Preparacion</label>
                         </button>

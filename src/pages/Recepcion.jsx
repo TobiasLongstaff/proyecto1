@@ -108,20 +108,20 @@ const Recepcion = () =>
                 <Nav titulo="Recepcion"/>
                 <main className="container-body">
                     <form className="container-form" onSubmit={handelSubmit}>
-                        <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
-                        <div>
+                        <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
+                        <input type="text" autoComplete="off" ref={textboxCodigo} className="animacion-1 textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
+                        <div className="animacion-1">
                             <label>Fecha del documento</label>
                             <input type="date" autoComplete="off" className="textbox-genegal" name="fecha_doc" onChange={handelChange} value={form.fecha_doc} required/>                    
                         </div>
-                        <div>
+                        <div className="animacion-1">
                             <label>Fecha de llegada</label>
                             <input type="date" className="textbox-genegal" value={cookies.get('fecha_actual')} disabled required/>                    
                         </div>
-                        <textarea autoComplete="off" className="textbox-genegal textarea-general" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
+                        <textarea autoComplete="off" className="textbox-genegal textarea-general animacion-1" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>
-                            <button type="submit" className="btn-continuar btn-controles">Continuar</button> 
+                            <button type="submit" className="btn-continuar btn-controles animacion-3">Continuar</button> 
                         </footer>
                     </form>
                 </main>

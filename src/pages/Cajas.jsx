@@ -150,13 +150,13 @@ const Cajas = () =>
                 <Nav titulo="Cajas"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
-                        <label>Codigo Caja: {form.cod_caja}</label>
-                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
-                        <label>Codigo Pallet: {infoCaja.cod_pallet}</label>
-                        <label>Descripcion: {infoCaja.descripcion}</label>
-                        <label>Kilos: {infoCaja.kilos}</label>
-                        <label>Vencimiento: {infoCaja.vencimiento}</label>
-                        <div className="container-cantidad">
+                        <label className="animacion-1">Codigo Caja: {form.cod_caja}</label>
+                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <label className="animacion-1">Codigo Pallet: {infoCaja.cod_pallet}</label>
+                        <label className="animacion-1">Descripcion: {infoCaja.descripcion}</label>
+                        <label className="animacion-1">Kilos: {infoCaja.kilos}</label>
+                        <label className="animacion-1">Vencimiento: {infoCaja.vencimiento}</label>
+                        <div className="container-cantidad animacion-1">
                             <label>Cantitad:</label>
                             <div className="container-contador-caja">
                                 <img src={SvgBox} alt="caja"/>

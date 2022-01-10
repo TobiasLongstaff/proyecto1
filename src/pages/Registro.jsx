@@ -60,17 +60,17 @@ const Registro = () =>
 
     return(
         <article className="container-registro">
-            <header className="header-registro">
+            <header className="header-registro animacion-1">
                 <h1>Registro</h1>
             </header>
             <main>
                 <form onSubmit={handelSubmit} className="menu-registro">
-                    <input type="text" placeholder="Nombre y Apellido" name="nombre_apellido" onChange={handelChange} className="textbox-genegal" value={form.nombre_apellido} required/>
-                    <input type="mail" placeholder="E-mail" name="mail" onChange={handelChange} className="textbox-genegal" value={form.mail} required/>
-                    <input type="password" placeholder="Contraseña" name="password" onChange={handelChange} className="textbox-genegal" value={form.password} required/>
-                    <input type="password" placeholder="Confirmar Contraseña" name="password_con" onChange={handelChange} className="textbox-genegal" value={form.password_con} required/>
+                    <input type="text" placeholder="Nombre y Apellido" name="nombre_apellido" onChange={handelChange} className="textbox-genegal animacion-2" value={form.nombre_apellido} required/>
+                    <input type="mail" placeholder="E-mail" name="mail" onChange={handelChange} className="textbox-genegal animacion-2" value={form.mail} required/>
+                    <input type="password" placeholder="Contraseña" name="password" onChange={handelChange} className="textbox-genegal animacion-2" value={form.password} required/>
+                    <input type="password" placeholder="Confirmar Contraseña" name="password_con" onChange={handelChange} className="textbox-genegal animacion-2" value={form.password_con} required/>
                     <label>{MensajeError}</label>
-                    <div className="container-btn">
+                    <div className="container-btn animacion-3">
                         <button type="submit" className="btn-registro btn-general-registro">Crear cuenta</button>
                         <Link to="/">
                             <button type="button" className="btn-volver-registro btn-general-registro">Volver</button>

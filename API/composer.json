@@ -1,0 +1,19 @@
+{
+    "name": "tobil/proyecto1",
+    "description": "API WooCommerce",
+    "license": "MTI",
+    "autoload": {
+        "psr-4": {
+            "Tobil\\Proyecto1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "TobiasLongstaff",
+            "email": "tobilongstaff@outlook.com"
+        }
+    ],
+    "require": {
+        "automattic/woocommerce": "^3.0"
+    }
+}

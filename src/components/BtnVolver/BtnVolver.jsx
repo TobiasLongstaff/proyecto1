@@ -7,7 +7,7 @@ const BtnVolver = ({volver}) =>
 {
     return(
         <Link to={volver}>
-            <button className="btn-volver btn-controles">
+            <button className="btn-volver btn-controles animacion-2">
                 <UilAngleLeft size="80" color="#252A34"/>
             </button>
         </Link>

@@ -70,15 +70,15 @@ const Login = () =>
 
     return(
         <article className="container-login">
-            <header className="header-login">
+            <header className="header-login animacion-1">
                 <h1>Iniciar sesión</h1>
             </header>
             <main>
                 <form className="menu-login" onSubmit={handelSubmit}>
-                    <input type="email" placeholder="E-mail" name="mail" onChange={handelChange} value={form.mail} className="textbox-genegal" required />
-                    <input type="password" placeholder="Contraseña" name="password" onChange={handelChange} value={form.password} className="textbox-genegal" required/>
+                    <input type="email" placeholder="E-mail" name="mail" onChange={handelChange} value={form.mail} className="textbox-genegal animacion-2" required />
+                    <input type="password" placeholder="Contraseña" name="password" onChange={handelChange} value={form.password} className="textbox-genegal animacion-2" required/>
                     <label>{MensajeError}</label>
-                    <div className="container-btn">
+                    <div className="container-btn animacion-3">
                         <button type="submit" className="btn-login btn-general-login">Iniciar sesión</button>
                         <Link to="/registrarse">
                             <button type="button" className="btn-registrarse btn-general-login">Crear cuenta</button>

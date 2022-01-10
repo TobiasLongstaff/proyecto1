@@ -11,14 +11,31 @@
     fill: var(--negro);
 }
 
+.container-contador-producto
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-.container-contador, .container-contador-pallet
+.container-contador-producto img
+{
+    width: 85px;
+    fill: var(--negro);
+}
+
+.container-contador, .container-contador-pallet, .container-contador-producto-text
 {
     position: absolute;
     bottom: 85px;
     font-weight: bold;
     font-size: 30px;
     color: white;
+}
+
+.container-contador-producto-text
+{
+    bottom: 25px;
 }
 
 .container-contador-pallet
@@ -39,7 +56,6 @@
     top: 55px;
     display: inline-grid;
     gap: 15px;
-    max-width: 420px;
     box-sizing: border-box;
 }
 

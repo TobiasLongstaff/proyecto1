@@ -179,7 +179,7 @@ const BtnControles = () =>
     return(
         <footer className="container-controles">
             <BtnVolver volver="/opciones-recepcion"/>
-            <button onClick={handelClick} className="btn-continuar btn-controles" type="button"><UilFileCheckAlt size="60" color="white"/></button>   
+            <button onClick={handelClick} className="btn-continuar btn-controles animacion-3" type="button"><UilFileCheckAlt size="60" color="white"/></button>   
         </footer> 
     )
 }

@@ -1,6 +1,7 @@
 <?php
 
     require 'conexion.php';
+    require 'woocommerce.php';
 
     // cerrar-recepcion
     if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -32,6 +33,27 @@
                 }
                 else
                 {
+                    $productos = $woocommerce->get('products');
+                    $prueba = 'S4100001A292231';
+                    
+                    $sql = "SELECT productos.codigo_articulo FROM pallets INNER JOIN cajas 
+                    ON cajas.id_pallet = pallets.id INNER JOIN productos ON productos.id_caja = 
+                    cajas.id WHERE id_recepcion = '$id_recepcion'";
+                    $resultado = mysqli_query($conexion, $sql);
+                    // while($filas = mysqli_fetch_array($resultado))
+                    if($filas = mysqli_fetch_array($resultado))
+                    {
+                        // echo $id = buscar_producto($filas['codigo_articulo'], $productos);
+                        $producto = buscar_producto($prueba, $productos);
+                        $id_producto = $producto['id'];
+                        $stock_actual = $producto['stock'];
+                        $data = [
+                            'stock_quantity' => $stock_actual + 1
+                        ];
+                        
+                        print_r($woocommerce->put('products/'.$id_producto, $data));
+                    }
+
                     $json[] = array(
                         'error' => '0',
                         'mensaje' => 'Recepcion Cerrada',

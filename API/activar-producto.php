@@ -42,11 +42,19 @@
                         }
                         else
                         {
+                            $sql_cant = "SELECT COUNT(id) AS cantidad_escaneados FROM productos WHERE activo = '1'";
+                            $resultado_cant = mysqli_query($conexion, $sql_cant);
+                            if($filas_cant = mysqli_fetch_array($resultado_cant))
+                            {
+                                $cantidad_escaneados = $filas_cant['cantidad_escaneados'];
+                            }
+                            
                             $json[] = array(
                                 'error' => '0',
                                 'descripcion' => $descripcion,
                                 'kilos' => $kilos,
-                                'vencimiento' => $vencimiento
+                                'vencimiento' => $vencimiento,
+                                'cantidad_escaneados' => $cantidad_escaneados
                             );
                         }
                     }

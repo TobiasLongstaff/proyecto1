@@ -65,12 +65,12 @@ const PrepararProductos = () =>
             <Nav titulo="Productos"/>
             <main className="container-body">
                 <div className="container-form-cajas">
-                    <label className="text-usuario">Usuario: {cookies.get('nombre')}</label>
-                    <label>Productos escaneados:</label>
+                    <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
+                    <label className="animacion-2">Productos escaneados:</label>
                     <Tabla/>
                     <footer className="container-controles">
                         <BtnVolver volver="/preparacion"/>
-                        <button type="button" className="btn-continuar btn-controles" onClick={()=>cargarProductos()}>
+                        <button type="button" className="btn-continuar btn-controles animacion-3" onClick={()=>cargarProductos()}>
                             <UilUploadAlt size="60" color="white"/>
                         </button> 
                     </footer> 

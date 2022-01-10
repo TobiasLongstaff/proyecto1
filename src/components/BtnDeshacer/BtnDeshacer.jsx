@@ -106,7 +106,7 @@ const BtnDeshacer = ({ pantalla, codigo }) =>
     }
 
     return (
-        <button className="btn-eliminar btn-general-login" type="button" onClick={handelClick}>
+        <button className="btn-eliminar btn-general-login animacion-2" type="button" onClick={handelClick}>
             <UilRedo size="20" color="white"/>Deshacer
         </button>
     )
