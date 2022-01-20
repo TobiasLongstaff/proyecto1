@@ -20,7 +20,7 @@
                 $numero_fila_car_veri = mysqli_num_rows($resultado_car_veri);
                 if($numero_fila_car_veri == '1')
                 {
-                    $sql_act_veri = "SELECT * FROM productos WHERE codigo = '$cod_producto' AND cargado = '0' AND activo = '0'";
+                    $sql_act_veri = "SELECT productos.*, stock.descripcion FROM productos INNER JOIN stock ON productos.id_stock = stock.id WHERE productos.codigo = '$cod_producto' AND cargado = '0' AND activo = '0'";
                     $resultado_act_veri = mysqli_query($conexion, $sql_act_veri);
                     $numero_fila_act_veri = mysqli_num_rows($resultado_act_veri);
                     if($numero_fila_act_veri == '1')
