@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Nav from '../components/Navegacion/Nav'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import '../styles/productos.css'
@@ -7,7 +7,6 @@ import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
-import { UilAngleRight } from '@iconscout/react-unicons'
 import SvgBox from '../img/box-solid.svg'
 
 const cookies = new Cookies()
@@ -16,15 +15,18 @@ const Productos = () =>
 {
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
+    let id_producto = cookies.get('id_producto')
+    let id_pedido = cookies.get('id_pedido')
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_producto: '' })
+    const [form, setForm] = useState({ cod_producto: '', id_producto: id_producto, id_pedido: cookies.get('id_pedido') })
     const [producto, setProducto] = useState(
-    { 
-        cod_producto: cookies.get('cod_producto'), 
-        descripcion: cookies.get('descripcion_producto'),
-        vencimiento: cookies.get('vencimiento_producto'),
-        peso: cookies.get('peso_producto'),
-        cantidad: cookies.get('cantidad_escaneados')
+    {
+        cod_producto: '', 
+        descripcion: '',
+        vencimiento: '',
+        peso: '',
+        cantidad: '',
+        cant_total: ''
     })
 
     useEffect(() =>
@@ -39,18 +41,40 @@ const Productos = () =>
             {
                 textboxCodigo.current.focus()
             }
+            obtenerProducto()
         }
-    })
+    },[])
 
     useEffect(() =>
     {
         if(form.cod_producto.length === 14 && textboxCodigo.current.value != '')
         {
-            obtenerProducto()
+            activarProducto()
         }
     }, [form])
 
     const obtenerProducto = async () =>
+    {
+        try
+        {
+            let res = await fetch(url+'obtener-producto.php?id_producto='+id_producto+'&id_pedido='+id_pedido)
+            let datos = await res.json()
+            setProducto(
+            {
+                ...producto,
+                descripcion: datos[0].descripcion,
+                cantidad: datos[0].cantidad_escaneados,
+                cant_total: datos[0].cant_total
+            })
+            console.log(datos)
+        }
+        catch(error)
+        {
+            console.error(error)
+        }
+    }
+
+    const activarProducto = async () =>
     {
         textboxCodigo.current.value = ''
         textboxCodigo.current.focus()
@@ -75,17 +99,10 @@ const Productos = () =>
                 {
                     ...producto,
                     cod_producto: form.cod_producto,
-                    descripcion: infoPost[0].descripcion,
                     vencimiento: infoPost[0].vencimiento,
                     peso: infoPost[0].kilos,
-                    cantidad: infoPost[0].cantidad_escaneados
+                    cantidad: infoPost[0].cantidad_escaneados,
                 })
-
-                cookies.set('cod_producto', form.cod_producto, {path: '/'})
-                cookies.set('descripcion_producto', infoPost[0].descripcion, {path: '/'})
-                cookies.set('vencimiento_producto', infoPost[0].vencimiento, {path: '/'})
-                cookies.set('peso_producto', infoPost[0].kilos, {path: '/'})
-                cookies.set('cantidad_escaneados', infoPost[0].cantidad_escaneados, {path: '/'})
 
                 Swal.fire(
                 {
@@ -127,29 +144,24 @@ const Productos = () =>
     if(idsession)
         return(
             <article>
-                <Nav titulo="Preparacion"/>
+                <Nav titulo="Producto"/>
                 <main className="container-body">
                     <div className="container-form-cajas">
-                        <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
                         <label className="animacion-1">Codigo Producto: {producto.cod_producto}</label>
-                        <label className="animacion-1">Descripcion: {producto.descripcion}</label>
+                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
+                        <p className="animacion-1">Descripcion: {producto.descripcion}</p>
                         <label className="animacion-1">Fecha Vencimiento: {producto.vencimiento}</label>
                         <label className="animacion-1">Peso: {producto.peso}</label>
+                        <label className="animacion-1">Cantidad Total: {producto.cant_total}</label>
                         <label className="animacion-1">Cantidad Escaneados: </label>
                         <div className="container-contador-caja animacion-1">
-                            <img src={SvgBox} alt="carne"/>
+                            <img src={SvgBox} alt="caja"/>
                             <div className="container-contador-producto-text">
                                 <label>{producto.cantidad}</label>
                             </div>
                         </div>
                         <footer className="container-controles">
-                            <BtnVolver volver="/menu"/>
-                            <Link to="/preparar-productos">
-                                <button type="button" className="btn-continuar btn-controles animacion-3">
-                                    <UilAngleRight size="80" color="white"/>
-                                </button> 
-                            </Link>
+                            <BtnVolver volver="/tabla-productos"/>
                         </footer> 
                     </div>
                 </main>

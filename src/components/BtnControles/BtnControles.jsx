@@ -123,13 +123,15 @@ const BtnControles = () =>
             let config =
             {
                 method: 'POST',
-                headers: 
+                headers:
                 {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formPallet)
             }
+            Swal.fire('Cerrando Recepcion');
+            Swal.showLoading()
             let res = await fetch(url+'cerrar-recepcion.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])

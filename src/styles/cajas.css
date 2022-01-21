@@ -27,7 +27,7 @@
 .container-contador, .container-contador-pallet, .container-contador-producto-text
 {
     position: absolute;
-    bottom: 85px;
+    bottom: 0px;
     font-weight: bold;
     font-size: 30px;
     color: white;
@@ -35,7 +35,7 @@
 
 .container-contador-producto-text
 {
-    bottom: 25px;
+    bottom: 0px;
 }
 
 .container-contador-pallet
@@ -45,7 +45,7 @@
 
 .container-form-cajas
 {
-    margin: 30px;
+    margin: 10px 30px;
     margin-bottom: 0;
     width: calc(100% - 60px);
     background-color: white;

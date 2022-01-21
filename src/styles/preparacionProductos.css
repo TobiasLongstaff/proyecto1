@@ -52,7 +52,7 @@ td
     width: 80px;
 }
 
-.btn-table-deshacer
+.btn-table-deshacer, .btn-table-seleccionar
 {
     background-color: var(--rojo);
     border-radius: 3px;
@@ -60,4 +60,9 @@ td
     width: 40px;
     padding-top: 5px;
     padding-bottom: 3px;
+}
+
+.btn-table-seleccionar
+{
+    background-color: var(--verde)
 }

@@ -153,7 +153,7 @@ const Cajas = () =>
                         <label className="animacion-1">Codigo Caja: {form.cod_caja}</label>
                         <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                         <label className="animacion-1">Codigo Pallet: {infoCaja.cod_pallet}</label>
-                        <label className="animacion-1">Descripcion: {infoCaja.descripcion}</label>
+                        <p className="animacion-1">Descripcion: {infoCaja.descripcion}</p>
                         <label className="animacion-1">Kilos: {infoCaja.kilos}</label>
                         <label className="animacion-1">Vencimiento: {infoCaja.vencimiento}</label>
                         <div className="container-cantidad animacion-1">

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { UilRedo } from '@iconscout/react-unicons'
+import { UilTrashAlt } from '@iconscout/react-unicons'
 import url from '../../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Loading from '../Loading/Loading'
@@ -114,7 +114,7 @@ const Tabla = () =>
                                     <td>{fila.descripcion}</td>
                                     <td className="td-btn">
                                         <button type="button" className="btn-table-deshacer" onClick={() =>handelClick(fila.id)}>
-                                            <UilRedo size="20" color="white"/>
+                                            <UilTrashAlt size="20" color="white"/>
                                         </button>
                                     </td>
                                 </tr>

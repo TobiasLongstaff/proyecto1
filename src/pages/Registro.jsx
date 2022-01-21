@@ -24,6 +24,8 @@ const Registro = () =>
                 },
                 body: JSON.stringify(form)
             }
+            Swal.fire('Creando Cuenta');
+            Swal.showLoading()
             let res = await fetch(url+'crear-cuenta.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])

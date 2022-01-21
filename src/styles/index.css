@@ -38,6 +38,14 @@ textarea
     animation: top 1s .3s both;
 }
 
+p
+{
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @keyframes top 
 {
     0% 

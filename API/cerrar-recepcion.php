@@ -33,8 +33,8 @@
                 }
                 else
                 {
-                    // $productos = $woocommerce->get('products');
-                    // $prueba = 'S4100001A292231';
+                    $productos = $woocommerce->get('products');
+                    $prueba = 'S4100001A292231';
                     
                     // $sql = "SELECT productos.codigo_articulo FROM pallets INNER JOIN cajas 
                     // ON cajas.id_pallet = pallets.id INNER JOIN productos ON productos.id_caja = 

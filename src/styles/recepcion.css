@@ -6,7 +6,7 @@
 
 .container-form
 {
-    margin: 30px;
+    margin: 10px 30px;
     background-color: white;
     position: absolute;
     width: calc(100% - 60px);
