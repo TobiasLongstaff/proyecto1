@@ -134,7 +134,7 @@ const Productos = () =>
 
     const handelChange = e =>
     {
-        setForm(
+        setForm( 
         {
             ...form,
             [e.target.name]: e.target.value
@@ -149,7 +149,7 @@ const Productos = () =>
                     <div className="container-form-cajas">
                         <label className="animacion-1">Codigo Producto: {producto.cod_producto}</label>
                         <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
-                        <p className="animacion-1">Descripcion: {producto.descripcion}</p>
+                        <p className="animacion-1">Desc: {producto.descripcion}</p>
                         <label className="animacion-1">Fecha Vencimiento: {producto.vencimiento}</label>
                         <label className="animacion-1">Peso: {producto.peso}</label>
                         <label className="animacion-1">Cantidad Total: {producto.cant_total}</label>
