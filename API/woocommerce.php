@@ -13,24 +13,21 @@
         ]
     );
 
-    function buscar_producto($sku_producto, $productos)
-    {
-        // $sku_producto = 'S4100003007';
-        foreach ($productos as $product)
-        {
-            if($product->sku == $sku_producto)
-            {
-                $datos_producto = array(
-                    'id' => $product->id,
-                    'paso' => $product->weight,
-                    'stock' => $product->stock_quantity
-                );
-                return $datos_producto;
-            }
-        }
-    }
-
-    // print_r($woocommerce->get('orders'));
-    // print_r($woocommerce->get('products'));
+    // function buscar_producto($sku_producto, $productos)
+    // {
+    //     // $sku_producto = 'S4100003007';
+    //     foreach ($productos as $product)
+    //     {
+    //         if($product->sku == $sku_producto)
+    //         {
+    //             $datos_producto = array(
+    //                 'id' => $product->id,
+    //                 'paso' => $product->weight,
+    //                 'stock' => $product->stock_quantity
+    //             );
+    //             return $datos_producto;
+    //         }
+    //     }
+    // }
 
 ?>

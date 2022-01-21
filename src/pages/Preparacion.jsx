@@ -70,7 +70,7 @@ const Preparacion = () =>
                                         {data.map((fila) =>
                                         (
                                             <tr key={fila.id}>
-                                                <td>{fila.id_pedido}</td>
+                                                <td>{fila.num_pedido}</td>
                                                 <td className="td-btn">
                                                     <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id)}>
                                                         <UilAngleRight size="20" color="white"/>

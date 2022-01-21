@@ -12,6 +12,7 @@ const Tabla = () =>
     const [ loading, setLoading ] = useState(true)
     const [data, setData] = useState([])
     const cantidad_escaneados = cookies.get('cantidad_escaneados')
+    let id_pedido = cookies.get('id_pedido')
 
     useEffect(() =>
     {
@@ -42,7 +43,7 @@ const Tabla = () =>
     {
         try
         {
-            let res = await fetch(url+'obtener-productos-activos.php')
+            let res = await fetch(url+'obtener-productos-activos.php?id_pedido='+id_pedido)
             let datos = await res.json()
             if(typeof datos !== 'undefined')
             {
