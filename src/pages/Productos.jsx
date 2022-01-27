@@ -98,7 +98,7 @@ const Productos = () =>
                 setProducto(
                 {
                     ...producto,
-                    cod_producto: form.cod_producto,
+                    cod_producto: infoPost[0].cod_producto,
                     vencimiento: infoPost[0].vencimiento,
                     peso: infoPost[0].kilos,
                     cantidad: infoPost[0].cantidad_escaneados,

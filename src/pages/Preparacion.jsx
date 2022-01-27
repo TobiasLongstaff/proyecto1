@@ -15,10 +15,18 @@ const Preparacion = () =>
 
     const [data, setData] = useState([])
     const [ loading, setLoading ] = useState(true)
+    const idsession = cookies.get('IdSession')
 
     useEffect(() =>
     {
-        fetchResource()
+        if(idsession == null)
+        {
+            navigate('/')
+        }
+        else
+        {
+            fetchResource()
+        }
     },[])
 
     const fetchResource = async () => 
@@ -58,8 +66,7 @@ const Preparacion = () =>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th className="td-btn">Controles</th>
+                                            <th className="th-desc">ID</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -70,10 +77,9 @@ const Preparacion = () =>
                                         {data.map((fila) =>
                                         (
                                             <tr key={fila.id}>
-                                                <td>{fila.num_pedido}</td>
-                                                <td className="td-btn">
+                                                <td>
                                                     <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id)}>
-                                                        <UilAngleRight size="20" color="white"/>
+                                                        {fila.num_pedido}
                                                     </button>
                                                 </td>
                                             </tr>

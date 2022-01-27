@@ -11,6 +11,7 @@ import Pallets from '../pages/Pallets'
 import PrepararProductos from '../pages/PrepararProductos'
 import Preparacion from '../pages/Preparacion'
 import TablaProductos from '../pages/TablaProductos'
+import Eliminar from '../pages/Eliminar'
 
 function Rutas() 
 {
@@ -28,6 +29,7 @@ function Rutas()
                 <Route exact path="preparar-productos" element={<PrepararProductos/>} />
                 <Route exact path="preparacion" element={<Preparacion/>} />
                 <Route exact path="tabla-productos" element={<TablaProductos/>} />
+                <Route exact path="eliminar" element={<Eliminar/>} />
             </Routes>
         </BrowserRouter>
     )

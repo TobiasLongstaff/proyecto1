@@ -9,7 +9,7 @@
 
 .btn-controles
 {
-    width: 105px;
+    width: 95px;
     height: 90px;
     box-shadow: 0px 0px 30px #00000033;
     color: var(--negro);
@@ -22,7 +22,7 @@
     background-color: white;
 }
 
-.btn-continuar
+.btn-continuar, .btn-eliminar
 {
     font-family: 'Roboto', sans-serif;
     color: white;
@@ -30,4 +30,9 @@
     text-transform: uppercase;
     font-weight: bold;
     background-color: var(--principal); 
+}
+
+.btn-eliminar
+{
+    background-color: var(--rojo);
 }

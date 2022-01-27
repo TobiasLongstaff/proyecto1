@@ -5,24 +5,37 @@
     if($_SERVER['REQUEST_METHOD'] == 'PUT')
     {
         header("HTTP/1.1 200 OK");
-        if(isset($_GET['id']))
+        if(isset($_GET['codigo']))
         {
-            $id = $_GET['id'];
+            $codigo = $_GET['codigo'];
 
-            $sql="UPDATE productos SET activo = '0' WHERE id = '$id'";
-            $resultado = mysqli_query($conexion, $sql);
-            if(!$resultado)
+            $sql_cod_veri = "SELECT id FROM productos WHERE activo = 1 AND codigo = $codigo";
+            $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
+            $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
+            if($numero_fila_cod_veri == '1')
             {
-                $json[] = array(
-                    'error' => '1',
-                    'mensaje' => 'Error inesperado volver a intentar mas tarde',
-                );
+                $sql="UPDATE productos SET activo = 0 WHERE codigo = $codigo";
+                $resultado = mysqli_query($conexion, $sql);
+                if(!$resultado)
+                {
+                    $json[] = array(
+                        'error' => '1',
+                        'mensaje' => 'Error inesperado volver a intentar mas tarde',
+                    );
+                }
+                else
+                {
+                    $json[] = array(
+                        'error' => '0',
+                        'mensaje' => 'El producto escaneado ya no se encuentra cargado',
+                    );
+                }
             }
             else
             {
                 $json[] = array(
-                    'error' => '0',
-                    'mensaje' => 'El producto seleccionado ya no se encuentra cargado',
+                    'error' => '1',
+                    'mensaje' => 'El producto escaneado no se encuentra cargado en el pedido',
                 );
             }
         }

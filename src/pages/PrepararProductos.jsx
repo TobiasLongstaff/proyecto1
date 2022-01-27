@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Nav from '../components/Navegacion/Nav'
-import { UilParcel } from '@iconscout/react-unicons'
-import { useNavigate } from 'react-router-dom'
+import { UilParcel, UilTrashAlt } from '@iconscout/react-unicons'
+import { Link, useNavigate } from 'react-router-dom'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import '../styles/preparacionProductos.css'
 import Cookies from 'universal-cookie'
@@ -29,6 +29,7 @@ const PrepararProductos = () =>
             navigate('/')
         }
     },[])
+
 
     const cargarProductos = async () =>
     {
@@ -148,11 +149,16 @@ const PrepararProductos = () =>
             <Nav titulo="Productos Listos"/>
             <main className="container-body">
                 <div className="container-form-cajas">
-                    <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
+                    <label className="text-usuario animacion-1">Cantidad total escaneados: {cookies.set('cantidad_productos_activos')}</label>
                     <label className="animacion-2">Productos escaneados:</label>
                     <Tabla/>
                     <footer className="container-controles">
-                        <BtnVolver volver="/tabla-productos"/>
+                        <BtnVolver volver="/tabla-productos" />
+                        <Link to="/eliminar">
+                            <button type="button" className="btn-eliminar btn-controles animacion-3">
+                                <UilTrashAlt size="60" color="white"/>
+                            </button>
+                        </Link>
                         <button type="button" className="btn-continuar btn-controles animacion-3" onClick={()=>cargarProductos()}>
                             <UilParcel size="60" color="white"/>
                         </button> 

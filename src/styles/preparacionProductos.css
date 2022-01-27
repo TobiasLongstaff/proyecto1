@@ -38,12 +38,17 @@ tr
     border-bottom: solid 1px var(--principal);
 }
 
-td
+.text-btn-tabla, .text-tabla-desc
 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 70px;
+    max-width: 210px;
+}
+
+.text-tabla-desc
+{
+    padding: 10px;
 }
 
 .td-btn
@@ -52,7 +57,7 @@ td
     width: 80px;
 }
 
-.btn-table-deshacer, .btn-table-seleccionar
+.btn-table-deshacer
 {
     background-color: var(--rojo);
     border-radius: 3px;
@@ -64,5 +69,24 @@ td
 
 .btn-table-seleccionar
 {
-    background-color: var(--verde)
+    background-color: transparent;
+    font-size: 15px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+}
+
+.td-cant
+{
+    width: 20px;
+}
+
+.td-desc
+{
+    max-width: 216px;
+}
+
+.th-desc
+{
+    text-align: center;
 }

@@ -15,10 +15,18 @@ const TablaProductos = () =>
     const [data, setData] = useState([])
     const [ loading, setLoading ] = useState(true)
     let id_pedido = cookies.get('id_pedido')
+    const idsession = cookies.get('IdSession')
 
     useEffect(() => 
     {
-        fetchResource()
+        if(idsession == null)
+        {
+            navigate('/')
+        }
+        else
+        {
+            fetchResource()
+        }
     },[])
 
     const fetchResource = async () => 
@@ -58,9 +66,8 @@ const TablaProductos = () =>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Cant</th>
-                                            <th>Descrip</th>
-                                            <th className="td-btn">Controles</th>
+                                            <th className="td-cant">Cant.</th>
+                                            <th className="th-desc">Descripcion</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -71,11 +78,10 @@ const TablaProductos = () =>
                                         {data.map((fila) =>
                                         (
                                             <tr key={fila.id}>
-                                                <td>{fila.cantidad}</td>
-                                                <td>{fila.descripcion}</td>
-                                                <td className="td-btn">
+                                                <td className="td-cant">{fila.cantidad}</td>
+                                                <td className="td-desc">
                                                     <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id_producto)}>
-                                                        <UilAngleRight size="20" color="white"/>
+                                                        <p className="text-btn-tabla">{fila.descripcion}</p>
                                                     </button>
                                                 </td>
                                             </tr>
