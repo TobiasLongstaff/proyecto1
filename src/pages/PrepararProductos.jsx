@@ -8,6 +8,8 @@ import Cookies from 'universal-cookie'
 import Tabla from '../components/Tabla/Tabla'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
+import { useReactToPrint } from 'react-to-print';
+import Etiqueta from '../components/Etiqueta/Etiqueta'
 
 const cookies = new Cookies()
 

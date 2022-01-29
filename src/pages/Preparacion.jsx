@@ -66,7 +66,8 @@ const Preparacion = () =>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th className="th-desc">ID</th>
+                                            <th className="td-cant">#</th>
+                                            <th className="th-desc">Cliente</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -77,9 +78,10 @@ const Preparacion = () =>
                                         {data.map((fila) =>
                                         (
                                             <tr key={fila.id}>
-                                                <td>
+                                                <td className="td-cant">{fila.num_pedido}</td>
+                                                <td className="td-desc">
                                                     <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id)}>
-                                                        {fila.num_pedido}
+                                                        <p className="text-btn-tabla">{fila.cliente}</p>
                                                     </button>
                                                 </td>
                                             </tr>

@@ -14,6 +14,10 @@
             $id_pedido = $item['id'];
             $n_pedido = $item['number'];
             $estado = $item['status'];
+            $nombre = $item['billing']['first_name'];
+            $apellido = $item['billing']['last_name'];
+            $direccion = $item['billing']['address_1'];
+            $ciudad = $item['billing']['city'];
             
             if($estado == 'processing')
             {
@@ -22,7 +26,7 @@
                 $numero_fila_veri_woo = mysqli_num_rows($resultado_veri_woo);
                 if($numero_fila_veri_woo != '1')
                 {
-                    $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, preparado) VALUE ('prueba', '$id_pedido', '$n_pedido', '0')";
+                    $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, direccion, ciudad, preparado) VALUE ('$apellido $nombre', '$id_pedido', '$n_pedido', '$direccion', '$ciudad', '0')";
                     $resultado_woo = mysqli_query($conexion, $sql_woo);
 
                     $sql_veri_woo_id="SELECT id FROM pedidos WHERE id_pedido = '$id_pedido'";
@@ -55,29 +59,6 @@
                                 echo 'error1';
                             }
                         }
-
-                        // $sku = explode("-", $pro['sku']);
-                        // foreach($sku as  $s)
-                        // {
-                        //     $codigo_v_productos = $s;
-
-                        //     $sql_stock_v="SELECT id FROM stock WHERE codigo = '$codigo'";
-                        //     $resultado_stock_v = mysqli_query($conexion, $sql_stock_v);
-                        //     $numero_fila_stock_v = mysqli_num_rows($resultado_stock_v);
-                        //     if($numero_fila_stock_v == '1')
-                        //     {
-                        //         $filas_stock_v = mysqli_fetch_array($resultado_stock_v);
-                        //         $id_producto_v = $filas_stock_v['id'];
-                        //         $cantidad_producto_v = 1;
-
-                        //         $sql_woo_pro = "INSERT INTO productos_pedidos (id_producto, id_pedido, cantidad) VALUE ('$id_producto_v', '$id_pedido_tabla', '$cantidad_producto_v')";
-                        //         $resultado_woo_pro = mysqli_query($conexion, $sql_woo_pro);
-                        //         if(!$resultado_woo_pro)
-                        //         {
-                        //             echo 'error2';
-                        //         }     
-                        //     }                       
-                        // }
                     }
                 }
             }
@@ -103,7 +84,7 @@
             $json[] = array(
                 'id' => $filas['id'],
                 'cliente' => $filas['cliente'],
-                'num_pedido' => $filas['numero']
+                'num_pedido' => $filas['numero'],
             );
         }
         $jsonstring = json_encode($json);

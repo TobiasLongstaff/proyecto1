@@ -17,7 +17,7 @@ const TablaProductos = () =>
     let id_pedido = cookies.get('id_pedido')
     const idsession = cookies.get('IdSession')
 
-    useEffect(() => 
+    useEffect(() =>
     {
         if(idsession == null)
         {

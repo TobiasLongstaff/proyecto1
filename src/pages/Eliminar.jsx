@@ -24,34 +24,13 @@ const Eliminar = () =>
         }
         else
         {
+            textboxCodigo.current.focus()
             if(form.cod_producto.length === 14 && textboxCodigo.current.value.length === 14)
-            {
-                preguntaDeshacerProducto()
-            }
-        }
-    }, [ form ])
-
-    const preguntaDeshacerProducto = () =>
-    {
-        Swal.fire(
-        {
-            title: '¿Deshacer este producto? ',
-            text: "Si presionas continuar el producto que escaneaste volverá a su estado inicial por lo tanto ya no se encontrará cargado",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#00C3E3',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Continuar'
-        }).then((result) => 
-        {
-            if(result.isConfirmed) 
             {
                 deshacerProducto()
             }
-        })
-        textboxCodigo.current.value = ''
-        textboxCodigo.current.focus()
-    }
+        }
+    }, [ form ])
 
     const deshacerProducto = async () =>
     {
@@ -90,6 +69,8 @@ const Eliminar = () =>
         {
             console.error(error)
         }
+        textboxCodigo.current.value = ''
+        textboxCodigo.current.focus()
     }
 
     const handelChange = e =>
@@ -108,13 +89,6 @@ const Eliminar = () =>
                 <form className="container-form-eliminar">
                     <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
                     <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo"/>
-                    <label className="animacion-2">Cantidad de productos:</label>
-                    <div className="container-contador-caja animacion-2">
-                        <img src={SvgBox} alt="caja"/>
-                        <div className="container-contador">
-                            <label>0</label>
-                        </div>
-                    </div>
                     <footer className="container-controles">
                         <BtnVolver volver="/preparar-productos"/>
                     </footer>

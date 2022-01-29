@@ -62,6 +62,7 @@ const Productos = () =>
             setProducto(
             {
                 ...producto,
+                cod_producto: datos[0].cod_producto,
                 descripcion: datos[0].descripcion,
                 cantidad: datos[0].cantidad_escaneados,
                 cant_total: datos[0].cant_total
@@ -98,7 +99,6 @@ const Productos = () =>
                 setProducto(
                 {
                     ...producto,
-                    cod_producto: infoPost[0].cod_producto,
                     vencimiento: infoPost[0].vencimiento,
                     peso: infoPost[0].kilos,
                     cantidad: infoPost[0].cantidad_escaneados,

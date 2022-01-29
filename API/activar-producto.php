@@ -87,8 +87,7 @@
                                         'error' => '0',
                                         'kilos' => $kilos,
                                         'vencimiento' => $vencimiento,
-                                        'cantidad_escaneados' => $cantidad_escaneados,
-                                        'cod_producto' => $codigo
+                                        'cantidad_escaneados' => $cantidad_escaneados
                                     );
                                 }
                             }

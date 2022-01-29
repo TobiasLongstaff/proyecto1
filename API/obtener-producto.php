@@ -24,17 +24,21 @@
                     $cantidad_total = $filas_cant_total['cantidad'];
                 }
 
-                $sql_cant = "SELECT COUNT(id) AS cantidad_escaneados FROM productos WHERE activo = '1' AND id_stock = '$id_producto'";
+                $sql_cant = "SELECT COUNT(productos.id) AS cantidad_escaneados, stock.codigo FROM productos 
+                INNER JOIN stock ON stock.id = productos.id_stock
+                WHERE productos.activo = '1' AND productos.id_stock = $id_producto";
                 $resultado_cant = mysqli_query($conexion, $sql_cant);
                 if($filas_cant = mysqli_fetch_array($resultado_cant))
                 {
                     $cantidad_escaneados = $filas_cant['cantidad_escaneados'];
+                    $codigo = $filas_cant['codigo'];
 
                     $json[] = array(
                         'error' => '0',
                         'descripcion' => $descripcion,
                         'cantidad_escaneados' => $cantidad_escaneados,
-                        'cant_total' => $cantidad_total
+                        'cant_total' => $cantidad_total,
+                        'cod_producto' => $codigo
                     );
                 }
             }
