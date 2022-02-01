@@ -6,7 +6,7 @@
     {
         header("HTTP/1.1 200 OK");
 
-        $datos = $woocommerce->get('orders'); 
+        $datos = $woocommerce->get('orders?per_page=40'); 
         $json = json_decode(json_encode($datos), true);
         
         foreach($json as $item)

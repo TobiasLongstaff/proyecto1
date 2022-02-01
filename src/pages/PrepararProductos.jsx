@@ -8,8 +8,6 @@ import Cookies from 'universal-cookie'
 import Tabla from '../components/Tabla/Tabla'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
-import { useReactToPrint } from 'react-to-print';
-import Etiqueta from '../components/Etiqueta/Etiqueta'
 
 const cookies = new Cookies()
 
@@ -154,6 +152,7 @@ const PrepararProductos = () =>
                     <label className="text-usuario animacion-1">Cantidad total escaneados: {cookies.set('cantidad_productos_activos')}</label>
                     <label className="animacion-2">Productos escaneados:</label>
                     <Tabla/>
+                    {/* <a href="./pdf" target="_blank">PDF</a> */}
                     <footer className="container-controles">
                         <BtnVolver volver="/tabla-productos" />
                         <Link to="/eliminar">
