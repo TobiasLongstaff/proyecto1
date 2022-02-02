@@ -8,7 +8,10 @@ import Cookies from 'universal-cookie'
 import Tabla from '../components/Tabla/Tabla'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
+import pdf from "@react-pdf/renderer"
+import PdfEtiqueta from '../pages/PdfEtiqueta'
 
+const { PDFDownloadLink } = pdf
 const cookies = new Cookies()
 
 const PrepararProductos = () =>
@@ -152,7 +155,12 @@ const PrepararProductos = () =>
                     <label className="text-usuario animacion-1">Cantidad total escaneados: {cookies.set('cantidad_productos_activos')}</label>
                     <label className="animacion-2">Productos escaneados:</label>
                     <Tabla/>
-                    {/* <a href="./pdf" target="_blank">PDF</a> */}
+                    {/* <PDFDownloadLink
+                        document={<PdfEtiqueta />}
+                        fileName="poema.pdf"
+                    >
+                        <button variant="info">Descargar PDF</button>
+                    </PDFDownloadLink> */}
                     <footer className="container-controles">
                         <BtnVolver volver="/tabla-productos" />
                         <Link to="/eliminar">

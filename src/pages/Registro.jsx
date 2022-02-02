@@ -24,7 +24,7 @@ const Registro = () =>
                 },
                 body: JSON.stringify(form)
             }
-            Swal.fire('Creando Cuenta');
+            Swal.fire('Creando Cuenta')
             Swal.showLoading()
             let res = await fetch(url+'crear-cuenta.php', config)
             let infoPost = await res.json()
@@ -40,6 +40,7 @@ const Registro = () =>
             }
             else
             {
+                Swal.close()
                 setError(infoPost[0].mensaje)
             }
         }

@@ -65,6 +65,7 @@ tr
     width: 40px;
     padding-top: 5px;
     padding-bottom: 3px;
+    cursor: pointer;
 }
 
 .btn-table-seleccionar

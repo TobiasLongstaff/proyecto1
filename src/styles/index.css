@@ -46,6 +46,42 @@ p
     text-overflow: ellipsis;
 }
 
+.select-general
+{
+    background-color: var(--principal);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 40px;
+    width: 220px;
+    outline: none;
+    font-size: 17px;
+    font-family: 'Roboto', sans-serif;
+    padding: 0 10px;
+}
+
+.form-aprobar-usuario
+{
+    display: inline-grid;
+    gap: 25px;
+    width: 400px;
+}
+
+.select-aprobar-usuario
+{
+    margin-bottom: 20px;
+}
+
+.container-aprobar-usuario
+{
+    background-color: var(--fondo);
+    height: calc(100vh - 70px);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @keyframes top 
 {
     0% 

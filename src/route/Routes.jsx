@@ -12,7 +12,9 @@ import PrepararProductos from '../pages/PrepararProductos'
 import Preparacion from '../pages/Preparacion'
 import TablaProductos from '../pages/TablaProductos'
 import Eliminar from '../pages/Eliminar'
-import Etiqueta from '../pages/Etiqueta'
+import AprobarUsuarios from '../pages/AprobarUsuarios'
+import Pedidos from '../pages/Pedidos'
+import Preparados from '../pages/Preparados'
 
 function Rutas() 
 {
@@ -31,7 +33,9 @@ function Rutas()
                 <Route exact path="preparacion" element={<Preparacion/>} />
                 <Route exact path="tabla-productos" element={<TablaProductos/>} />
                 <Route exact path="eliminar" element={<Eliminar/>} />
-                <Route exact path="pdf" element={<Etiqueta/>} />
+                <Route exact path="pedidos" element={<Pedidos/>} />
+                <Route exact path="preparados" element={<Preparados/>} />
+                <Route exact path="aprobar-usuarios/:mail/:hash/:nombre" element={<AprobarUsuarios/>} />
             </Routes>
         </BrowserRouter>
     )

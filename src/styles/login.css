@@ -22,6 +22,11 @@
     font-size: 18px;
 }
 
+.header-registro
+{
+    height: auto;
+}
+
 .container-btn
 {
     margin-top: 20px;
@@ -73,12 +78,14 @@
     font-weight: bold;
     font-size: 15px;
     height: 45px;
+    cursor: pointer;
 }
 
 .btn-login, .btn-registro
 {
     color: white;
     background-color: var(--principal);
+    cursor: pointer;
 }
 
 .btn-eliminar
@@ -89,6 +96,7 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+    cursor: pointer;
 }
 
 .btn-general-cargar
@@ -100,4 +108,5 @@
 {
     color: var(--negro);
     box-shadow: 0px 0px 30px #00000033;
+    cursor: pointer;
 }
