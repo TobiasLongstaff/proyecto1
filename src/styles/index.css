@@ -82,6 +82,32 @@ p
     align-items: center;
 }
 
+.container-page-web
+{
+    background-color: var(--fondo);
+    height: calc(100vh - 70px);
+    box-sizing: border-box;
+    padding: 4%;
+}
+
+.btn-tabla-productos, .btn-tabla-imprimir
+{
+    background-color: var(--principal);
+    border: none;
+    border-radius: 5px;
+    width: 40px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-tabla-imprimir
+{
+    background-color: var(--rojo);
+}
+
 @keyframes top 
 {
     0% 

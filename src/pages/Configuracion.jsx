@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import NavDektop from '../components/NavegacionDesktop/NavDesktop'
-import { useNavigate, Link } from 'react-router-dom'
+import React,{ useEffect, useState } from 'react'
+import NavDesktop from '../components/NavegacionDesktop/NavDesktop'
+import { useNavigate } from "react-router-dom";
 import url from '../services/Settings'
-import { UilPackage } from '@iconscout/react-unicons'
 import Cookies from 'universal-cookie'
+import { UilExclamationCircle } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
-const Pedidos = () =>
+const Configuracion = () =>
 {
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
+
     const [data, setData] = useState([])
+    let navigate = useNavigate()
     const [ loading, setLoading ] = useState(true)
+    const idsession = cookies.get('IdSession')
+    const key = 'c52f1bd66cc19d05628bd8bf27af3ad6'
 
     useEffect(() =>
     {
@@ -30,7 +32,7 @@ const Pedidos = () =>
     {
         try
         {
-            let res = await fetch(url+'obtener-pedidos.php')
+            let res = await fetch(url+'obtener-usuarios.php?key='+key)
             let datos = await res.json()
             if(typeof datos !== 'undefined')
             {
@@ -46,17 +48,17 @@ const Pedidos = () =>
 
     return(
         <article>
-            <NavDektop titulo="Pedidos"/>
+            <NavDesktop titulo="Configuracion"/>
             <main className="container-page-web">
                 <div className="tbl-header-web">
                     <table>
                         <thead>
                             <tr className="tr-head-web">
-                                <th className="th-cant-web">#</th>
-                                <th>Cliente</th>
-                                <th>Direccion</th>
-                                <th>Ciudad</th>
-                                <th className="th-controles">Controles</th>
+                                <th className="th-cod">#</th>
+                                <th>Nombre y Apellido</th>
+                                <th>E-Mail</th>
+                                <th>Permisos</th>
+                                <th className="th-cont">Controles</th>
                             </tr>
                         </thead>
                     </table>
@@ -72,16 +74,13 @@ const Pedidos = () =>
                                     data.map((fila) =>
                                     (
                                         <tr key={fila.id} className="tr-web">
-                                            <td className="td-cant-web">{fila.num_pedido}</td>
-                                            <td className="text-tabla-desc"><p>{fila.cliente}</p></td>
-                                            <td className="text-tabla-desc"><p>{fila.direccion}</p></td>
-                                            <td>{fila.ciudad}</td>
-                                            <td className="td-controles">
-                                                <Link to={'/productos-pedidos/'+fila.id}>
-                                                    <button className="btn-tabla-productos">
-                                                        <UilPackage size="25" color="white"/>
-                                                    </button>
-                                                </Link>
+                                            <td className="td-cod">{fila.id}</td>
+                                            <td><p>{fila.nombre}</p></td>
+                                            <td><p>{fila.mail}</p></td>
+                                            <td>{fila.permisos}</td>
+                                            <td className="td-cont">
+                                                <button className="btn-tabla-productos">
+                                                </button>
                                             </td>
                                         </tr>
                                     ))
@@ -95,4 +94,4 @@ const Pedidos = () =>
     )
 }
 
-export default Pedidos
+export default Configuracion

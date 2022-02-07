@@ -80,7 +80,7 @@
                     'quantity' => '2.50'
                 ];
                 
-                print_r($woocommerce->put('orders/'.$id_pedido, $data));
+                // print_r($woocommerce->put('orders/'.$id_pedido, $data));
 
                 //STOCK
                 // $productos = $woocommerce->get('products');

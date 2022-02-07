@@ -15,6 +15,9 @@ import Eliminar from '../pages/Eliminar'
 import AprobarUsuarios from '../pages/AprobarUsuarios'
 import Pedidos from '../pages/Pedidos'
 import Preparados from '../pages/Preparados'
+import ProductosPedidos from '../pages/ProductosPedidos'
+import ProductosPreparados from '../pages/ProductosPreparados'
+import Configuracion from '../pages/Configuracion'
 
 function Rutas() 
 {
@@ -36,6 +39,9 @@ function Rutas()
                 <Route exact path="pedidos" element={<Pedidos/>} />
                 <Route exact path="preparados" element={<Preparados/>} />
                 <Route exact path="aprobar-usuarios/:mail/:hash/:nombre" element={<AprobarUsuarios/>} />
+                <Route exact path="productos-pedidos/:id_pedido" element={<ProductosPedidos/>} />
+                <Route exact path="productos-preparados/:id_pedido" element={<ProductosPreparados/>} />
+                <Route exact path="configuracion" element={<Configuracion/>} />
             </Routes>
         </BrowserRouter>
     )

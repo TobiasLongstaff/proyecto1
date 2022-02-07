@@ -6,7 +6,7 @@
     {
         header("HTTP/1.1 200 OK");
 
-        $datos = $woocommerce->get('orders?per_page=40'); 
+        $datos = $woocommerce->get('orders?per_page=50'); 
         $json = json_decode(json_encode($datos), true);
         
         foreach($json as $item)
@@ -19,7 +19,7 @@
             $direccion = $item['billing']['address_1'];
             $ciudad = $item['billing']['city'];
             
-            if($estado == 'processing')
+            if($estado == 'completed')
             {
                 $sql_veri_woo="SELECT id FROM pedidos WHERE id_pedido = '$id_pedido'";
                 $resultado_veri_woo = mysqli_query($conexion, $sql_veri_woo);
@@ -85,6 +85,8 @@
                 'id' => $filas['id'],
                 'cliente' => $filas['cliente'],
                 'num_pedido' => $filas['numero'],
+                'direccion' => $filas['direccion'],
+                'ciudad' => $filas['ciudad'],
             );
         }
         $jsonstring = json_encode($json);
