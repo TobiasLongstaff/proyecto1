@@ -82,6 +82,11 @@ tr
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+.text-btn-tabla-productos
+{
     max-width: 210px;
 }
 
@@ -111,14 +116,14 @@ tr
 {
     background-color: transparent;
     font-size: 15px;
-    padding: 10px;
+    padding: 10px 0;
     width: 100%;
     border: none;
 }
 
 .td-cant
 {
-    width: 20px;
+    width: 30px;
 }
 
 .td-desc
@@ -126,9 +131,15 @@ tr
     max-width: 216px;
 }
 
-.th-desc
+.th-desc, .th-id
 {
     text-align: center;
+}
+
+.th-id, .th-num
+{
+    width: 60px;
+    box-sizing: border-box;
 }
 
 .th-cod, .td-cod
@@ -162,4 +173,10 @@ tr
 {
     width: 50px;
     text-align: center
+}
+
+.td-id
+{
+    width: 60px;
+    box-sizing: border-box;
 }

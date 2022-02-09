@@ -1,0 +1,27 @@
+<?php
+
+    require 'conexion.php';
+
+    if($_SERVER['REQUEST_METHOD'] == 'GET')
+    {
+        header("HTTP/1.1 200 OK");
+
+        if(isset($_GET['key']) && $_GET['key'] == 'c52f1bd66cc19d05628bd8bf27af3ad6')
+        {
+            $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios";
+            $resultado = mysqli_query($conexion, $sql);
+            while($filas = mysqli_fetch_array($resultado))
+            {
+                $json[] = array(
+                    'error' => '0',
+                    'mail' => $filas['mail'],
+                    'nombre' => $filas['nombre_apellido'],
+                    'tipo' => $filas['tipo'],
+                    'id' => $filas['id']
+                );
+            }
+            $jsonstring = json_encode($json);
+            echo $jsonstring;
+        }
+    }
+?>

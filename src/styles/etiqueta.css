@@ -1,0 +1,23 @@
+.img-etiqueta
+{
+    width: 100px;
+    margin-top: 20px
+}
+
+.container-etiqueta
+{
+    display: flex;
+    justify-content: center;
+}
+
+.titulo-imagen
+{
+    display: flex;
+    justify-content: center;
+}
+
+.text-titulo-etiqueta
+{
+    font-size: 30px;
+    text-align: center;
+}

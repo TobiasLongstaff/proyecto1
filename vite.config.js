@@ -6,5 +6,8 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh(), shimReactPdf()],
+  build: {
+    chunkSizeWarningLimit: 2600,
+  },
   // plugins: [react()]
 })

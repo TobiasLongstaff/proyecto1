@@ -37,7 +37,7 @@ const Productos = () =>
         }
         else
         {
-            if(textboxCodigo.current == '')
+            if(textboxCodigo.current.value == '')
             {
                 textboxCodigo.current.focus()
             }
@@ -50,6 +50,14 @@ const Productos = () =>
         if(form.cod_producto.length === 14 && textboxCodigo.current.value != '')
         {
             activarProducto()
+        }
+        else
+        {
+            if(form.cod_producto.length > 14 || form.cod_producto.length < 14 && textboxCodigo.current.value != '')
+            {
+                textboxCodigo.current.value = ''
+                textboxCodigo.current.focus()
+            }
         }
     }, [form])
 

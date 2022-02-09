@@ -16,7 +16,8 @@
                 'cliente' => $filas['cliente'],
                 'num_pedido' => $filas['numero'],
                 'direccion' => $filas['direccion'],
-                'ciudad' => $filas['ciudad'],
+                'id_pedido' => $filas['id_pedido'],
+                'ciudad' => $filas['ciudad']
             );
         }
         $jsonstring = json_encode($json);

@@ -81,7 +81,7 @@ const TablaProductos = () =>
                                                 <td className="td-cant">{fila.cantidad}</td>
                                                 <td className="td-desc">
                                                     <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id_producto)}>
-                                                        <p className="text-btn-tabla">{fila.descripcion}</p>
+                                                        <p className="text-btn-tabla-productos">{fila.descripcion}</p>
                                                     </button>
                                                 </td>
                                             </tr>

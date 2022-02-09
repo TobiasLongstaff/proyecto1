@@ -53,6 +53,7 @@ const Pedidos = () =>
                         <thead>
                             <tr className="tr-head-web">
                                 <th className="th-cant-web">#</th>
+                                <th className="th-cant-web">ID</th>
                                 <th>Cliente</th>
                                 <th>Direccion</th>
                                 <th>Ciudad</th>
@@ -73,6 +74,7 @@ const Pedidos = () =>
                                     (
                                         <tr key={fila.id} className="tr-web">
                                             <td className="td-cant-web">{fila.num_pedido}</td>
+                                            <td className="td-cant-web">{fila.id_pedido}</td>
                                             <td className="text-tabla-desc"><p>{fila.cliente}</p></td>
                                             <td className="text-tabla-desc"><p>{fila.direccion}</p></td>
                                             <td>{fila.ciudad}</td>

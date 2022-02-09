@@ -4,6 +4,9 @@ import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
 import { UilExclamationCircle, UilPackage, UilPrint } from '@iconscout/react-unicons'
+import PdfEtiqueta from './PdfEtiqueta'
+import pdf from "@react-pdf/renderer";
+const { PDFViewer } = pdf;
 
 const cookies = new Cookies()
 
@@ -44,6 +47,17 @@ const Preparados = () =>
         }
     }
 
+    const imprimir = (id_pedido) =>
+    {
+        var ventana = window.open('http://localhost:3000/etiqueta/'+id_pedido, 'PRINT', 'height=600,width=1000');;
+        ventana.document.close();
+        ventana.focus();
+        ventana.onload = setTimeout(function() 
+        {
+            ventana.print();
+        }, 2000)
+    }
+
     return(
         <article>
             <NavDektop titulo="Preparados"/>
@@ -53,6 +67,7 @@ const Preparados = () =>
                         <thead>
                             <tr className="tr-head-web">
                                 <th className="th-cant-web">#</th>
+                                <th className="th-cant-web">ID</th>
                                 <th>Cliente</th>
                                 <th>Direccion</th>
                                 <th>Ciudad</th>
@@ -74,6 +89,7 @@ const Preparados = () =>
                                     (
                                         <tr key={fila.id} className="tr-web">
                                             <td className="td-cant-web">{fila.num_pedido}</td>
+                                            <td className="td-cant-web">{fila.id_pedido}</td>
                                             <td className="text-tabla-desc"><p>{fila.cliente}</p></td>
                                             <td className="text-tabla-desc"><p>{fila.direccion}</p></td>
                                             <td>{fila.ciudad}</td>
@@ -84,11 +100,9 @@ const Preparados = () =>
                                                         <UilPackage size="25" color="white"/>
                                                     </button>
                                                 </Link>
-                                                <Link to='/'>
-                                                    <button className="btn-tabla-imprimir">
-                                                        <UilPrint size="25" color="white"/>
-                                                    </button>
-                                                </Link>
+                                                <button className="btn-tabla-imprimir" onClick={() =>imprimir(fila.id)}>
+                                                    <UilPrint size="25" color="white"/>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))
