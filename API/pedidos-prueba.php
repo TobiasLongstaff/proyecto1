@@ -25,41 +25,41 @@
     // }
 
     // print_r($woocommerce->get('products/9713/variations/9714'));
-    print_r($woocommerce->get('orders/10049'));
+    print_r($woocommerce->get('orders'));
 
-    $id_pedido_woo = '10049';
-    $data_productos[] = array();
+    // $id_pedido_woo = '10049';
+    // $data_productos[] = array();
 
-    $productos = $woocommerce->get('orders/'.$id_pedido_woo);
-    $json = json_decode(json_encode($productos), true);
+    // $productos = $woocommerce->get('orders/'.$id_pedido_woo);
+    // $json = json_decode(json_encode($productos), true);
 
-    foreach ($json['line_items'] as $item)
-    {
-        $codigo = $item['sku'];
-        $id_producto = $item['product_id'];
-        $sql = "SELECT kilos FROM stock WHERE codigo = '$codigo'";
-        $resultado = mysqli_query($conexion,$sql);
-        if($filas = mysqli_fetch_array($resultado))
-        {
-            $data = [
-                'update' => 
-                [
-                    [
-                        'id' => $id_pedido_woo,
-                        'line_items' => 
-                        [
-                            [
-                                'id' => $id_producto,
-                                'quantity' => $kilos = $filas['kilos']
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-        }  
+    // foreach ($json['line_items'] as $item)
+    // {
+    //     $codigo = $item['sku'];
+    //     $id_producto = $item['product_id'];
+    //     $sql = "SELECT kilos FROM stock WHERE codigo = '$codigo'";
+    //     $resultado = mysqli_query($conexion,$sql);
+    //     if($filas = mysqli_fetch_array($resultado))
+    //     {
+    //         $data = [
+    //             'update' => 
+    //             [
+    //                 [
+    //                     'id' => $id_pedido_woo,
+    //                     'line_items' => 
+    //                     [
+    //                         [
+    //                             'id' => $id_producto,
+    //                             'quantity' => $kilos = $filas['kilos']
+    //                         ]
+    //                     ]
+    //                 ]
+    //             ]
+    //         ];
+    //     }  
         
-        print_r($woocommerce->post('orders/batch', $data));
-    }
+    //     print_r($woocommerce->post('orders/batch', $data));
+    // }
 
     // $data = [
     //     'update' => 

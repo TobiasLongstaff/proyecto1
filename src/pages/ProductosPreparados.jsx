@@ -55,6 +55,7 @@ const ProductosPreparados = () =>
                             <tr className="tr-head-web">
                                 <th className="th-cod">Codigo</th>
                                 <th className="th-cant-web">Cantidad</th>
+                                <th className="th-cant-web">Peso</th>
                                 <th>Descripcion</th>
                                 <th className="th-estado">Estado</th>
                                 <th className="th-cont">Controles</th>
@@ -75,10 +76,12 @@ const ProductosPreparados = () =>
                                         <tr key={fila.id} className="tr-web">
                                             <td className="td-cod">{fila.codigo}</td>
                                             <td className="td-cant-web">{fila.cantidad}</td>
+                                            <td className="td-cant-web">{fila.peso}</td>
                                             <td className="text-tabla-desc"><p>{fila.descripcion}</p></td>
                                             <td className="td-estado"><UilExclamationCircle size="25" color="red"/></td>
                                             <td className="td-cont">
                                                 <button className="btn-tabla-productos">
+
                                                 </button>
                                             </td>
                                         </tr>

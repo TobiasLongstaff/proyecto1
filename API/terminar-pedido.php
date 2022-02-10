@@ -43,7 +43,7 @@
                     $productos_text = $productos_text.$filas_log_pro['codigo'].'-';
                 }
 
-                $sql_log = "INSERT INTO log (fecha, descripcion, id_pantallas, id_usuario) VALUES ('$fecha_actual', 'Se cerró el pedido ".$id_pedido." con ".$cant_faltante." productos menos productos: ".$productos_text."' , 7, $id_usuario)";
+                $sql_log = "INSERT INTO log_pedidos (fecha, descripcion, id_pantallas, id_usuario, id_pedido) VALUES ('$fecha_actual', 'Se cerró el pedido ".$id_pedido." con ".$cant_faltante." productos menos productos: ".$productos_text."' , 7, $id_usuario, $id_pedido)";
                 $resultado_log = mysqli_query($conexion, $sql_log);
                 if(!$resultado_log)
                 {

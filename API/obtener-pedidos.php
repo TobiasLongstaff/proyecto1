@@ -11,7 +11,7 @@
 
         if($fecha_actual <= '01:06:10')
         {
-            $datos = $woocommerce->get('orders?per_page=50'); 
+            $datos = $woocommerce->get('orders?per_page=10'); 
             $json = json_decode(json_encode($datos), true);
             
             foreach($json as $item)

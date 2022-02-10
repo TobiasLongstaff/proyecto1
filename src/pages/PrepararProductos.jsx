@@ -155,12 +155,6 @@ const PrepararProductos = () =>
                     <label className="text-usuario animacion-1">Cantidad total escaneados: {cookies.set('cantidad_productos_activos')}</label>
                     <label className="animacion-2">Productos escaneados:</label>
                     <Tabla/>
-                    {/* <PDFDownloadLink
-                        document={<PdfEtiqueta />}
-                        fileName="poema.pdf"
-                    >
-                        <button variant="info">Descargar PDF</button>
-                    </PDFDownloadLink> */}
                     <footer className="container-controles">
                         <BtnVolver volver="/tabla-productos" />
                         <Link to="/eliminar">

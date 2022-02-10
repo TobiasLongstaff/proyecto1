@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { UilTruckLoading, UilShoppingCartAlt } from '@iconscout/react-unicons'
+import { UilTruckLoading, UilShoppingCartAlt, UilPackage } from '@iconscout/react-unicons'
 import { Link, useNavigate } from 'react-router-dom'
 import '../styles/menu.css'
 import Cookies from 'universal-cookie'
@@ -42,7 +42,7 @@ const Menu = () =>
                         </Link>
                         <Link to="/preparados" className="link-menu"> 
                             <button type="button" className="btn-menu-web animacion-2">
-                                <UilTruckLoading size="50" color="#252A34"/><br/>
+                                <UilPackage size="50" color="#252A34"/><br/>
                                 <label>Preparados</label>
                             </button>
                         </Link>

@@ -33,8 +33,8 @@
                 }
                 else
                 {
-                    $productos = $woocommerce->get('products');
-                    $prueba = 'S4100001A292231';
+                    // $productos = $woocommerce->get('products');
+                    // $prueba = 'S4100001A292231';
                     
                     // $sql = "SELECT productos.codigo_articulo FROM pallets INNER JOIN cajas 
                     // ON cajas.id_pallet = pallets.id INNER JOIN productos ON productos.id_caja = 
@@ -63,8 +63,16 @@
                 if(!empty($cant_faltante))
                 {
                     //LOG
-                    $sql_log = "INSERT INTO log (fecha, descripcion, id_pantallas, id_usuario) VALUES ('$fecha_actual', 'Se cerró la recepción ".$id_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario')";
+                    $sql_log = "INSERT INTO log_recepcion (fecha, descripcion, id_pantallas, id_usuario, id_recepcion) VALUES ('$fecha_actual', 'Se cerró la recepción ".$id_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario', '$id_recepcion')";
                     $resultado_log = mysqli_query($conexion, $sql_log);
+                    if(!$resultado_log)
+                    {
+                        $json[] = array(
+                            'error' => '1',
+                            'mensaje' => 'Error log',
+                            'sql' => $sql_log
+                        );
+                    }
                 }   
 
             }

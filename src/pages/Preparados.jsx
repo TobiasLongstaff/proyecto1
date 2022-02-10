@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
 import { UilExclamationCircle, UilPackage, UilPrint } from '@iconscout/react-unicons'
-import PdfEtiqueta from './PdfEtiqueta'
 import pdf from "@react-pdf/renderer";
 const { PDFViewer } = pdf;
 
