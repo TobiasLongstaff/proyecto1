@@ -82,12 +82,18 @@ p
     align-items: center;
 }
 
-.container-page-web
+.container-page-web, .container-page-web-productos-preparados
 {
     background-color: var(--fondo);
     height: calc(100vh - 70px);
     box-sizing: border-box;
     padding: 4%;
+}
+
+.container-page-web-productos-preparados
+{
+    display: flex;
+    gap: 20px;
 }
 
 .btn-tabla-productos, .btn-tabla-imprimir
@@ -106,6 +112,14 @@ p
 .btn-tabla-imprimir
 {
     background-color: var(--rojo);
+}
+
+.container-from-usuarios
+{
+    min-width: 250px;
+    display: inline-grid;
+    gap: 20px;
+    height: 100px
 }
 
 @keyframes top 

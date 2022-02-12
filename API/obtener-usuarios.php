@@ -8,7 +8,15 @@
 
         if(isset($_GET['key']) && $_GET['key'] == 'c52f1bd66cc19d05628bd8bf27af3ad6')
         {
-            $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios";
+            if(isset($_GET['id']))
+            {
+                $id_usuario = $_GET['id'];
+                $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios WHERE id = '$id_usuario'";
+            }
+            else
+            {
+                $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios";
+            }
             $resultado = mysqli_query($conexion, $sql);
             while($filas = mysqli_fetch_array($resultado))
             {

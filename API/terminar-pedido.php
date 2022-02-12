@@ -62,7 +62,7 @@
             {
                 $id = $filas['id'];
     
-                $sql_update="UPDATE productos SET activo = 0, cargado = 1 WHERE id = $id";
+                $sql_update="UPDATE productos SET activo = 0, cargado = 1, id_pedido = $id_pedido WHERE id = $id";
                 $resultado_update = mysqli_query($conexion, $sql_update);
             }
 

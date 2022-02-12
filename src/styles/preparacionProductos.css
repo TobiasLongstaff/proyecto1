@@ -121,6 +121,25 @@ tr
     border: none;
 }
 
+.btn-tabla-controles
+{
+    border-radius: 5px;
+    border: none;
+    width: 42px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.btn-editar
+{
+    background-color: var(--verde)
+}
+
+.text-error
+{
+    color: var(--principal);
+}
+
 .td-cant
 {
     width: 30px;
@@ -144,12 +163,12 @@ tr
 
 .th-cod, .td-cod
 {
-    width: 150px;
+    width: 120px;
 }
 
 .th-cant-web, .td-cant-web
 {
-    width: 100px;
+    width: 70px;
 }
 
 .th-cont, .td-cont

@@ -67,18 +67,18 @@
                         }
                     }
                 }
-                else
-                {
-                    $sql_delete = "DELETE FROM pedidos WHERE id_pedido = '$id_pedido' AND preparado = '0'";
-                    $resultado_delete = mysqli_query($conexion, $sql_delete);
-                    if(!$resultado_delete)
-                    {
-                        $json[] = array(
-                            'error' => '1',
-                            'mensaje' => 'error al eliminar'
-                        );
-                    }
-                }
+                // else
+                // {
+                //     $sql_delete = "DELETE FROM pedidos WHERE id_pedido = '$id_pedido' AND preparado = '0'";
+                //     $resultado_delete = mysqli_query($conexion, $sql_delete);
+                //     if(!$resultado_delete)
+                //     {
+                //         $json[] = array(
+                //             'error' => '1',
+                //             'mensaje' => 'error al eliminar'
+                //         );
+                //     }
+                // }
             }
         }
     

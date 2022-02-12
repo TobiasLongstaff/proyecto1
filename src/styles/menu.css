@@ -15,6 +15,7 @@ nav
 {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .container-menu-options

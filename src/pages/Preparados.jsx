@@ -3,9 +3,7 @@ import NavDektop from '../components/NavegacionDesktop/NavDesktop'
 import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
-import { UilExclamationCircle, UilPackage, UilPrint } from '@iconscout/react-unicons'
-import pdf from "@react-pdf/renderer";
-const { PDFViewer } = pdf;
+import { UilExclamationCircle, UilPackage, UilPrint, UilCheckCircle } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
@@ -39,6 +37,7 @@ const Preparados = () =>
                 setData(datos)
                 setLoading(false)
             }
+            console.log(datos)
         }
         catch(error)
         {
@@ -92,7 +91,14 @@ const Preparados = () =>
                                             <td className="text-tabla-desc"><p>{fila.cliente}</p></td>
                                             <td className="text-tabla-desc"><p>{fila.direccion}</p></td>
                                             <td>{fila.ciudad}</td>
-                                            <td className="td-estado"><UilExclamationCircle size="25" color="red"/></td>
+                                            <td className="td-estado">
+                                            { fila.estado == 1 ? (
+                                                    <UilExclamationCircle size="25" color="#ff7777"/>
+                                                ): (
+                                                    <UilCheckCircle size="25" color="#23e780"/>
+                                                )
+                                            }
+                                            </td>
                                             <td className="td-controles">
                                                 <Link to={'/productos-preparados/'+fila.id}>
                                                     <button className="btn-tabla-productos">

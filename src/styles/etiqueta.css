@@ -1,7 +1,14 @@
 .img-etiqueta
 {
-    width: 100px;
-    margin-top: 20px
+    width: 140px;
+}
+
+.container-img-etiqueta
+{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: right;
 }
 
 .container-etiqueta
@@ -10,10 +17,20 @@
     justify-content: center;
 }
 
-.titulo-imagen
+.container-info-etiqueta
 {
     display: flex;
+    width: 100%;
     justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.container-info-cliente-etiqueta
+{
+    display: inline-grid;
+    gap: 10px;
+    width: 100%;
 }
 
 .text-titulo-etiqueta

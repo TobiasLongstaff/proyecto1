@@ -28,7 +28,7 @@ const Menu = () =>
 
     if(idsession)
     {
-        if(tipo == 'admin')
+        if(tipo == 'admin' || tipo == 'estandar')
         {
             return(
                 <article>

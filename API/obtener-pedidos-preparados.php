@@ -1,23 +1,39 @@
 <?php
     require 'conexion.php';
-    require 'woocommerce.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         header("HTTP/1.1 200 OK");
     
+        $estado = '0';
+
         $sql="SELECT * FROM pedidos WHERE preparado = '1'";
         $resultado=mysqli_query($conexion,$sql);
         $json = array();
         while($filas = mysqli_fetch_array($resultado))
         {
+            $id_pedido = $filas['id'];
+
+            $sql_alerta="SELECT id FROM log_pedidos WHERE id_pedido = '$id_pedido'";
+            $resultado_alerta = mysqli_query($conexion, $sql_alerta);
+            $numero_alerta = mysqli_num_rows($resultado_alerta);
+            if($numero_alerta == '1')
+            {
+                $estado = '1';
+            }
+            else
+            {
+                $estado = '0';
+            }
+
             $json[] = array(
-                'id' => $filas['id'],
+                'id' => $id_pedido,
                 'cliente' => $filas['cliente'],
                 'num_pedido' => $filas['numero'],
                 'direccion' => $filas['direccion'],
                 'id_pedido' => $filas['id_pedido'],
-                'ciudad' => $filas['ciudad']
+                'ciudad' => $filas['ciudad'],
+                'estado' => $estado
             );
         }
         $jsonstring = json_encode($json);

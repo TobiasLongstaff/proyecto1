@@ -22,7 +22,7 @@
                 $nombre = $filas['nombre_apellido'];
                 $id = $filas['id'];
     
-                if($tipo_usuario == 'handheld' || $tipo_usuario == 'admin')
+                if($tipo_usuario == 'handheld' || $tipo_usuario == 'admin' || $tipo_usuario == 'estandar')
                 {
                     $json[] = array(
                         'error' => '0',

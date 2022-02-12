@@ -50,8 +50,16 @@ const PdfEtiqueta = () =>
         return(
             <article className="container-etiqueta">
                 <main>
-                    <div className="titulo-imagen">
-                        <img src={ohrapampa} className="img-etiqueta"></img>
+                    <div className="container-info-etiqueta">
+                        <div className="container-img-etiqueta">
+                            <img src={ohrapampa} className="img-etiqueta"></img>
+                        </div>
+                        <div className="container-info-cliente-etiqueta">
+                            <label>Num pedido: {data[0].num_pedido}</label>
+                            <label>Direccion: {data[0].direccion}</label>
+                            <label>Cliente: {data[0].cliente}</label>
+                            <label>Peso total: {data[0].peso_total}</label>
+                        </div>
                     </div>
                     <h1 className="text-titulo-etiqueta">COMBO CELEBRACION</h1>
                     {data.map((fila) =>

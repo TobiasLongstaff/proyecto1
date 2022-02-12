@@ -4,7 +4,6 @@ import Loading from '../components/Loading/Loading'
 import url from '../services/Settings'
 import BtnVolver from '../components/BtnVolver/BtnVolver';
 import Cookies from 'universal-cookie'
-import { UilAngleRight } from '@iconscout/react-unicons'
 import { useNavigate } from 'react-router-dom'
 
 const cookies = new Cookies()
