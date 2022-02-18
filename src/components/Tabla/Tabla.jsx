@@ -55,7 +55,7 @@ const Tabla = () =>
                                 <tr key={fila.id}>
                                     <td className="td-cant">{fila.cantidad}</td>
                                     <td className="td-desc">
-                                        <p className="text-tabla-desc">
+                                        <p className="text-tabla-desc-product">
                                             {fila.descripcion}
                                         </p>
                                     </td>

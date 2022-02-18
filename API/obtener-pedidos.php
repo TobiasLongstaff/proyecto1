@@ -9,8 +9,8 @@
         date_default_timezone_set('America/Buenos_Aires');
         $fecha_actual = date('H:i:s');
 
-        if($fecha_actual <= '01:06:10')
-        {
+        // if($fecha_actual <= '01:06:10')
+        // {
             $datos = $woocommerce->get('orders?per_page=10'); 
             $json = json_decode(json_encode($datos), true);
             
@@ -80,7 +80,7 @@
                 //     }
                 // }
             }
-        }
+        // }
     
         $sql="SELECT * FROM pedidos WHERE preparado = '0' ORDER BY numero ASC";
         $resultado=mysqli_query($conexion,$sql);

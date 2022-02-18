@@ -77,12 +77,18 @@ tr
     border: none;
 }
 
-.text-btn-tabla, .text-tabla-desc
+.text-btn-tabla, .text-tabla-desc, .text-tabla-desc-product
 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 120px;
+}
+
+.text-tabla-desc-product
+{
+    max-width: none;
+    padding: 10px;
 }
 
 .text-btn-tabla-productos
