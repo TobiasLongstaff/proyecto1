@@ -1,16 +1,18 @@
 .container-login, .container-registro
 {
-    margin-top: 65px;
+    display: flex;
+    justify-content: center;
     width: 100%;
-    align-items: center;
-    padding: 0 15%;
-    height: 100vh;
+    margin-top: 10%;
+    height: calc(100vh - 10%);
     box-sizing: border-box;
 }
 
-.container-registro
+.container-info-login
 {
-    margin-top: 40px;
+    max-width: 400px;
+    width: 100%;
+    padding: 0 15%;
 }
 
 .header-login, .header-registro

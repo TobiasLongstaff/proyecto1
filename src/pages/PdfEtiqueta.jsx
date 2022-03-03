@@ -1,10 +1,11 @@
 import React,{ useEffect, useState } from 'react'
 import ohrapampa from '../img/ohrapampa.png'
 import '../styles/etiqueta.css'
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"
 import url from '../services/Settings'
 import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
+import QRCode from 'react-qr-code'
 
 const cookies = new Cookies()
 
@@ -49,23 +50,34 @@ const PdfEtiqueta = () =>
     if(!loading)
         return(
             <article className="container-etiqueta">
-                <main>
+                <main className="container-body-etiqueta">
                     <div className="container-info-etiqueta">
                         <div className="container-img-etiqueta">
                             <img src={ohrapampa} className="img-etiqueta"></img>
                         </div>
+                        <div className="separador"></div>
                         <div className="container-info-cliente-etiqueta">
-                            <label>Num pedido: {data[0].num_pedido}</label>
-                            <label>Direccion: {data[0].direccion}</label>
+                            <label>Numero de pedido: {data[0].num_pedido}</label>
                             <label>Cliente: {data[0].cliente}</label>
-                            <label>Peso total: {data[0].peso_total}</label>
+                            <label>Direccion: {data[0].direccion}</label>
+                            <label>Codigo postal: {data[0].cod_postal}</label>
+                            <label>Telefono: {data[0].telefono}</label>
+                            <label>Ciudad: {data[0].ciudad}</label>
                         </div>
                     </div>
-                    <h1 className="text-titulo-etiqueta">COMBO CELEBRACION</h1>
-                    {data.map((fila) =>
-                    (
-                        <h2 key={fila.id}>{fila.descripcion}..............{fila.cantidad}UNITS</h2>  
-                    ))}           
+                    <h1 className="text-titulo-etiqueta">COMBO PERSONALIZADO</h1>
+                    <div className="container-info-cortes">
+                        {data.map((fila) =>
+                        (
+                            <label className="text-corte" key={fila.id}>{fila.cantidad} - {fila.descripcion}</label>  
+                        ))}                     
+                    </div>
+                    <div className="container-footer-etiqueta">
+                        <QRCode value={data[0].cod_pedido} size={100} bgColor="#00000" fgColor="#fff" level="H" />
+                        <div className="container-text-peso">
+                            <label>Peso total: {data[0].peso_total}</label>  
+                        </div>        
+                    </div>
                 </main>
             </article>
         )

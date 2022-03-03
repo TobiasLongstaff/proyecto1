@@ -23,6 +23,8 @@
                 $apellido = $item['billing']['last_name'];
                 $direccion = $item['billing']['address_1'];
                 $ciudad = $item['billing']['city'];
+                $cod_postal = $item['billing']['postcode'];
+                $telefono = $item['billing']['phone'];
                 $cod_pedido = $n_pedido.$id_pedido;
 
                 if($estado == 'completed')
@@ -32,7 +34,7 @@
                     $numero_fila_veri_woo = mysqli_num_rows($resultado_veri_woo);
                     if($numero_fila_veri_woo != '1')
                     {
-                        $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, direccion, ciudad, preparado, cod_pedido) VALUE ('$apellido $nombre', '$id_pedido', '$n_pedido', '$direccion', '$ciudad', '0', '$cod_pedido')";
+                        $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, direccion, ciudad, preparado, cod_pedido, cod_postal, telefono) VALUE ('$apellido $nombre', '$id_pedido', '$n_pedido', '$direccion', '$ciudad', '0', '$cod_pedido', '$cod_postal', '$telefono')";
                         $resultado_woo = mysqli_query($conexion, $sql_woo);
     
                         $sql_veri_woo_id="SELECT id FROM pedidos WHERE id_pedido = '$id_pedido'";
