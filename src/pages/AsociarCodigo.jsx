@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router-dom'
 
 const cookies = new Cookies()
 
-const Eliminar = () =>
+const AsociarCodigo = () =>
 {
     const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_producto: '' })
+    const [form, setForm] = useState({ cod_caja: '' })
     let navigate = useNavigate()
     const idsession = cookies.get('IdSession')
-    
+
     useEffect(() =>
     {
         if(idsession == null)
@@ -24,14 +24,18 @@ const Eliminar = () =>
         else
         {
             textboxCodigo.current.focus()
-            if(form.cod_producto.length === 14 && textboxCodigo.current.value.length === 14)
+            if(form.cod_caja.length >= 8)
             {
-                deshacerProducto()
+                AsociarCodigo()
+            }
+            else
+            {
+                textboxCodigo.current.value = ''
             }
         }
     }, [ form ])
 
-    const deshacerProducto = async () =>
+    const AsociarCodigo = async () =>
     {
         try
         {
@@ -44,7 +48,9 @@ const Eliminar = () =>
                     'Content-Type': 'application/json'
                 }
             }
-            let res = await fetch(url+'deshacer-producto.php?codigo='+form.cod_producto, config)
+            let res = await fetch(
+                url+'actualizar-codigo-pedido.php?codigo='+form.cod_caja+'&id_pedido='+cookies.get('id_pedido'), 
+                config)
             let infoPost = await res.json()
             console.log(infoPost[0])
             if(infoPost[0].error == '0')
@@ -54,6 +60,7 @@ const Eliminar = () =>
                     infoPost[0].mensaje,
                     'success'
                 )
+                navigate('/menu')
             }
             else
             {
@@ -68,8 +75,6 @@ const Eliminar = () =>
         {
             console.error(error)
         }
-        textboxCodigo.current.value = ''
-        textboxCodigo.current.focus()
     }
 
     const handelChange = e =>
@@ -83,18 +88,18 @@ const Eliminar = () =>
 
     return(
         <article>
-            <Nav titulo="Eliminar producto"/>
+            <Nav titulo="Asociar Codigo"/>
             <main className="container-body">
                 <form className="container-form-eliminar">
                     <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                    <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo"/>
+                    <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
                     <footer className="container-controles">
-                        <BtnVolver volver="/preparar-productos"/>
+                        <BtnVolver volver="/asociar-pedido"/>
                     </footer>
                 </form>
             </main>
-        </article>     
+        </article>
     )
 }
 
-export default Eliminar
+export default AsociarCodigo

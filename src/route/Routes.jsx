@@ -19,6 +19,9 @@ import ProductosPedidos from '../pages/ProductosPedidos'
 import ProductosPreparados from '../pages/ProductosPreparados'
 import Configuracion from '../pages/Configuracion'
 import PdfEtiqueta from '../pages/PdfEtiqueta'
+import Devolucion from '../pages/Devolucion'
+import AsociarPedido from '../pages/AsociarPedido'
+import AsociarCodigo from '../pages/AsociarCodigo'
 
 function Rutas() 
 {
@@ -44,6 +47,9 @@ function Rutas()
                 <Route exact path="productos-preparados/:id_pedido" element={<ProductosPreparados/>} />
                 <Route exact path="configuracion" element={<Configuracion/>} />
                 <Route exact path="etiqueta/:id_pedido" element={<PdfEtiqueta/>} />
+                <Route exact path="devolucion" element={<Devolucion/>} />
+                <Route exact path="asociar-pedido" element={<AsociarPedido/>} />
+                <Route exact path="asociar-codigo" element={<AsociarCodigo/>} />
             </Routes>
         </BrowserRouter>
     )

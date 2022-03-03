@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { UilTruckLoading, UilShoppingCartAlt, UilPackage } from '@iconscout/react-unicons'
+import { UilTruckLoading, UilShoppingCartAlt, UilPackage, UilBox, UilQrcodeScan } from '@iconscout/react-unicons'
 import { Link, useNavigate } from 'react-router-dom'
 import '../styles/menu.css'
 import Cookies from 'universal-cookie'
@@ -56,7 +56,7 @@ const Menu = () =>
                 <article>
                     <NavDektop titulo="Menu"/>
                     <main className="container-menu-options">
-                        <Link to="/recepcion"> 
+                        <Link to="/recepcion">
                             <button type="button" className="btn-menu animacion-2">
                                 <UilTruckLoading size="50" color="#252A34"/><br/>
                                 <label>Recepcion</label>
@@ -66,6 +66,18 @@ const Menu = () =>
                             <button type="button" className="btn-menu animacion-3">
                                 <UilShoppingCartAlt  size="50" color="#252A34"/><br/>
                                 <label>Preparacion</label>
+                            </button>
+                        </Link>
+                        <Link to="/devolucion">
+                            <button type="button" className="btn-menu animacion-3">
+                                <UilBox size="50" color="#252A34"/><br/>
+                                <label>Devolucion</label>
+                            </button>
+                        </Link>
+                        <Link to="/asociar-pedido">
+                            <button type="button" className="btn-menu animacion-3">
+                                <UilQrcodeScan size="50" color="#252A34"/><br/>
+                                <label>Asociar codigo</label>
                             </button>
                         </Link>
                     </main>

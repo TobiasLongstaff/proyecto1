@@ -43,6 +43,7 @@ const Preparacion = () =>
         catch(error)
         {
             console.error(error)
+            fetchResource()
         }
     }
 

@@ -150,6 +150,12 @@ const TablaProductos = () =>
         setPopup('container-popup-producto')
     }
 
+    const handelClick = (id_producto) =>
+    {
+        cookies.set('id_producto', id_producto, {path: '/'})
+        navigate('/productos')
+    }
+
     return(
         <article>
             <Nav titulo="Tabla Productos"/>
@@ -178,10 +184,12 @@ const TablaProductos = () =>
                                         data.map((fila) =>
                                         (
                                             <tr key={fila.id}>
-                                                <td className="td-cant">{fila.cantidad}</td>
-                                                <td className="td-desc">
-                                                    <p className="text-btn-tabla-productos">{fila.descripcion}</p>
-                                                </td>
+                                                <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id_producto)}>
+                                                    <td className="td-cant">{fila.cantidad}</td>
+                                                    <td className="td-desc">
+                                                        <p className="text-btn-tabla-productos">{fila.descripcion}</p>
+                                                    </td>                                                    
+                                                </button>
                                             </tr>
                                         ))
                                     )

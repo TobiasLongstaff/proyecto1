@@ -25,7 +25,7 @@
     // }
 
     // print_r($woocommerce->get('products/9713/variations/9714'));
-    print_r($woocommerce->get('orders'));
+    print_r($woocommerce->get('orders/10409'));
 
     // $id_pedido_woo = '10049';
     // $data_productos[] = array();

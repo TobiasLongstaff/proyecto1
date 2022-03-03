@@ -7,7 +7,15 @@
     
         $estado = '0';
 
-        $sql="SELECT * FROM pedidos WHERE preparado = '1'";
+        if(isset($_GET['codigo_or']))
+        {
+            $sql="SELECT * FROM pedidos WHERE preparado = '1' AND cod_pedido = concat_ws('', numero, id_pedido)";
+        }
+        else
+        {
+            $sql="SELECT * FROM pedidos WHERE preparado = '1'";
+        }
+
         $resultado=mysqli_query($conexion,$sql);
         $json = array();
         while($filas = mysqli_fetch_array($resultado))
@@ -33,9 +41,11 @@
                 'direccion' => $filas['direccion'],
                 'id_pedido' => $filas['id_pedido'],
                 'ciudad' => $filas['ciudad'],
-                'estado' => $estado
+                'estado' => $estado,
+                'cod_pedido' => $filas['cod_pedido'],
             );
         }
+
         $jsonstring = json_encode($json);
         echo $jsonstring;
     }
