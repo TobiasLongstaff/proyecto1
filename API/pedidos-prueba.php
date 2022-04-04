@@ -25,7 +25,8 @@
     // }
 
     // print_r($woocommerce->get('products/9713/variations/9714'));
-    print_r($woocommerce->get('orders/10409'));
+    print_r($woocommerce->get('orders?per_page=35'));
+    // print_r($woocommerce->get('orders?per_page=25'));
 
     // $id_pedido_woo = '10049';
     // $data_productos[] = array();
@@ -92,5 +93,4 @@
     //     $sql_woo = "INSERT INTO stock (descripcion, codigo, kilos, stock) VALUE ('$name', '$sku', '0', '1')";
     //     $resultado_woo = mysqli_query($conexion, $sql_woo);
     // }
-
 ?>

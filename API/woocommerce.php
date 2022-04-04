@@ -6,6 +6,7 @@
 
     $woocommerce = new Client(
         'https://club.ohrapampa.com/', 
+        // 'ck_919cf97820fe782c1f2cae53f4546fbbae008ffa', 
         'ck_919cf97820fe782c1f2cae53f4546fbbae008ffa', 
         'cs_19a3a2daeb86b4e9b79cb53b2a52ed37fd323d14',
         [

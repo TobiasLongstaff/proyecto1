@@ -14,6 +14,7 @@ const Preparacion = () =>
 
     const [data, setData] = useState([])
     const [ loading, setLoading ] = useState(true)
+    const [ errorCarga, setErrorCarga ] = useState(false)
     const idsession = cookies.get('IdSession')
 
     useEffect(() =>
@@ -30,6 +31,7 @@ const Preparacion = () =>
 
     const fetchResource = async () => 
     {
+        setErrorCarga(false)
         try
         {
             let res = await fetch(url+'obtener-pedidos.php')
@@ -38,12 +40,13 @@ const Preparacion = () =>
             {
                 setData(datos)
                 setLoading(false)
+                console.log('fetch')
             }
         }
         catch(error)
         {
             console.error(error)
-            fetchResource()
+            setErrorCarga(true)
         }
     }
 
@@ -94,13 +97,13 @@ const Preparacion = () =>
                         </div>
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>
-                        </footer> 
+                        </footer>
                     </div>
                 </main>
             </article>        
         )
     return(
-        <Loading/>
+        <Loading error={errorCarga} childClick={()=>fetchResource()}/>
     )
 }
 

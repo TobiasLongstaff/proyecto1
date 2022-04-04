@@ -11,7 +11,7 @@
 
         // if($fecha_actual <= '01:06:10')
         // {
-            $datos = $woocommerce->get('orders?per_page=10'); 
+            $datos = $woocommerce->get('orders?per_page=30'); 
             $json = json_decode(json_encode($datos), true);
             
             foreach($json as $item)
@@ -70,18 +70,18 @@
                         }
                     }
                 }
-                // else
-                // {
-                //     $sql_delete = "DELETE FROM pedidos WHERE id_pedido = '$id_pedido' AND preparado = '0'";
-                //     $resultado_delete = mysqli_query($conexion, $sql_delete);
-                //     if(!$resultado_delete)
-                //     {
-                //         $json[] = array(
-                //             'error' => '1',
-                //             'mensaje' => 'error al eliminar'
-                //         );
-                //     }
-                // }
+                else
+                {
+                    $sql_delete = "DELETE FROM pedidos WHERE id_pedido = $id_pedido AND preparado = 0";
+                    $resultado_delete = mysqli_query($conexion, $sql_delete);
+                    if(!$resultado_delete)
+                    {
+                        $json[] = array(
+                            'error' => '1',
+                            'mensaje' => 'error al eliminar'
+                        );
+                    }
+                }
             }
         // }
     

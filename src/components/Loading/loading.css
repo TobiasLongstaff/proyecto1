@@ -1,3 +1,30 @@
+.container-error-conexion
+{
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    height: 90vh;  
+}
+
+.btn-reintentar-conexion
+{
+    color: #fff;
+    background-color: var(--principal);
+}
+
+.container-info-error-conexion h2
+{
+    margin: 0;
+}
+
+.container-info-error-conexion
+{
+    display: grid;
+    gap: 20px;
+    text-align: center;
+    width: 60%;
+}
+
 .container-loader
 {
     display: flex;
