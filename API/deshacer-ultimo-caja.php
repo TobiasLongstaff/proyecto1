@@ -23,15 +23,15 @@
                 }
                 else
                 {
-                    $sql="SELECT id, cantidad FROM pallets WHERE id IN (SELECT id_pallet FROM cajas WHERE codigo = '$codigo_caja')";
+                    $sql="SELECT codigo, cantidad FROM pallets WHERE codigo IN (SELECT cod_pallet FROM cajas WHERE codigo = '$codigo_caja')";
                     $resultado=mysqli_query($conexion,$sql);
                     if($filas = mysqli_fetch_array($resultado))
                     {
-                        $id_pallet = $filas['id'];
+                        $cod_pallet = $filas['codigo'];
                         $cantidad_pallets = $filas['cantidad'];
                     }
 
-                    $sql="SELECT COUNT(id) AS cantidad_cargados FROM cajas WHERE id_pallet = '$id_pallet' AND cargado != '0'";
+                    $sql="SELECT COUNT(codigo) AS cantidad_cargados FROM cajas WHERE cod_pallet = '$cod_pallet' AND cargado != '0'";
                     $resultado=mysqli_query($conexion,$sql);
                     if($filas = mysqli_fetch_array($resultado))
                     {
@@ -40,7 +40,7 @@
 
                     if($cantidad_cargados != $cantidad_pallets)
                     {
-                        $sql_update="UPDATE pallets SET cargado = '0' WHERE id = '$id_pallet'";
+                        $sql_update="UPDATE pallets SET cargado = '0' WHERE codigo = '$cod_pallet'";
                         $resultado_update = mysqli_query($conexion, $sql_update);
                         if(!$resultado_update)
                         {

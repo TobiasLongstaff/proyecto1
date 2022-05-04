@@ -13,16 +13,16 @@
             date_default_timezone_set('America/Buenos_Aires');
             $fecha_actual = date('Y-m-d H:i:s');
 
-            $id_recepcion = $datos->id_recepcion; 
+            $cod_recepcion = $datos->id_recepcion; 
             $cant_faltante = $datos->cant_faltante;
             $id_usuario = $datos->id_usuario;
 
-            $sql_cod_veri = "SELECT id FROM recepcion WHERE id = '$id_recepcion'";
+            $sql_cod_veri = "SELECT documento FROM recepcion WHERE documento = '$cod_recepcion'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql_update="UPDATE recepcion SET cargado = '1' WHERE id = '$id_recepcion'";
+                $sql_update="UPDATE recepcion SET cargado = '1' WHERE documento = '$cod_recepcion'";
                 $resultado_update = mysqli_query($conexion, $sql_update);
                 if(!$resultado_update)
                 {
@@ -63,7 +63,7 @@
                 if(!empty($cant_faltante))
                 {
                     //LOG
-                    $sql_log = "INSERT INTO log_recepcion (fecha, descripcion, id_pantallas, id_usuario, id_recepcion) VALUES ('$fecha_actual', 'Se cerró la recepción ".$id_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario', '$id_recepcion')";
+                    $sql_log = "INSERT INTO log_recepcion (fecha, descripcion, id_pantallas, id_usuario, id_recepcion) VALUES ('$fecha_actual', 'Se cerró la recepción ".$cod_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario', '$cod_recepcion')";
                     $resultado_log = mysqli_query($conexion, $sql_log);
                     if(!$resultado_log)
                     {

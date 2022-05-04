@@ -52,15 +52,15 @@
                             $codigo = $pro['sku'];
                             $cantidad = $pro['quantity'];
     
-                            $sql_stock="SELECT id FROM stock WHERE codigo = '$codigo'";
+                            $sql_stock="SELECT codigo FROM stock WHERE codigo = '$codigo'";
                             $resultado_stock = mysqli_query($conexion, $sql_stock);
                             $numero_fila_stock = mysqli_num_rows($resultado_stock);
                             if($numero_fila_stock == '1')
                             {
                                 $filas_stock = mysqli_fetch_array($resultado_stock);
-                                $id_producto = $filas_stock['id'];
+                                $cod_producto = $filas_stock['codigo'];
     
-                                $sql_woo_pro = "INSERT INTO productos_pedidos (id_producto, id_pedido, cantidad) VALUE ('$id_producto', '$id_pedido_tabla', '$cantidad')";
+                                $sql_woo_pro = "INSERT INTO productos_pedidos (cod_producto, id_pedido, cantidad) VALUE ('$cod_producto', '$id_pedido_tabla', '$cantidad')";
                                 $resultado_woo_pro = mysqli_query($conexion, $sql_woo_pro);
                                 if(!$resultado_woo_pro)
                                 {

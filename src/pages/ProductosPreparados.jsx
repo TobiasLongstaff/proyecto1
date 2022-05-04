@@ -77,7 +77,7 @@ const ProductosPreparados = () =>
                                     ): (
                                         data.map((fila) =>
                                         (
-                                            <tr key={fila.id} className="tr-web">
+                                            <tr key={fila.codigo} className="tr-web">
                                                 <td className="td-cod">{fila.codigo}</td>
                                                 <td className="td-cant-web">{fila.cantidad}</td>
                                                 <td className="text-tabla-desc"><p>{fila.descripcion}</p></td>

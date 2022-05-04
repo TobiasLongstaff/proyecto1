@@ -9,9 +9,9 @@
         {
             $id_pedido = $_GET['id_pedido'];
 
-            $sql="SELECT productos.id, stock.descripcion, COUNT(stock.descripcion) AS cantidad_productos FROM productos 
-            INNER JOIN stock ON productos.id_stock = stock.id 
-            INNER JOIN productos_pedidos ON stock.id = productos_pedidos.id_producto 
+            $sql="SELECT productos.codigo, stock.descripcion, COUNT(stock.descripcion) AS cantidad_productos FROM productos 
+            INNER JOIN stock ON productos.cod_stock = stock.codigo
+            INNER JOIN productos_pedidos ON stock.cod = productos_pedidos.cod_producto 
             WHERE cargado = '0' AND activo = '1' AND productos_pedidos.id_pedido = '$id_pedido' 
             GROUP BY stock.descripcion HAVING cantidad_productos >=1";
             $resultado=mysqli_query($conexion,$sql);
@@ -19,7 +19,7 @@
             while($filas = mysqli_fetch_array($resultado))
             {
                 $json[] = array(
-                    'id' => $filas['id'],
+                    'codigo' => $filas['codigo'],
                     'descripcion' => $filas['descripcion'],
                     'cantidad' => $filas['cantidad_productos'],
                 );

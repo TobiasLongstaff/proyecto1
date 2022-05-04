@@ -9,13 +9,12 @@
         {
             $id_pedido = $_GET['id'];
 
-            $sql="SELECT productos.id, productos.codigo, productos.kilos, stock.descripcion FROM productos INNER JOIN stock ON productos.id_stock = stock.id WHERE id_pedido = '$id_pedido'";
+            $sql="SELECT productos.codigo, productos.kilos, stock.descripcion FROM productos INNER JOIN stock ON productos.cod_stock = stock.codigo WHERE id_pedido = '$id_pedido'";
             $resultado=mysqli_query($conexion,$sql);
             $json = array();
             while($filas = mysqli_fetch_array($resultado))
             {
                 $json[] = array(
-                    'id' => $filas['id'],
                     'descripcion' => $filas['descripcion'],
                     'codigo' => $filas['codigo'],
                     'peso' => $filas['kilos'],

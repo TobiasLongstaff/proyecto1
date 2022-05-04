@@ -10,25 +10,26 @@
         if($datos != null)
         {
             $codigo_caja = $datos->cod_caja;
-            $id_recepcion = $datos->id_recepcion;
+            $cod_recepcion = $datos->id_recepcion;
             $codigo_pallet = '';
 
-            $sql_cod_veri = "SELECT id FROM cajas WHERE codigo = '$codigo_caja'";
+            $sql_cod_veri = "SELECT codigo FROM cajas WHERE codigo = '$codigo_caja'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql_rec_veri = "SELECT cajas.id AS id_cajas FROM cajas INNER JOIN 
-                pallets ON cajas.id_pallet = pallets.id WHERE cajas.codigo = '$codigo_caja' 
-                AND pallets.id_recepcion = '$id_recepcion'";
+                $sql_rec_veri = "SELECT cajas.codigo AS id_cajas FROM cajas INNER JOIN 
+                pallets ON cajas.cod_pallet = pallets.codigo WHERE cajas.codigo = '$codigo_caja' 
+                AND pallets.cod_recepcion = '$cod_recepcion'";
                 $resultado_rec_veri = mysqli_query($conexion, $sql_rec_veri);
                 $numero_fila_rec_veri = mysqli_num_rows($resultado_rec_veri);
                 if($numero_fila_rec_veri == '1')
                 {
-                    $sql = "SELECT cajas.id AS id_cajas, cajas.codigo AS codigo_cajas, cajas.descripcion, 
-                    cajas.kilos, cajas.cantidades, cajas.vencimiento, cajas.id_pallet, cajas.cargado, pallets.id, 
-                    pallets.codigo AS codigo_pallet FROM cajas LEFT JOIN pallets ON 
-                    cajas.id_pallet = pallets.id WHERE cajas.cargado = '0' AND cajas.codigo = '$codigo_caja'";
+                    $sql = "SELECT cajas.codigo AS id_cajas, cajas.descripcion, 
+                    cajas.kilos, cajas.cantidades, cajas.vencimiento, cajas.cod_pallet, cajas.cargado, 
+                    pallets.codigo AS codigo_pallet FROM cajas 
+                    LEFT JOIN pallets ON cajas.cod_pallet = pallets.codigo 
+                    WHERE cajas.cargado = '0' AND cajas.codigo = '$codigo_caja'";
                     $resultado = mysqli_query($conexion, $sql);
                     $numero_fila = mysqli_num_rows($resultado);
                     if($numero_fila == '1')
@@ -57,15 +58,15 @@
                         }
                         else
                         {
-                            $sql="SELECT id, cantidad FROM pallets WHERE codigo = '$codigo_pallet'";
+                            $sql="SELECT codigo, cantidad FROM pallets WHERE codigo = '$codigo_pallet'";
                             $resultado=mysqli_query($conexion,$sql);
                             if($filas = mysqli_fetch_array($resultado))
                             {
-                                $id_pallet = $filas['id'];
+                                $cod_pallet = $filas['codigo'];
                                 $cantidad_pallets = $filas['cantidad'];
                             }
         
-                            $sql="SELECT COUNT(id) AS cantidad_cargados FROM cajas WHERE id_pallet = '$id_pallet' AND cargado != '0'";
+                            $sql="SELECT COUNT(codigo) AS cantidad_cargados FROM cajas WHERE cod_pallet = '$cod_pallet' AND cargado != '0'";
                             $resultado=mysqli_query($conexion,$sql);
                             if($filas = mysqli_fetch_array($resultado))
                             {
@@ -74,7 +75,7 @@
         
                             if($cantidad_cargados == $cantidad_pallets)
                             {
-                                $sql_update="UPDATE pallets SET cargado = '1' WHERE id = '$id_pallet'";
+                                $sql_update="UPDATE pallets SET cargado = '1' WHERE codigo = '$cod_pallet'";
                                 $resultado_update = mysqli_query($conexion, $sql_update);
                                 if(!$resultado_update)
                                 {

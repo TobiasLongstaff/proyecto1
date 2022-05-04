@@ -10,14 +10,14 @@
         if($datos != null)
         {
             $codigo_pallet = $datos->cod_pallet;
-            $id_recepcion = $datos->id_recepcion;
+            $cod_recepcion = $datos->id_recepcion;
 
-            $sql_cod_veri = "SELECT id FROM pallets WHERE codigo = '$codigo_pallet'";
+            $sql_cod_veri = "SELECT codigo FROM pallets WHERE codigo = '$codigo_pallet'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql_rec_veri = "SELECT id FROM pallets WHERE codigo = '$codigo_pallet' AND id_recepcion = '$id_recepcion'";
+                $sql_rec_veri = "SELECT codigo FROM pallets WHERE codigo = '$codigo_pallet' AND cod_recepcion = '$cod_recepcion'";
                 $resultado_rec_veri = mysqli_query($conexion, $sql_rec_veri);
                 $numero_fila_rec_veri = mysqli_num_rows($resultado_rec_veri);
                 if($numero_fila_rec_veri == '1')
@@ -30,7 +30,7 @@
                         $filas = mysqli_fetch_array($resultado);
                         $json[] = array(
                             'error' => '0',
-                            'id_pallet' => $filas['id'],
+                            'id_pallet' => $filas['codigo'],
                             'mensaje' => 'Pallet escaneado',
                             'cantidades' => $filas['cantidad']
                         );

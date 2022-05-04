@@ -15,18 +15,18 @@
             $observacion = $datos->observacion;
             $id_usuario = $datos->id_user;
 
-            $sql_cod_veri = "SELECT id FROM recepcion WHERE documento = '$documento'";
+            $sql_cod_veri = "SELECT documento FROM recepcion WHERE documento = '$documento'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql_cod_car = "SELECT id, cantidad FROM recepcion WHERE documento = '$documento' AND cargado = '0'";
+                $sql_cod_car = "SELECT documento, cantidad FROM recepcion WHERE documento = '$documento' AND cargado = '0'";
                 $resultado_cod_car = mysqli_query($conexion, $sql_cod_car);
                 $numero_fila_cod_car = mysqli_num_rows($resultado_cod_car);
                 if($numero_fila_cod_car== '1')
                 {
                     $filas = mysqli_fetch_array($resultado_cod_car);
-                    $id_recepcion = $filas['id'];
+                    $id_recepcion = $filas['documento'];
                     $cantidad_pallets = $filas['cantidad'];
     
                     $sql_update="UPDATE recepcion SET fecha_de_documento = '$fecha_de_documento', 

@@ -24,7 +24,7 @@
                 $cantidad_productos = $filas_cant_prod['cantidad_productos'];
             }
 
-            $sql_cant_act = "SELECT COUNT(productos.id) AS cantidad_productos_activos FROM productos WHERE activo = '1'";
+            $sql_cant_act = "SELECT COUNT(productos.codigo) AS cantidad_productos_activos FROM productos WHERE activo = '1'";
             $resultado_cant_act=mysqli_query($conexion,$sql_cant_act);
             if($filas_cant_act = mysqli_fetch_array($resultado_cant_act))
             {
@@ -35,8 +35,8 @@
             {
                 $cant_faltante = $cantidad_productos - $cantidad_productos_act;
                 //LOG
-                $sql_log_pro = "SELECT stock.codigo FROM stock INNER JOIN productos_pedidos ON stock.id 
-                = productos_pedidos.id_producto WHERE productos_pedidos.id_pedido = '$id_pedido'";
+                $sql_log_pro = "SELECT stock.codigo FROM stock INNER JOIN productos_pedidos ON stock.codigo 
+                = productos_pedidos.cod_producto WHERE productos_pedidos.id_pedido = '$id_pedido'";
                 $resultado_log_pro=mysqli_query($conexion,$sql_log_pro);
                 while($filas_log_pro = mysqli_fetch_array($resultado_log_pro))
                 {
@@ -56,13 +56,13 @@
 
             }
 
-            $sql="SELECT id FROM productos WHERE activo = 1 AND cargado = 0";
+            $sql="SELECT codigo FROM productos WHERE activo = 1 AND cargado = 0";
             $resultado=mysqli_query($conexion,$sql);
             while($filas = mysqli_fetch_array($resultado))
             {
-                $id = $filas['id'];
+                $id = $filas['codigo'];
     
-                $sql_update="UPDATE productos SET activo = 0, cargado = 1, id_pedido = $id_pedido WHERE id = $id";
+                $sql_update="UPDATE productos SET activo = 0, cargado = 1, id_pedido = $id_pedido WHERE codigo = $id";
                 $resultado_update = mysqli_query($conexion, $sql_update);
             }
 

@@ -26,7 +26,7 @@
                     $cantidad_productos = $filas_cant_prod['cantidad_productos'];
                 }
     
-                $sql_cant_act = "SELECT COUNT(productos.id) AS cantidad_productos_activos FROM productos WHERE activo = '1'";
+                $sql_cant_act = "SELECT COUNT(productos.codigo) AS cantidad_productos_activos FROM productos WHERE activo = '1'";
                 $resultado_cant_act=mysqli_query($conexion,$sql_cant_act);
                 if($filas_cant_act = mysqli_fetch_array($resultado_cant_act))
                 {

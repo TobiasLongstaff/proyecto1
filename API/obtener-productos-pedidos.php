@@ -19,8 +19,8 @@
                 {
                     $peso_total = round($filas_productos['peso_total'], 2).'kg';
 
-                    $sql="SELECT productos_pedidos.id, productos_pedidos.id_producto,
-                    productos_pedidos.cantidad, stock.codigo, stock.descripcion FROM productos_pedidos INNER JOIN stock ON productos_pedidos.id_producto = stock.id WHERE id_pedido = '$id_pedido'";
+                    $sql="SELECT productos_pedidos.id, productos_pedidos.cod_producto,
+                    productos_pedidos.cantidad, stock.codigo, stock.descripcion FROM productos_pedidos INNER JOIN stock ON productos_pedidos.cod_producto = stock.codigo WHERE id_pedido = '$id_pedido'";
                     $resultado=mysqli_query($conexion,$sql);
                     $json = array();
                     while($filas = mysqli_fetch_array($resultado))
@@ -33,7 +33,7 @@
                             'cod_postal' => $filas_pedido['cod_postal'],
                             'telefono' => $filas_pedido['telefono'],
                             'id' => $filas['id'],
-                            'id_producto' => $filas['id_producto'],
+                            'id_producto' => $filas['cod_producto'],
                             'cod_pedido' => $filas_pedido['cod_pedido'],
                             'descripcion' => $filas['descripcion'],
                             'codigo' => $filas['codigo'],

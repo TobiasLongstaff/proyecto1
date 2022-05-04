@@ -9,7 +9,7 @@
         {
             $codigo = $_GET['codigo'];
 
-            $sql_cod_veri = "SELECT id FROM productos WHERE activo = 1 AND codigo = $codigo";
+            $sql_cod_veri = "SELECT codigo FROM productos WHERE activo = 1 AND codigo = $codigo";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')

@@ -25,7 +25,7 @@
     // }
 
     // print_r($woocommerce->get('products/9713/variations/9714'));
-    print_r($woocommerce->get('orders?per_page=35'));
+    print_r($woocommerce->get('orders?per_page=100'));
     // print_r($woocommerce->get('orders?per_page=25'));
 
     // $id_pedido_woo = '10049';

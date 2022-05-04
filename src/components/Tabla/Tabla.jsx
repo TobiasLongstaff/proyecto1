@@ -52,7 +52,7 @@ const Tabla = () =>
                         <tbody>
                             {data.map((fila) =>
                             (
-                                <tr key={fila.id}>
+                                <tr key={fila.codigo}>
                                     <td className="td-cant">{fila.cantidad}</td>
                                     <td className="td-desc">
                                         <p className="text-tabla-desc-product">

@@ -12,15 +12,15 @@
             date_default_timezone_set('America/Buenos_Aires');
             $fecha_actual = date('Y-m-d');
 
-            $id_recepcion = $datos->id_recepcion; 
+            $cod_recepcion = $datos->id_recepcion; 
             $cantidad_pallets = $datos->cant_pallets;
 
-            $sql_cod_veri = "SELECT id, cantidad FROM recepcion WHERE id = '$id_recepcion'";
+            $sql_cod_veri = "SELECT documento, cantidad FROM recepcion WHERE documento = '$cod_recepcion'";
             $resultado_cod_veri = mysqli_query($conexion, $sql_cod_veri);
             $numero_fila_cod_veri = mysqli_num_rows($resultado_cod_veri);
             if($numero_fila_cod_veri == '1')
             {
-                $sql="SELECT COUNT(id) AS pallets_cargados FROM pallets WHERE id_recepcion = '$id_recepcion' AND cargado = '1'";
+                $sql="SELECT COUNT(codigo) AS pallets_cargados FROM pallets WHERE cod_recepcion = '$cod_recepcion' AND cargado = '1'";
                 $resultado=mysqli_query($conexion,$sql);
                 $filas = mysqli_fetch_array($resultado);
                 $pallets_cargados = $filas['pallets_cargados'];

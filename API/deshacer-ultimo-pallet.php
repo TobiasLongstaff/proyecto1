@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    $sql_update="UPDATE cajas SET cargado = '0' WHERE id_pallet IN (SELECT id FROM pallets WHERE codigo = '$codigo_pallet')";
+                    $sql_update="UPDATE cajas SET cargado = '0' WHERE cod_pallet IN (SELECT codigo FROM pallets WHERE codigo = '$codigo_pallet')";
                     $resultado_update = mysqli_query($conexion, $sql_update);
                     if(!$resultado_update)
                     {
