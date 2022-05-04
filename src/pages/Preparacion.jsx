@@ -56,6 +56,28 @@ const Preparacion = () =>
         navigate('/tabla-productos')
     }
 
+    const handelBuscar = async e =>
+    {
+        console.log(e.target.value)
+        let busqueda = e.target.value
+        try
+        {
+            let res = await fetch(url+'obtener-pedidos.php?busqueda='+busqueda)
+            let datos = await res.json()
+            if(typeof datos !== 'undefined')
+            {
+                setData(datos)
+                setLoading(false)
+                console.log('fetch')
+            }
+        }
+        catch(error)
+        {
+            console.error(error)
+            setErrorCarga(true)
+        }
+    }
+
     if(!loading)
         return(
             <article>
@@ -63,6 +85,7 @@ const Preparacion = () =>
                 <main className="container-body">
                     <div className="container-form-cajas">
                         <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
+                        <input type="search" name="buscar" placeholder="Buscar pedido" className="textbox-genegal textbox-escanear-codigo animacion-1" onChange={handelBuscar} />
                         <label className="animacion-2">Pedidos Pendientes:</label>
                         <div className="animacion-1">
                             <div className="tbl-header">
@@ -76,7 +99,7 @@ const Preparacion = () =>
                                     </thead>
                                 </table>
                             </div>
-                            <div className="tbl-content">
+                            <div className="tbl-content-buscar">
                                 <table>
                                     <tbody>
                                         {data.map((fila) =>

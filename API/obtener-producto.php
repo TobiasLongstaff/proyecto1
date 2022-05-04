@@ -26,7 +26,7 @@
 
                 $sql_cant = "SELECT COUNT(productos.codigo) AS cantidad_escaneados, stock.codigo FROM productos 
                 INNER JOIN stock ON stock.codigo = productos.cod_stock
-                WHERE productos.activo = '1' AND productos.cod_stock = $cod_producto";
+                WHERE productos.activo = '1' AND productos.cod_stock = '$cod_producto'";
                 $resultado_cant = mysqli_query($conexion, $sql_cant);
                 if($filas_cant = mysqli_fetch_array($resultado_cant))
                 {

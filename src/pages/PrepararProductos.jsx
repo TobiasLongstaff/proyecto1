@@ -8,10 +8,7 @@ import Cookies from 'universal-cookie'
 import Tabla from '../components/Tabla/Tabla'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
-import pdf from "@react-pdf/renderer"
-import PdfEtiqueta from '../pages/PdfEtiqueta'
 
-const { PDFDownloadLink } = pdf
 const cookies = new Cookies()
 
 const PrepararProductos = () =>

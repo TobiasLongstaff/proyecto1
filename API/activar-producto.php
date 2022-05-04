@@ -49,7 +49,7 @@
                                 $cantidad_escaneados = $filas_cant['cantidad_escaneados'];
                             }
 
-                            $sql_cant_total = "SELECT cantidad FROM productos_pedidos WHERE id_pedido = '$id_pedido' AND cod_producto = '$cod_producto'";
+                            $sql_cant_total = "SELECT cantidad FROM productos_pedidos WHERE id_pedido = '$id_pedido' AND cod_producto = '$id_producto'";
                             $resultado_cant_total = mysqli_query($conexion, $sql_cant_total);
                             if($filas_cant_total = mysqli_fetch_array($resultado_cant_total))
                             {

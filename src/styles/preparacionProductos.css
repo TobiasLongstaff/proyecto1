@@ -13,7 +13,7 @@
     background-color: #fff;
 }
 
-.tbl-content, .tbl-content-web
+.tbl-content, .tbl-content-web, .tbl-content-buscar
 {
     height: calc(100vh - 200px);
     overflow-x: auto;
@@ -24,6 +24,11 @@
 .tbl-content
 {
     height: calc(100vh - 350px);
+}
+
+.tbl-content-buscar
+{
+    height: calc(100vh - 420px)
 }
 
 .tbl-content-web 

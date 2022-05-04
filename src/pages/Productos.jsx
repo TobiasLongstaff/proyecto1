@@ -63,6 +63,7 @@ const Productos = () =>
 
     const obtenerProducto = async () =>
     {
+        console.log(id_producto+' '+id_pedido)
         try
         {
             let res = await fetch(url+'obtener-producto.php?id_producto='+id_producto+'&id_pedido='+id_pedido)
