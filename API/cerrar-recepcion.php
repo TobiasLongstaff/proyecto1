@@ -33,6 +33,40 @@
                 }
                 else
                 {
+                    $sql_select_pallets = "SELECT codigo FROM pallets WHERE cod_recepcion = '$cod_recepcion' AND cargado = 0";
+                    $resultado_select_pallets = mysqli_query($conexion, $sql_select_pallets);
+                    while($filas_pallet = mysqli_fetch_array($resultado_select_pallets))
+                    {
+                        $cod_pallet = $filas_pallet['codigo'];
+
+                        $sql_update="UPDATE cajas SET cargado = '1' WHERE cod_pallet = '$cod_pallet' AND cargado = 0";
+                        $resultado_update = mysqli_query($conexion, $sql_update);
+                        if(!$resultado_update)
+                        {
+                            $json[] = array(
+                                'error' => '1',
+                                'mensaje' => 'Error al cargar cajas',
+                            );
+                        }
+                    }
+
+                    $sql_update_pallets="UPDATE pallets SET cargado = '1' WHERE cod_recepcion = '$cod_recepcion' AND cargado = 0";
+                    $resultado_update_pallets = mysqli_query($conexion, $sql_update_pallets);
+                    if(!$resultado_update_pallets)
+                    {
+                        $json[] = array(
+                            'error' => '1',
+                            'mensaje' => 'Error al cargar el pallet',
+                        );
+                    }
+                    else
+                    {
+                        $json[] = array(
+                            'error' => '0',
+                            'mensaje' => 'Recepcion Cerrada',
+                        );                    
+                    }
+
                     // $productos = $woocommerce->get('products');
                     // $prueba = 'S4100001A292231';
                     
@@ -53,17 +87,12 @@
                         
                         // print_r($woocommerce->put('products/'.$id_producto, $data));
                     // }
-
-                    $json[] = array(
-                        'error' => '0',
-                        'mensaje' => 'Recepcion Cerrada',
-                    );
                 }
 
                 if(!empty($cant_faltante))
                 {
                     //LOG
-                    $sql_log = "INSERT INTO log_recepcion (fecha, descripcion, id_pantallas, id_usuario, id_recepcion) VALUES ('$fecha_actual', 'Se cerró la recepción ".$cod_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario', '$cod_recepcion')";
+                    $sql_log = "INSERT INTO log_recepcion (fecha, descripcion, id_pantalla, id_usuario, cod_recepcion) VALUES ('$fecha_actual', 'Se cerró la recepción ".$cod_recepcion." con ".$cant_faltante." pallets menos', '6', '$id_usuario', '$cod_recepcion')";
                     $resultado_log = mysqli_query($conexion, $sql_log);
                     if(!$resultado_log)
                     {
