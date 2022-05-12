@@ -33,39 +33,10 @@
                 }
                 else
                 {
-                    $sql_select_pallets = "SELECT codigo FROM pallets WHERE cod_recepcion = '$cod_recepcion' AND cargado = 0";
-                    $resultado_select_pallets = mysqli_query($conexion, $sql_select_pallets);
-                    while($filas_pallet = mysqli_fetch_array($resultado_select_pallets))
-                    {
-                        $cod_pallet = $filas_pallet['codigo'];
-
-                        $sql_update="UPDATE cajas SET cargado = '1' WHERE cod_pallet = '$cod_pallet' AND cargado = 0";
-                        $resultado_update = mysqli_query($conexion, $sql_update);
-                        if(!$resultado_update)
-                        {
-                            $json[] = array(
-                                'error' => '1',
-                                'mensaje' => 'Error al cargar cajas',
-                            );
-                        }
-                    }
-
-                    $sql_update_pallets="UPDATE pallets SET cargado = '1' WHERE cod_recepcion = '$cod_recepcion' AND cargado = 0";
-                    $resultado_update_pallets = mysqli_query($conexion, $sql_update_pallets);
-                    if(!$resultado_update_pallets)
-                    {
-                        $json[] = array(
-                            'error' => '1',
-                            'mensaje' => 'Error al cargar el pallet',
-                        );
-                    }
-                    else
-                    {
-                        $json[] = array(
-                            'error' => '0',
-                            'mensaje' => 'Recepcion Cerrada',
-                        );                    
-                    }
+                    $json[] = array(
+                        'error' => '0',
+                        'mensaje' => 'Recepcion Cerrada',
+                    );                    
 
                     // $productos = $woocommerce->get('products');
                     // $prueba = 'S4100001A292231';
@@ -117,4 +88,5 @@
             echo $jsonstring;
         }
     }
+    mysqli_close($conexion);
 ?>

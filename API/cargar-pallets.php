@@ -93,4 +93,5 @@
     }
     $jsonstring = json_encode($json);
     echo $jsonstring;
+    mysqli_close($conexion);
 ?>

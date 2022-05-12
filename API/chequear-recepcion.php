@@ -53,4 +53,5 @@
             echo $jsonstring;
         }
     }
+    mysqli_close($conexion);
 ?>
