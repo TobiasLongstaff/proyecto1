@@ -23,6 +23,7 @@ import Devolucion from '../pages/Devolucion'
 import AsociarPedido from '../pages/AsociarPedido'
 import AsociarCodigo from '../pages/AsociarCodigo'
 import CajasFaltantes from '../pages/CajasFaltantes'
+import Stock from '../pages/Stock'
 
 
 function Rutas() 
@@ -53,6 +54,7 @@ function Rutas()
                 <Route exact path="asociar-pedido" element={<AsociarPedido/>} />
                 <Route exact path="asociar-codigo" element={<AsociarCodigo/>} />
                 <Route exact path="cajas-faltantes" element={<CajasFaltantes/>} />
+                <Route exact path="stock" element={<Stock/>} />
             </Routes>
         </BrowserRouter>
     )

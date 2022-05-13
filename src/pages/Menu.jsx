@@ -46,6 +46,12 @@ const Menu = () =>
                                 <label>Preparados</label>
                             </button>
                         </Link>
+                        <Link to="/stock" className="link-menu"> 
+                            <button type="button" className="btn-menu-web animacion-2">
+                                <UilBox size="50" color="#252A34"/><br/>
+                                <label>Stock</label>
+                            </button>
+                        </Link>
                     </main>
                 </article>
             )

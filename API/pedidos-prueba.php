@@ -25,14 +25,14 @@
     // }
 
     // print_r($woocommerce->get('products/9713/variations/9714'));
-    print_r($woocommerce->get('orders?per_page=100'));
+    // print_r($woocommerce->get('orders?per_page=100'));
     // print_r($woocommerce->get('orders?per_page=25'));
 
-    // $id_pedido_woo = '10049';
+    $id_pedido_woo = '11540';
     // $data_productos[] = array();
 
-    // $productos = $woocommerce->get('orders/'.$id_pedido_woo);
-    // $json = json_decode(json_encode($productos), true);
+    $productos = $woocommerce->get('orders/'.$id_pedido_woo);
+    $json = json_decode(json_encode($productos), true);
 
     // foreach ($json['line_items'] as $item)
     // {
@@ -62,25 +62,27 @@
     //     print_r($woocommerce->post('orders/batch', $data));
     // }
 
-    // $data = [
-    //     'update' => 
-    //     [
-    //         [
-    //             'id' => $id_pedido_woo,
-    //             'line_items' => 
-    //             [
-    //                 [
-    //                     'id' => '5659',
-    //                     'quantity' => '3.5'
-    //                 ],
-    //                 [
-    //                     'id' => '5659',
-    //                     'quantity' => '3.5'
-    //                 ]
-    //             ]
-    //         ]
-    //     ]
-    // ];
+    $data = [
+        'update' => 
+        [
+            [
+                'id' => $id_pedido_woo,
+                'line_items' => 
+                [
+                    [
+                        'id' => '6960',
+                        'quantity' => '3.5'
+                    ],
+                    [
+                        'id' => '6961',
+                        'quantity' => '3.5'
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    print_r($woocommerce->post('orders/batch', $data));
 
     // $datos = $woocommerce->get('products'); 
     // $json = json_decode(json_encode($datos), true);
