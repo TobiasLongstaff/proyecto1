@@ -8,7 +8,7 @@ import { UilFileCheckAlt } from '@iconscout/react-unicons'
 
 const cookies = new Cookies()
 
-const BtnControles = () =>
+const BtnControles = ({usuario}) =>
 {
     const navigate = useNavigate()
     const [form, setFrom] = useState(
@@ -21,7 +21,7 @@ const BtnControles = () =>
     {
         id_recepcion: cookies.get('id_recepcion'),
         cant_faltante: '',
-        id_usuario: cookies.get('IdSession')
+        id_usuario: usuario
     })
 
     useEffect(() =>

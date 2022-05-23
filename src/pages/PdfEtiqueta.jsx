@@ -1,32 +1,25 @@
 import React,{ useEffect, useState } from 'react'
 import ohrapampa from '../img/ohrapampa.png'
 import '../styles/etiqueta.css'
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import url from '../services/Settings'
 import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
 import QRCode from 'react-qr-code'
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const cookies = new Cookies()
 
 const PdfEtiqueta = () => 
 {
+    const { autenticacion } = useAutenticacion()
     const [data, setData] = useState([])
-    let navigate = useNavigate()
     const [ loading, setLoading ] = useState(true)
     let { id_pedido }  = useParams()
-    const idsession = cookies.get('IdSession')
 
     useEffect(() =>
     {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            fetchResource()
-        }
+        fetchResource()
     },[])
 
     const fetchResource = async () => 

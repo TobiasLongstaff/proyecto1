@@ -14,7 +14,7 @@ const Login = () =>
 
     useEffect(() => 
     {
-        if(cookies.get('IdSession'))
+        if(cookies.get('hashSession'))
         { 
             navigate('/menu')
         }
@@ -38,12 +38,11 @@ const Login = () =>
             let res = await fetch(url+'login.php', config)
             let infoPost = await res.json()
             console.log(infoPost[0])
-            if(infoPost[0].id != null)
+            if(infoPost[0].error == '0')
             {
-                cookies.set('IdSession', infoPost[0].id, {path: '/'})
+                cookies.set('hashSession', infoPost[0].hash, {path: '/'})
                 cookies.set('nombre', infoPost[0].nombre, {path: '/'})
                 cookies.set('mail', form.mail, {path: '/'})
-                cookies.set('tipo', infoPost[0].tipo, {path: '/'})
                 navigate('/menu')
             }
             else

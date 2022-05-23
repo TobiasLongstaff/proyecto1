@@ -4,30 +4,22 @@ import Cookies from 'universal-cookie'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
-import { useNavigate } from 'react-router-dom'
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import Loading from '../components/Loading/Loading'
 
 const cookies = new Cookies()
 
 const Eliminar = () =>
 {
     const textboxCodigo = React.createRef()
+    const { autenticacion } = useAutenticacion()
     const [form, setForm] = useState({ cod_producto: '' })
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
     
     useEffect(() =>
     {
-        if(idsession == null)
+        if(form.cod_producto.length === 14 && textboxCodigo.current.value.length === 14)
         {
-            navigate('/')
-        }
-        else
-        {
-            textboxCodigo.current.focus()
-            if(form.cod_producto.length === 14 && textboxCodigo.current.value.length === 14)
-            {
-                deshacerProducto()
-            }
+            deshacerProducto()
         }
     }, [ form ])
 
@@ -81,19 +73,32 @@ const Eliminar = () =>
         })
     }
 
+    if(autenticacion.autenticado)
+        return(
+            <article>
+                <Nav titulo="Eliminar producto"/>
+                <main className="container-body">
+                    <form className="container-form-eliminar">
+                        <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
+                        <input 
+                            ref={textboxCodigo} 
+                            autoComplete="off" 
+                            type="text" 
+                            className="textbox-genegal textbox-escanear-codigo animacion-2" 
+                            name="cod_producto" 
+                            onChange={handelChange} 
+                            placeholder="Escanear Codigo"
+                            autoFocus
+                        />
+                        <footer className="container-controles">
+                            <BtnVolver volver="/preparar-productos"/>
+                        </footer>
+                    </form>
+                </main>
+            </article>     
+        )
     return(
-        <article>
-            <Nav titulo="Eliminar producto"/>
-            <main className="container-body">
-                <form className="container-form-eliminar">
-                    <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                    <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo"/>
-                    <footer className="container-controles">
-                        <BtnVolver volver="/preparar-productos"/>
-                    </footer>
-                </form>
-            </main>
-        </article>     
+        <Loading/>
     )
 }
 

@@ -1,5 +1,4 @@
-import React, {useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, {useState, useEffect, useRef } from 'react'
 import Nav from '../components/Navegacion/Nav'
 import SvgBox from '../img/box-solid.svg'
 import '../styles/cajas.css'
@@ -9,15 +8,19 @@ import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
 import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const cookies = new Cookies()
 
 const Cajas = () =>
 {
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
-    const textboxCodigo = React.createRef()
-    const [form, setForm] = useState({ cod_caja: cookies.get('cod_caja'), id_recepcion: cookies.get('id_recepcion') })
+    const { autenticacion } = useAutenticacion()
+    const textboxCodigo = useRef()
+    const [form, setForm] = useState(
+    { 
+        cod_caja: cookies.get('cod_caja'), 
+        id_recepcion: cookies.get('id_recepcion') 
+    })
     const infoCajaInicial =
     { 
         descripcion: cookies.get('descripcion_caja'), 
@@ -27,18 +30,6 @@ const Cajas = () =>
         cod_pallet: cookies.get('cod_pallet_caja')
     }
     const [infoCaja, setCaja] = useState(infoCajaInicial)
-
-    useEffect(() =>
-    {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            textboxCodigo.current.focus()
-        }
-    })
 
     useEffect(() =>
     {
@@ -144,14 +135,23 @@ const Cajas = () =>
         })
     }
 
-    if(idsession)
+    if(autenticacion.autenticado)
         return(
             <article>
                 <Nav titulo="Cajas"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
                         <label className="animacion-1">Codigo Caja: {form.cod_caja}</label>
-                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <input 
+                            ref={textboxCodigo} 
+                            autoComplete="off" 
+                            type="text" 
+                            className="textbox-genegal textbox-escanear-codigo animacion-1" 
+                            name="cod_caja" 
+                            onChange={handelChange} 
+                            placeholder="Escanear Codigo" 
+                            autoFocus
+                        />
                         <label className="animacion-1">Codigo Pallet: {infoCaja.cod_pallet}</label>
                         <p className="animacion-1">Descripcion: {infoCaja.descripcion}</p>
                         <label className="animacion-1">Kilos: {infoCaja.kilos}</label>
@@ -166,7 +166,7 @@ const Cajas = () =>
                             </div>
                         </div>
                         <BtnDeshacer pantalla="caja" codigo={form.cod_caja}/>
-                        <BtnControles/>
+                        <BtnControles usuario={autenticacion.id} />
                     </form>
                 </main>
             </article>

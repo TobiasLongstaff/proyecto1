@@ -24,10 +24,9 @@ const BtnCerrarSesion = ({color}) =>
         {
             if(result.isConfirmed) 
             {
-                cookies.remove('IdSession');
-                cookies.remove('nombre');
-                cookies.remove('mail');
-                cookies.remove('tipo');
+                cookies.remove('hashSession')
+                cookies.remove('nombre')
+                cookies.remove('mail')
                 navigate('/')
             }
         })

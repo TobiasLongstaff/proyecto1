@@ -8,13 +8,13 @@ import Loading from '../components/Loading/Loading'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import SvgBox from '../img/box-solid.svg'
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const cookies = new Cookies()
 
 const Productos = () =>
 {
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
+    const { autenticacion } = useAutenticacion()
     let id_producto = cookies.get('id_producto')
     let id_pedido = cookies.get('id_pedido')
     const textboxCodigo = React.createRef()
@@ -31,29 +31,18 @@ const Productos = () =>
 
     useEffect(() =>
     {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            if(textboxCodigo.current.value == '')
-            {
-                textboxCodigo.current.focus()
-            }
-            obtenerProducto()
-        }
+        obtenerProducto()
     },[])
 
     useEffect(() =>
     {
-        if(form.cod_producto.length === 14 && textboxCodigo.current.value != '')
+        if(form.cod_producto.length === 14 && form.cod_producto != '')
         {
             activarProducto()
         }
         else
         {
-            if(form.cod_producto.length > 14 || form.cod_producto.length < 14 && textboxCodigo.current.value != '')
+            if(form.cod_producto.length > 14 || form.cod_producto.length < 14 && form.cod_producto != '')
             {
                 textboxCodigo.current.value = ''
                 textboxCodigo.current.focus()
@@ -150,14 +139,25 @@ const Productos = () =>
         })
     }
 
-    if(idsession)
+    if(autenticacion.autenticado)
         return(
             <article>
                 <Nav titulo="Producto"/>
                 <main className="container-body">
                     <div className="container-form-cajas">
                         <label className="animacion-1">Codigo Producto: {producto.cod_producto}</label>
-                        <input type="text" autoComplete="off" ref={textboxCodigo} className="textbox-genegal textbox-escanear-codigo animacion-1" name="cod_producto" onChange={handelChange} placeholder="Escanear Codigo" required/>
+                        <input 
+                            type="text" 
+                            autoComplete="off" 
+                            ref={textboxCodigo} 
+                            className="textbox-genegal textbox-escanear-codigo animacion-1" 
+                            name="cod_producto" 
+                            onChange={handelChange} 
+                            placeholder="Escanear Codigo" 
+                            required
+                            autoFocus
+                            value={form.cod_producto}
+                        />
                         <p className="animacion-1">Desc: {producto.descripcion}</p>
                         <label className="animacion-1">Fecha Vencimiento: {producto.vencimiento}</label>
                         <label className="animacion-1">Peso: {producto.peso}</label>

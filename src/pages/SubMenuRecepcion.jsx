@@ -1,32 +1,16 @@
-import React, { useEffect } from 'react'
-import { UilSetting, UilTruckLoading, UilBox } from '@iconscout/react-unicons'
-import { Link, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { UilTruckLoading, UilBox } from '@iconscout/react-unicons'
+import { Link } from 'react-router-dom'
 import '../styles/menu.css'
 import BtnCerrarSesion from '../components/BtnCerrarSesion/BtnCerrarSesion'
-import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
-
-const cookies = new Cookies()
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const SubMenuRecepcion = () =>
 {
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
-    const idrecepcion = cookies.get('id_recepcion')
+    const { autenticacion } = useAutenticacion()
 
-    useEffect(() =>
-    {
-        if(idsession == null)
-        { 
-            navigate('/')
-        }
-        else if (idrecepcion == null)
-        { 
-            navigate('/menu')
-        }
-    })
-
-    if(idsession)
+    if(autenticacion.autenticado)
         return(
             <article>
                 <nav className="animacion-1">

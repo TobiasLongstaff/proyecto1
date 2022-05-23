@@ -37,7 +37,7 @@
                     {
                         $json[] = array(
                             'error' => '1',
-                            'mensaje' => 'Error al cargar el pallet',
+                            'mensaje' => 'Error consultar con soporte',
                         );
                     }
                     else

@@ -1,37 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/recepcion.css'
 import Nav from '../components/Navegacion/Nav'
-import BtnVolver from "../components/BtnVolver/BtnVolver";
+import BtnVolver from "../components/BtnVolver/BtnVolver"
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Loading from '../components/Loading/Loading'
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import { useFecha } from '../hooks/useFecha'
 
 const cookies = new Cookies()
 
 const Recepcion = () =>
 {
     let navigate = useNavigate()
-    const [ form, setForm ] = useState({num_doc: '', fecha_doc: '', fecha_llegada: cookies.get('fecha_actual'), observacion: '', id_user: cookies.get('IdSession')})
-    const idsession = cookies.get('IdSession')
-    const textboxCodigo = React.createRef()
-
-    useEffect(() =>
+    const { autenticacion } = useAutenticacion()
+    const { fecha } = useFecha()
+    const [ form, setForm ] = useState(
     {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            fecha_actual()
-            if(textboxCodigo.current.value == '')
-            {
-                textboxCodigo.current.focus()
-            }
-        }
-    },[])
+        num_doc: '', 
+        fecha_doc: '', 
+        fecha_llegada: '', 
+        observacion: '', 
+        id_user: ''
+    })
 
     const handelSubmit = async e =>
     {
@@ -83,42 +76,59 @@ const Recepcion = () =>
         setForm(
         {
             ...form,
+            fecha_llegada: fecha, 
+            id_user: autenticacion.id,
             [e.target.name]: e.target.value
         })
     }
 
-    const fecha_actual = () =>
-    {
-        let newDate = new Date()
-        let date = newDate.getDate();
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-        let fecha = `${year}-${month<10?`0${month}`:`${month}`}-${date<10?`0${date}`:`${date}`}`
-        cookies.set('fecha_actual', fecha, {path: '/'})
-        setForm(
-        {
-            ...form,
-            fecha_llegada: fecha
-        })
-    }
-
-    if(idsession)
+    if(autenticacion.autenticado)
         return(
             <article>
                 <Nav titulo="Recepcion"/>
                 <main className="container-body">
                     <form className="container-form" onSubmit={handelSubmit}>
                         <label className="text-usuario animacion-1">Usuario: {cookies.get('nombre')}</label>
-                        <input type="text" autoComplete="off" ref={textboxCodigo} className="animacion-1 textbox-genegal textbox-escanear-codigo" name="num_doc" placeholder="N° Documento" onChange={handelChange} value={form.num_doc} required/>
+                        <input 
+                            type="text" 
+                            autoComplete="off" 
+                            className="animacion-1 textbox-genegal textbox-escanear-codigo" 
+                            name="num_doc" 
+                            placeholder="N° Documento" 
+                            onChange={handelChange} 
+                            value={form.num_doc} 
+                            required 
+                            autoFocus
+                        />
                         <div className="animacion-1">
                             <label>Fecha del documento</label>
-                            <input type="date" autoComplete="off" className="textbox-genegal" name="fecha_doc" onChange={handelChange} value={form.fecha_doc} required/>                    
+                            <input 
+                                type="date" 
+                                autoComplete="off" 
+                                className="textbox-genegal" 
+                                name="fecha_doc" 
+                                onChange={handelChange} 
+                                value={form.fecha_doc} 
+                                required
+                            />                    
                         </div>
                         <div className="animacion-1">
                             <label>Fecha de llegada</label>
-                            <input type="date" className="textbox-genegal" value={cookies.get('fecha_actual')} disabled required/>                    
+                            <input 
+                                type="date" 
+                                className="textbox-genegal" 
+                                value={fecha} 
+                                disabled 
+                                required/>                    
                         </div>
-                        <textarea autoComplete="off" className="textbox-genegal textarea-general animacion-1" name="observacion" placeholder="Observacion" onChange={handelChange} value={form.observacion}></textarea>     
+                        <textarea 
+                            autoComplete="off" 
+                            className="textbox-genegal textarea-general animacion-1" 
+                            name="observacion" 
+                            placeholder="Observacion" 
+                            onChange={handelChange} 
+                            value={form.observacion}
+                        ></textarea>     
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>
                             <button type="submit" className="btn-continuar btn-controles animacion-3">Continuar</button> 

@@ -5,28 +5,21 @@ import url from '../services/Settings'
 import BtnVolver from '../components/BtnVolver/BtnVolver';
 import Cookies from 'universal-cookie'
 import { useNavigate } from 'react-router-dom'
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const cookies = new Cookies()
 
 const Preparacion = () =>
 {
     let navigate = useNavigate()
-
+    const { autenticacion } = useAutenticacion()
     const [data, setData] = useState([])
     const [ loading, setLoading ] = useState(true)
     const [ errorCarga, setErrorCarga ] = useState(false)
-    const idsession = cookies.get('IdSession')
 
     useEffect(() =>
     {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            fetchResource()
-        }
+        fetchResource()
     },[])
 
     const fetchResource = async () => 

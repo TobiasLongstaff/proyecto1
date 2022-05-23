@@ -1,5 +1,4 @@
-import React, {useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, {useState, useEffect, useRef } from 'react'
 import Nav from '../components/Navegacion/Nav'
 import SvgBox from '../img/box-solid.svg'
 import '../styles/cajas.css'
@@ -9,29 +8,17 @@ import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import BtnControles from '../components/BtnControles/BtnControles'
 import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
+import { useAutenticacion } from '../hooks/useAutenticacion'
 
 const cookies = new Cookies()
 
 const Pallets = () =>
 {
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
-    const textboxCodigo = React.createRef()
+    const { autenticacion } = useAutenticacion()
+    const textboxCodigo = useRef()
     const [form, setForm] = useState({ cod_pallet: cookies.get('cod_pallet'), id_recepcion: cookies.get('id_recepcion') })
     const [infoCaja, setCaja] = useState({ cantidad: cookies.get('cantidad_caja_pallet') }) 
     const [ultimoPallet, setPallet] = useState(cookies.get('cod_pallet'))
-
-    useEffect(() =>
-    {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            textboxCodigo.current.focus()
-        }
-    })
 
     useEffect(() =>
     {
@@ -137,14 +124,23 @@ const Pallets = () =>
         })
     }
 
-    if(idsession)
+    if(autenticacion.autenticado)
         return(
             <article>
                 <Nav titulo="Pallets"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
                         <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_pallet" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <input 
+                            ref={textboxCodigo} 
+                            autoComplete="off" 
+                            type="text" 
+                            className="textbox-genegal textbox-escanear-codigo animacion-2" 
+                            name="cod_pallet" 
+                            onChange={handelChange} 
+                            placeholder="Escanear Codigo"
+                            autoFocus
+                        />
                         <label className="animacion-2">Pallet cargado: {ultimoPallet}</label>
                         <label className="animacion-2">Cantitad de cajas:</label>
                         <div className="container-contador-caja animacion-2">

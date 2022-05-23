@@ -13,6 +13,11 @@
                 $id_usuario = $_GET['id'];
                 $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios WHERE id = '$id_usuario'";
             }
+            elseif(isset($_GET['hash']))
+            {
+                $hash = $_GET['hash'];
+                $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios WHERE hash = '$hash'";
+            }
             else
             {
                 $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios";

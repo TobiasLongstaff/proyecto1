@@ -1,37 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import Cookies from 'universal-cookie'
-import Loading from '../components/Loading/Loading'
+import { useParams } from 'react-router-dom'
 import NavDektop from '../components/NavegacionDesktop/NavDesktop'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
-
-const cookies = new Cookies()
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import Loading from '../components/Loading/Loading'
 
 const AprobarUsuarios = () =>
 {
     let { mail, hash, nombre } = useParams()
-    const idsession = cookies.get('IdSession')
-    let navigate = useNavigate()
+    const { autenticacion } = useAutenticacion()
     const permisos = React.createRef()
 
     const [form, setForm] = useState({ mail: mail, hash: hash, permisos: ''})
-
-    useEffect(() =>
-    {
-        if(idsession == null)
-        { 
-            navigate('/')
-        }
-        else
-        {
-            if(cookies.get('tipo') != 'admin')
-            {
-                navigate('/menu')
-            }
-            
-        }
-    })
 
     const handelSubmit = e =>
     {
@@ -110,23 +91,27 @@ const AprobarUsuarios = () =>
         })
     }
 
+    if(autenticacion.autenticado)
+        return(
+            <article>
+                <NavDektop titulo="Aprobar Usuario"/>
+                <main className="container-aprobar-usuario">
+                    <form className="form-aprobar-usuario animacion-2" onSubmit={handelSubmit}>
+                        <label>Nombre y Apellido: {nombre}</label>
+                        <label>E-Mail: {mail}</label>
+                        <label>Hash: {hash}</label>
+                        <label>Seleccionar privilegios del usuario:</label>
+                        <select ref={permisos} className="select-general select-aprobar-usuario" name="permisos" onChange={handelChange} required>
+                            <option value="handheld">Handheld</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                        <button type="submit" className="btn-general-login btn-login">Aprobar</button>
+                    </form>
+                </main>
+            </article>
+        )
     return(
-        <article>
-            <NavDektop titulo="Aprobar Usuario"/>
-            <main className="container-aprobar-usuario">
-                <form className="form-aprobar-usuario animacion-2" onSubmit={handelSubmit}>
-                    <label>Nombre y Apellido: {nombre}</label>
-                    <label>E-Mail: {mail}</label>
-                    <label>Hash: {hash}</label>
-                    <label>Seleccionar privilegios del usuario:</label>
-                    <select ref={permisos} className="select-general select-aprobar-usuario" name="permisos" onChange={handelChange} required>
-                        <option value="handheld">Handheld</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                    <button type="submit" className="btn-general-login btn-login">Aprobar</button>
-                </form>
-            </main>
-        </article>
+        <Loading/>
     )
 }
 

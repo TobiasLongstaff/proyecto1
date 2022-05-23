@@ -5,6 +5,8 @@ import BtnVolver from '../components/BtnVolver/BtnVolver'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import url from '../services/Settings'
 import { useNavigate } from 'react-router-dom'
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import Loading from '../components/Loading/Loading'
 
 const cookies = new Cookies()
 
@@ -13,25 +15,18 @@ const AsociarCodigo = () =>
     const textboxCodigo = React.createRef()
     const [form, setForm] = useState({ cod_caja: '' })
     let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
+    const { autenticacion } = useAutenticacion() 
 
     useEffect(() =>
     {
-        if(idsession == null)
+        textboxCodigo.current.focus()
+        if(form.cod_caja.length >= 8)
         {
-            navigate('/')
+            AsociarCodigo()
         }
         else
         {
-            textboxCodigo.current.focus()
-            if(form.cod_caja.length >= 8)
-            {
-                AsociarCodigo()
-            }
-            else
-            {
-                textboxCodigo.current.value = ''
-            }
+            textboxCodigo.current.value = ''
         }
     }, [ form ])
 
@@ -86,19 +81,23 @@ const AsociarCodigo = () =>
         })
     }
 
+    if(autenticacion.autenticado)
+        return(
+            <article>
+                <Nav titulo="Asociar Codigo"/>
+                <main className="container-body">
+                    <form className="container-form-eliminar">
+                        <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
+                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <footer className="container-controles">
+                            <BtnVolver volver="/asociar-pedido"/>
+                        </footer>
+                    </form>
+                </main>
+            </article>
+        )
     return(
-        <article>
-            <Nav titulo="Asociar Codigo"/>
-            <main className="container-body">
-                <form className="container-form-eliminar">
-                    <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                    <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
-                    <footer className="container-controles">
-                        <BtnVolver volver="/asociar-pedido"/>
-                    </footer>
-                </form>
-            </main>
-        </article>
+        <Loading/>
     )
 }
 

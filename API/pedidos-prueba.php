@@ -28,11 +28,8 @@
     // print_r($woocommerce->get('orders?per_page=100'));
     // print_r($woocommerce->get('orders?per_page=25'));
 
-    $id_pedido_woo = '11540';
+    $id_pedido_woo = '11546';
     // $data_productos[] = array();
-
-    $productos = $woocommerce->get('orders/'.$id_pedido_woo);
-    $json = json_decode(json_encode($productos), true);
 
     // foreach ($json['line_items'] as $item)
     // {
@@ -62,6 +59,8 @@
     //     print_r($woocommerce->post('orders/batch', $data));
     // }
 
+
+
     $data = [
         'update' => 
         [
@@ -70,12 +69,15 @@
                 'line_items' => 
                 [
                     [
-                        'id' => '6960',
-                        'quantity' => '3.5'
-                    ],
-                    [
-                        'id' => '6961',
-                        'quantity' => '3.5'
+                        'id' => 6963,
+                        'meta_data' =>
+                        [
+                            [
+                                'id' => 52884,
+                                'key' => 'peso recalculado',
+                                'value' => 3.5,                                  
+                            ]
+                        ]                        
                     ]
                 ]
             ]
@@ -83,6 +85,11 @@
     ];
 
     print_r($woocommerce->post('orders/batch', $data));
+    
+    // $productos = $woocommerce->get('orders/'.$id_pedido_woo);
+    // print_r($json = json_decode(json_encode($productos), true));
+
+
 
     // $datos = $woocommerce->get('products'); 
     // $json = json_decode(json_encode($datos), true);

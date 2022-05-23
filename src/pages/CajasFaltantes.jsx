@@ -4,7 +4,8 @@ import BtnVolver from '../components/BtnVolver/BtnVolver'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Cookies from 'universal-cookie'
 import url from '../services/Settings'
-import { useNavigate } from 'react-router-dom'
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import Loading from '../components/Loading/Loading'
 
 const cookies = new Cookies()
 
@@ -12,22 +13,13 @@ const CajasFaltantes = () =>
 {
     const textboxCodigo = useRef()
     const [form, setForm] = useState({ cod_caja: '' })
-    let navigate = useNavigate()
-    const idsession = cookies.get('IdSession')
+    const { autenticacion } = useAutenticacion()
 
     useEffect(() =>
     {
-        if(idsession == null)
+        if(textboxCodigo.current.value.length >= 8)
         {
-            navigate('/')
-        }
-        else
-        {
-            textboxCodigo.current.focus()
-            if(textboxCodigo.current.value.length >= 8)
-            {
-                devolucion()
-            }
+            devolucion()
         }
     }, [ form ])
 
@@ -81,19 +73,32 @@ const CajasFaltantes = () =>
         })
     }
 
+    if(autenticacion.autenticado)
+        return(
+            <article>
+                <Nav titulo="Cajas Faltantes"/>
+                <main className="container-body">
+                    <form className="container-form-eliminar">
+                        <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
+                        <input 
+                            ref={textboxCodigo} 
+                            autoComplete="off" 
+                            type="text" 
+                            className="textbox-genegal textbox-escanear-codigo animacion-2" 
+                            name="cod_caja" 
+                            onChange={handelChange} 
+                            placeholder="Escanear Caja"
+                            autoFocus
+                        />
+                        <footer className="container-controles">
+                            <BtnVolver volver="/menu"/>
+                        </footer>
+                    </form>
+                </main>
+            </article>
+        )
     return(
-        <article>
-            <Nav titulo="Cajas Faltantes"/>
-            <main className="container-body">
-                <form className="container-form-eliminar">
-                    <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                    <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Caja"/>
-                    <footer className="container-controles">
-                        <BtnVolver volver="/menu"/>
-                    </footer>
-                </form>
-            </main>
-        </article>
+        <Loading/>
     )
 }
 

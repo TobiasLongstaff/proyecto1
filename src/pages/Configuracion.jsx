@@ -1,42 +1,23 @@
 import React,{ useEffect, useState } from 'react'
 import NavDesktop from '../components/NavegacionDesktop/NavDesktop'
-import { useNavigate } from "react-router-dom";
 import url from '../services/Settings'
-import Cookies from 'universal-cookie'
 import { UilTrashAlt, UilEditAlt} from '@iconscout/react-unicons'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
-
-const cookies = new Cookies()
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import Loading from '../components/Loading/Loading'
 
 const Configuracion = () =>
 {
-
+    const { autenticacion } = useAutenticacion()
     const [data, setData] = useState([])
-    let navigate = useNavigate()
     const [ loading, setLoading ] = useState(true)
-    const idsession = cookies.get('IdSession')
     const key = 'c52f1bd66cc19d05628bd8bf27af3ad6'
     const [ form, setForm ] = useState({ nombre: '', mail: '', permisos: '', id: ''})
     const [ MensajeError, setError ] = useState(null)
-    const tipo = cookies.get('tipo')
 
     useEffect(() =>
     {
-        if(idsession == null)
-        {
-            navigate('/')
-        }
-        else
-        {
-            if(tipo != 'admin')
-            {
-                navigate('/menu')
-            }
-            else
-            {
-                fetchResource()                    
-            }
-        }
+        fetchResource()                    
     },[])
 
     const fetchResource = async () => 
@@ -190,70 +171,73 @@ const Configuracion = () =>
             [e.target.name]: e.target.value
         })
     }
-
-    return(
-        <article>
-            <NavDesktop titulo="Configuracion"/>
-            <main className="container-page-web-productos-preparados">
-                <form className="container-from-usuarios" onSubmit={handelSubmit}>
-                    <h1 className="animacion-1">Editar Usuario</h1>
-                    <input type="text" className="textbox-genegal animacion-1" name="nombre" placeholder="Nombre Apellido" onChange={handelChange} value={form.nombre} required/>
-                    <input type="email" className="textbox-genegal animacion-2" name="mail" placeholder="E-Mail" onChange={handelChange} value={form.mail} required/>
-                    <select value={form.permisos} className="select-general select-aprobar-usuario animacion-2" name="permisos" onChange={handelChange} required>
-                        <option value="handheld">Handheld</option>
-                        <option value="estandar">Estandar</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                    <label className="text-error">{MensajeError}</label>
-                    <button type="submit" className="btn-login btn-general-login animacion-3">Editar usuario</button>
-                </form>
-                <div>
-                    <div className="tbl-header-web">
-                        <table>
-                            <thead>
-                                <tr className="tr-head-web">
-                                    <th className="th-cod">#</th>
-                                    <th>Nombre y Apellido</th>
-                                    <th>E-Mail</th>
-                                    <th>Permisos</th>
-                                    <th className="th-controles">Controles</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div className="tbl-content-web">
-                        <table>
-                            <tbody>
-                                { loading ? (
-                                    <tr className="tr-load">
-                                        <td><div className="loader">Loading...</div></td>
+    if(autenticacion.autenticado)
+        return(
+            <article>
+                <NavDesktop titulo="Configuracion"/>
+                <main className="container-page-web-productos-preparados">
+                    <form className="container-from-usuarios" onSubmit={handelSubmit}>
+                        <h1 className="animacion-1">Editar Usuario</h1>
+                        <input type="text" className="textbox-genegal animacion-1" name="nombre" placeholder="Nombre Apellido" onChange={handelChange} value={form.nombre} required/>
+                        <input type="email" className="textbox-genegal animacion-2" name="mail" placeholder="E-Mail" onChange={handelChange} value={form.mail} required/>
+                        <select value={form.permisos} className="select-general select-aprobar-usuario animacion-2" name="permisos" onChange={handelChange} required>
+                            <option value="handheld">Handheld</option>
+                            <option value="estandar">Estandar</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                        <label className="text-error">{MensajeError}</label>
+                        <button type="submit" className="btn-login btn-general-login animacion-3">Editar usuario</button>
+                    </form>
+                    <div>
+                        <div className="tbl-header-web">
+                            <table>
+                                <thead>
+                                    <tr className="tr-head-web">
+                                        <th className="th-cod">#</th>
+                                        <th>Nombre y Apellido</th>
+                                        <th>E-Mail</th>
+                                        <th>Permisos</th>
+                                        <th className="th-controles">Controles</th>
                                     </tr>
-                                    ): (
-                                        data.map((fila) =>
-                                        (
-                                            <tr key={fila.id} className="tr-web">
-                                                <td className="td-cod">{fila.id}</td>
-                                                <td><p>{fila.nombre}</p></td>
-                                                <td><p>{fila.mail}</p></td>
-                                                <td>{fila.tipo}</td>
-                                                <td className="td-controles">
-                                                    <button className="btn-tabla-controles btn-editar">
-                                                        <UilEditAlt size="25" color="white" onClick={() =>handelEditar(fila.id)}/>
-                                                    </button>
-                                                    <button className="btn-tabla-controles btn-eliminar" onClick={() =>handelEliminar(fila.id)}>
-                                                        <UilTrashAlt size="30" color="white"/>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                    </div>                    
-                </div>
-            </main>
-        </article>
+                                </thead>
+                            </table>
+                        </div>
+                        <div className="tbl-content-web">
+                            <table>
+                                <tbody>
+                                    { loading ? (
+                                        <tr className="tr-load">
+                                            <td><div className="loader">Loading...</div></td>
+                                        </tr>
+                                        ): (
+                                            data.map((fila) =>
+                                            (
+                                                <tr key={fila.id} className="tr-web">
+                                                    <td className="td-cod">{fila.id}</td>
+                                                    <td><p>{fila.nombre}</p></td>
+                                                    <td><p>{fila.mail}</p></td>
+                                                    <td>{fila.tipo}</td>
+                                                    <td className="td-controles">
+                                                        <button className="btn-tabla-controles btn-editar">
+                                                            <UilEditAlt size="25" color="white" onClick={() =>handelEditar(fila.id)}/>
+                                                        </button>
+                                                        <button className="btn-tabla-controles btn-eliminar" onClick={() =>handelEliminar(fila.id)}>
+                                                            <UilTrashAlt size="30" color="white"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+                        </div>                    
+                    </div>
+                </main>
+            </article>
+        )
+    return(
+        <Loading/>
     )
 }
 
