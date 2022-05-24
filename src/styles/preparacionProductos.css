@@ -23,12 +23,12 @@
 
 .tbl-content
 {
-    height: calc(100vh - 350px);
+    height: calc(100vh - 300px);
 }
 
 .tbl-content-buscar
 {
-    height: calc(100vh - 420px)
+    height: calc(100vh - 370px)
 }
 
 .tbl-content-web 

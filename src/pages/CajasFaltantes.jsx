@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from '../components/Navegacion/Nav'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
@@ -11,13 +11,12 @@ const cookies = new Cookies()
 
 const CajasFaltantes = () =>
 {
-    const textboxCodigo = useRef()
     const [form, setForm] = useState({ cod_caja: '' })
     const { autenticacion } = useAutenticacion()
 
     useEffect(() =>
     {
-        if(textboxCodigo.current.value.length >= 8)
+        if(form.cod_caja.length >= 8)
         {
             devolucion()
         }
@@ -81,7 +80,6 @@ const CajasFaltantes = () =>
                     <form className="container-form-eliminar">
                         <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
                         <input 
-                            ref={textboxCodigo} 
                             autoComplete="off" 
                             type="text" 
                             className="textbox-genegal textbox-escanear-codigo animacion-2" 
@@ -89,6 +87,7 @@ const CajasFaltantes = () =>
                             onChange={handelChange} 
                             placeholder="Escanear Caja"
                             autoFocus
+                            value={form.cod_caja}
                         />
                         <footer className="container-controles">
                             <BtnVolver volver="/menu"/>

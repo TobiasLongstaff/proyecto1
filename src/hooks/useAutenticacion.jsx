@@ -8,21 +8,13 @@ const cookie = new Cookies
 export const useAutenticacion = () =>
 {
     let navigate = useNavigate()
-    const location = useLocation();
+    const location = useLocation()
     const [autenticacion, setAutenticacion] = useState({autenticado: false, tipo: '', id: ''})
     var hash = cookie.get('hashSession')
 
     useEffect(() =>
     {
-        if(hash != null)
-        {
-            verificarUsuario()
-        }
-        else
-        {
-            navigate('/')
-        }
-        
+        (hash != null) ? verificarUsuario() : navigate('/')
     },[])
 
     const verificarUsuario = async () =>
@@ -35,24 +27,18 @@ export const useAutenticacion = () =>
             {
                 if(location.pathname == '/opciones-recepcion')
                 {
-                    if(cookie.get('id_recepcion') == null)
-                    {
-                        navigate('/menu')
-                    }
+                    if(cookie.get('id_recepcion') == null){ navigate('/menu') }
                 }
                 else if(location.pathname == '/aprobar-usuarios' || location.pathname == '/configuracion')
                 {
-                    if(usuario[0].tipo !== 'admin')
-                    {
-                        navigate('/menu')
-                    }
+                    if(usuario[0].tipo !== 'admin'){ navigate('/menu') }
                 }
-
+                else if(location.pathname == '/'){ navigate('/menu') }
                 setAutenticacion({
                     autenticado: true,
                     tipo: usuario[0].tipo,
                     id: usuario[0].id
-                })   
+                }) 
             }
         }
         catch(error)

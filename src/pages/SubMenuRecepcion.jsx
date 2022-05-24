@@ -17,10 +17,9 @@ const SubMenuRecepcion = () =>
                     <BtnCerrarSesion color="#252A34"/>
                     <h1>Opciones</h1>
                     <button type="button" className="btn-nav-menu">
-                        {/* <UilSetting size="32" color="#252A34"/> */}
                     </button>
                 </nav>
-                <main className="container-menu-options">
+                <main className="container-menu-options-horizontal">
                     <Link to="/pallets"> 
                         <button type="button" className="btn-menu animacion-2">
                             <UilTruckLoading size="50" color="#252A34"/><br/>

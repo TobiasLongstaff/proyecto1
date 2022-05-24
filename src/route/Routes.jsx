@@ -31,13 +31,17 @@ function Rutas()
     return (
         <BrowserRouter>
             <Routes>
+                {/* Usuario */}
                 <Route exact path="/" element={<Login/>} />
-                <Route exact path="menu" element={<Menu/>} /> 
-                <Route exact path="opciones-recepcion" element={<SubMenuRecepcion/>} />    
                 <Route exact path="registrarse" element={<Registro/>} /> 
+                <Route exact path="menu" element={<Menu/>} /> 
+                {/* Recepcion */}
                 <Route exact path="recepcion" element={<Recepcion/>} />
-                <Route exact path="cajas" element={<Cajas/>} />
+                <Route exact path="opciones-recepcion" element={<SubMenuRecepcion/>} />    
+                {/* --Op */}
                 <Route exact path="pallets" element={<Pallets/>} />
+                <Route exact path="cajas" element={<Cajas/>} />
+                
                 <Route exact path="productos" element={<Productos/>} />
                 <Route exact path="preparar-productos" element={<PrepararProductos/>} />
                 <Route exact path="preparacion" element={<Preparacion/>} />

@@ -1,7 +1,7 @@
 .container-controles
 {
     position: absolute;
-    bottom: -110px;
+    bottom: -100px;
     display: flex;
     justify-content: space-between;
     width: 100%;

@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import '../styles/recepcion.css'
 import Nav from '../components/Navegacion/Nav'
 import BtnVolver from "../components/BtnVolver/BtnVolver"
 import Cookies from 'universal-cookie'
-import url from '../services/Settings'
-import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Loading from '../components/Loading/Loading'
 import { useAutenticacion } from '../hooks/useAutenticacion'
 import { useFecha } from '../hooks/useFecha'
+import { useRecepcion } from '../hooks/useRecepcion'
 
 const cookies = new Cookies()
 
 const Recepcion = () =>
 {
-    let navigate = useNavigate()
     const { autenticacion } = useAutenticacion()
     const { fecha } = useFecha()
+    const { recepcion } = useRecepcion()
     const [ form, setForm ] = useState(
     {
         num_doc: '', 
@@ -26,49 +24,10 @@ const Recepcion = () =>
         id_user: ''
     })
 
-    const handelSubmit = async e =>
+    const handelSubmit = e =>
     {
-        console.log(form)
         e.preventDefault()
-        try
-        {
-            let config =
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-            let res = await fetch(url+'recepcion.php', config)
-            let infoPost = await res.json()
-            console.log(infoPost[0])
-            if(infoPost[0].mensaje == 'Recepcion creada')
-            {
-                cookies.set('id_recepcion', infoPost[0].id_recepcion, {path: '/'})
-                cookies.set('cantidad_pallets', infoPost[0].cantidad_pallets, {path: '/'})
-                navigate('/opciones-recepcion')
-            }
-            else
-            {
-                Swal.fire(
-                    'Error',
-                    infoPost[0].mensaje,
-                    'error'
-                )
-            }
-        }
-        catch(error)
-        {
-            console.error(error)
-            Swal.fire(
-                'Error',
-                'Error al cargar recepcion intentar mas tarde',
-                'error'
-            )
-        }
+        recepcion(form)
     }
 
     const handelChange = e =>

@@ -20,13 +20,15 @@
                 $filas = mysqli_fetch_array($resultado);
                 $hash = $filas['hash'];
                 $tipo_usuario = $filas['tipo'];
+                $nombre = $filas['nombre_apellido'];
     
                 if($tipo_usuario == 'handheld' || $tipo_usuario == 'admin' || $tipo_usuario == 'estandar')
                 {
                     $json[] = array(
                         'error' => '0',
                         'mensaje' => 'Bien',
-                        'hash' => $hash
+                        'hash' => $hash,
+                        'nombre' => $nombre
                     );           
                 }
                 else

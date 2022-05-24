@@ -1,60 +1,19 @@
-import React, {useState, useEffect} from "react";
-import { Link, useNavigate} from 'react-router-dom'
+import React, { useState } from "react";
+import { Link } from 'react-router-dom'
 import '../styles/login.css'
-import Cookies from 'universal-cookie'
-import url from '../services/Settings'
-
-const cookies = new Cookies()
+import { useAutenticacion } from '../hooks/useAutenticacion'
+import { useUser } from '../hooks/useUser'
 
 const Login = () =>
 {
-    let navigate = useNavigate()
-    const [ MensajeError, setError ] = useState(null) 
-    const [ form, setForm ] = useState({mail: '', password: ''})
-
-    useEffect(() => 
-    {
-        if(cookies.get('hashSession'))
-        { 
-            navigate('/menu')
-        }
-    })
+    const { autenticacion } = useAutenticacion()
+    const { login, error } = useUser()
+    const [ form, setForm ] = useState({ mail: '', password: '' })
 
     const handelSubmit = async e =>
     {
         e.preventDefault()
-        try
-        {
-            let config =
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-            let res = await fetch(url+'login.php', config)
-            let infoPost = await res.json()
-            console.log(infoPost[0])
-            if(infoPost[0].error == '0')
-            {
-                cookies.set('hashSession', infoPost[0].hash, {path: '/'})
-                cookies.set('nombre', infoPost[0].nombre, {path: '/'})
-                cookies.set('mail', form.mail, {path: '/'})
-                navigate('/menu')
-            }
-            else
-            {
-                setError(infoPost[0].mensaje)
-            }
-        }
-        catch(error)
-        {
-            console.error(error)
-            setError('Error al iniciar sesion intentar mas tarde')
-        }
+        login(form)
     }
 
     const handelChange = e =>
@@ -64,7 +23,6 @@ const Login = () =>
             ...form,
             [e.target.name]: e.target.value
         })
-        console.log(form)
     }
 
     return(
@@ -75,9 +33,25 @@ const Login = () =>
                 </header>
                 <main>
                     <form className="menu-login" onSubmit={handelSubmit}>
-                        <input type="email" placeholder="E-mail" name="mail" onChange={handelChange} value={form.mail} className="textbox-genegal animacion-2" required />
-                        <input type="password" placeholder="Contraseña" name="password" onChange={handelChange} value={form.password} className="textbox-genegal animacion-2" required/>
-                        <label>{MensajeError}</label>
+                        <input 
+                            type="email" 
+                            placeholder="E-mail" 
+                            name="mail" 
+                            onChange={handelChange} 
+                            value={form.mail} 
+                            className="textbox-genegal animacion-2" 
+                            required 
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Contraseña" 
+                            name="password" 
+                            onChange={handelChange} 
+                            value={form.password} 
+                            className="textbox-genegal animacion-2" 
+                            required
+                        />
+                        <label>{error}</label>
                         <div className="container-btn animacion-3">
                             <button type="submit" className="btn-login btn-general-login">Iniciar sesión</button>
                             <Link to="/registrarse">
@@ -85,7 +59,7 @@ const Login = () =>
                             </Link>                    
                         </div>
                     </form>
-                </main>                 
+                </main>
             </div>
         </article>        
     )

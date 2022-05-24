@@ -12,21 +12,15 @@ const cookies = new Cookies()
 
 const AsociarCodigo = () =>
 {
-    const textboxCodigo = React.createRef()
     const [form, setForm] = useState({ cod_caja: '' })
     let navigate = useNavigate()
     const { autenticacion } = useAutenticacion() 
 
     useEffect(() =>
     {
-        textboxCodigo.current.focus()
         if(form.cod_caja.length >= 8)
         {
             AsociarCodigo()
-        }
-        else
-        {
-            textboxCodigo.current.value = ''
         }
     }, [ form ])
 
@@ -88,7 +82,7 @@ const AsociarCodigo = () =>
                 <main className="container-body">
                     <form className="container-form-eliminar">
                         <label className="text-usuario animacion-2">Usuario: {cookies.get('nombre')}</label>
-                        <input ref={textboxCodigo} autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo"/>
+                        <input autoComplete="off" type="text" className="textbox-genegal textbox-escanear-codigo animacion-2" name="cod_caja" onChange={handelChange} placeholder="Escanear Codigo" autoFocus value={form.cod_caja}/>
                         <footer className="container-controles">
                             <BtnVolver volver="/asociar-pedido"/>
                         </footer>
