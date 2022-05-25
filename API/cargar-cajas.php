@@ -88,6 +88,7 @@
         
                             $json[] = array(
                                 'error' => '0',
+                                'cod_caja' => $codigo_caja,
                                 'id_caja' => $id_caja,
                                 'mensaje' => 'Caja abierta',
                                 'descripcion' => $descripcion,

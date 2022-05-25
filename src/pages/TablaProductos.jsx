@@ -75,7 +75,6 @@ const TablaProductos = () =>
     const activarProducto = async () =>
     {
         textboxCodigo.current.value = ''
-        textboxCodigo.current.focus()
         try
         {
             let config =

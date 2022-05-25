@@ -59,8 +59,6 @@ const CajasFaltantes = () =>
         {
             console.error(error)
         }
-        textboxCodigo.current.value = ''
-        textboxCodigo.current.focus()
     }
 
     const handelChange = e =>

@@ -15,14 +15,14 @@ const cookies = new Cookies()
 const Cajas = () =>
 {
     const { autenticacion } = useAutenticacion()
-    const textboxCodigo = useRef()
     const [form, setForm] = useState(
-    { 
-        cod_caja: cookies.get('cod_caja'), 
+    {
+        cod_caja: '', 
         id_recepcion: cookies.get('id_recepcion') 
     })
     const infoCajaInicial =
     { 
+        cod_caja: cookies.get('cod_caja'),
         descripcion: cookies.get('descripcion_caja'), 
         kilos: cookies.get('kilos_caja'), 
         vencimiento: cookies.get('vencimiento_caja'), 
@@ -35,7 +35,7 @@ const Cajas = () =>
     {
         if(typeof form.cod_caja !== 'undefined')
         {
-            if(form.cod_caja.length === 14 && textboxCodigo.current.value.length === 14)
+            if(form.cod_caja.length === 14)
             {
                 EscanearCaja()
             }
@@ -44,8 +44,6 @@ const Cajas = () =>
 
     const EscanearCaja = async () =>
     {
-        textboxCodigo.current.focus()
-        textboxCodigo.current.value = ''
         try
         {
             let config =
@@ -66,6 +64,7 @@ const Cajas = () =>
                 setCaja(
                 {
                     ...infoCaja,
+                    cod_caja: infoPost[0].cod_caja,
                     descripcion: infoPost[0].descripcion,
                     kilos: infoPost[0].kilos,
                     vencimiento: infoPost[0].vencimiento,
@@ -109,6 +108,11 @@ const Cajas = () =>
                 'error'
             )
         }
+        setForm(
+        {
+            ...form,
+            cod_caja: ''
+        })
     }
 
     const handelChange = e =>
@@ -141,9 +145,8 @@ const Cajas = () =>
                 <Nav titulo="Cajas"/>
                 <main className="container-body">
                     <form className="container-form-cajas">
-                        <label className="animacion-1">Codigo Caja: {form.cod_caja}</label>
+                        <label className="animacion-1">Codigo Caja: {infoCaja.cod_caja}</label>
                         <input 
-                            ref={textboxCodigo} 
                             autoComplete="off" 
                             type="text" 
                             className="textbox-genegal textbox-escanear-codigo animacion-1" 
@@ -151,6 +154,7 @@ const Cajas = () =>
                             onChange={handelChange} 
                             placeholder="Escanear Codigo" 
                             autoFocus
+                            value={form.cod_caja}
                         />
                         <label className="animacion-1">Codigo Pallet: {infoCaja.cod_pallet}</label>
                         <p className="animacion-1">Descripcion: {infoCaja.descripcion}</p>
@@ -165,7 +169,7 @@ const Cajas = () =>
                                 </div>
                             </div>
                         </div>
-                        <BtnDeshacer pantalla="caja" codigo={form.cod_caja}/>
+                        <BtnDeshacer pantalla="caja" codigo={infoCaja.cod_caja}/>
                         <BtnControles usuario={autenticacion.id} />
                     </form>
                 </main>

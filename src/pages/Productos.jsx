@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import Nav from '../components/Navegacion/Nav'
 import BtnVolver from '../components/BtnVolver/BtnVolver'
 import '../styles/productos.css'
@@ -17,7 +16,6 @@ const Productos = () =>
     const { autenticacion } = useAutenticacion()
     let id_producto = cookies.get('id_producto')
     let id_pedido = cookies.get('id_pedido')
-    const textboxCodigo = React.createRef()
     const [form, setForm] = useState({ cod_producto: '', id_producto: id_producto, id_pedido: cookies.get('id_pedido') })
     const [producto, setProducto] = useState(
     {
@@ -44,8 +42,10 @@ const Productos = () =>
         {
             if(form.cod_producto.length > 14 || form.cod_producto.length < 14 && form.cod_producto != '')
             {
-                textboxCodigo.current.value = ''
-                textboxCodigo.current.focus()
+                setForm({
+                    ...form,
+                    cod_producto: ''
+                })
             }
         }
     }, [form])
@@ -75,8 +75,6 @@ const Productos = () =>
 
     const activarProducto = async () =>
     {
-        textboxCodigo.current.value = ''
-        textboxCodigo.current.focus()
         try
         {
             let config =
@@ -128,6 +126,10 @@ const Productos = () =>
                 'error'
             )
         }
+        setForm({
+            ...form,
+            cod_producto: ''
+        })
     }
 
     const handelChange = e =>
@@ -149,7 +151,6 @@ const Productos = () =>
                         <input 
                             type="text" 
                             autoComplete="off" 
-                            ref={textboxCodigo} 
                             className="textbox-genegal textbox-escanear-codigo animacion-1" 
                             name="cod_producto" 
                             onChange={handelChange} 
