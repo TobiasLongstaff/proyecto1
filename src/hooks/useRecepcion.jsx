@@ -14,9 +14,26 @@ export const useRecepcion = () =>
         cantidad: '',
         pallet: ''
     })
+
+    const [infoCaja, setInfoCaja] = useState(
+    {
+        cod_caja: '',
+        descripcion: '', 
+        kilos: '', 
+        vencimiento: '', 
+        cantidad: '', 
+        cod_pallet: ''
+    })
+
     const [formPallet, setFormPallet] = useState(
     {
         cod_pallet: '', 
+        id_recepcion: cookies.get('id_recepcion') 
+    })
+
+    const [formCaja, setFormCaja] = useState(
+    {
+        cod_caja: '', 
         id_recepcion: cookies.get('id_recepcion') 
     })
 
@@ -127,6 +144,95 @@ export const useRecepcion = () =>
         }
     }
 
+    useEffect(() =>
+    {
+        if(typeof formCaja.cod_caja !== 'undefined')
+        {
+            if(formCaja.cod_caja.length === 14)
+            {
+                EscanearCaja()
+            }
+        }
+    }, [ formCaja.cod_caja ])
+
+    const EscanearCaja = async () =>
+    {
+        try
+        {
+            let config =
+            {
+                method: 'POST',
+                headers: 
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formCaja)
+            }
+            let res = await fetch(url+'cargar-cajas.php', config)
+            let infoPost = await res.json()
+            console.log(infoPost[0])
+            if(infoPost[0].error == '0')
+            {
+                setInfoCaja(
+                {
+                    ...infoCaja,
+                    cod_caja: infoPost[0].cod_caja,
+                    descripcion: infoPost[0].descripcion,
+                    kilos: infoPost[0].kilos,
+                    vencimiento: infoPost[0].vencimiento,
+                    cantidad: infoPost[0].cantidades,
+                    cod_pallet: infoPost[0].cod_pallet
+                })
+                setFormCaja({ ...formPallet, cod_caja: '' })
+                Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Caja cargada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            else
+            {
+                setInfoCaja(
+                {        
+                    cod_caja: '',
+                    descripcion: '', 
+                    kilos: '', 
+                    vencimiento: '', 
+                    cantidad: '', 
+                    cod_pallet: ''
+                })
+                setFormCaja({ ...formPallet, cod_caja: '' })
+                Swal.fire(
+                    'Error',
+                    infoPost[0].mensaje,
+                    'error'
+                )
+            }
+        }
+        catch(error)
+        {
+            console.error(error)
+            setInfoCaja(
+            {        
+                cod_caja: '',
+                descripcion: '', 
+                kilos: '', 
+                vencimiento: '', 
+                cantidad: '', 
+                cod_pallet: ''
+            })
+            setFormCaja({ ...formPallet, cod_caja: '' })
+            Swal.fire(
+                'Error',
+                'Error al cargar recepcion intentar mas tarde',
+                'error'
+            )
+        }
+    }
+
     const changePallet = (value) =>
     {
         setFormPallet(
@@ -135,8 +241,17 @@ export const useRecepcion = () =>
             cod_pallet: value
         })
     }
+
+    const changeCaja = (value) =>
+    {
+        setFormCaja(
+        {
+            ...formCaja,
+            cod_caja: value
+        })
+    }
     
-    return { recepcion, recepcionarPallet, changePallet, infoPallet, formPallet }
+    return { recepcion, recepcionarPallet, changePallet, changeCaja, infoPallet, infoCaja, formPallet, formCaja }
 }
 
 

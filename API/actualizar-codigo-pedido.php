@@ -10,13 +10,14 @@
             $codigo = $_GET['codigo'];
             $id_pedido = $_GET['id_pedido'];
 
-            $sql="UPDATE pedidos SET cod_pedido = $codigo WHERE id = $id_pedido";
+            $sql="UPDATE pedidos SET cod_pedido = '$codigo' WHERE id = $id_pedido";
             $resultado = mysqli_query($conexion, $sql);
             if(!$resultado)
             {
                 $json[] = array(
                     'error' => '1',
                     'mensaje' => 'Error inesperado volver a intentar mas tarde',
+                    'sql' => $sql
                 );
             }
             else

@@ -13,9 +13,19 @@
     background-color: #fff;
 }
 
-.tbl-content, .tbl-content-web, .tbl-content-buscar
+.web-productos
 {
-    height: calc(100vh - 200px);
+    width: 50%;
+}
+
+.web-cajas
+{
+    width: 100%;
+}
+
+.tbl-content, .tbl-content-web, .tbl-content-buscar, .tbl-content-web-stock
+{
+    height: calc(100vh - 155px - 8%);
     overflow-x: auto;
     margin-top: 0px;
     border: 1px solid var(--principal);
@@ -31,13 +41,18 @@
     height: calc(100vh - 370px)
 }
 
-.tbl-content-web 
+.tbl-content-web, .tbl-content-web-stock
 {
     border: 2px solid #252a34;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top: none;
     background-color: #fff;
+}
+
+.tbl-content-web-stock
+{
+    height: calc(100vh - 250px - 8%);
 }
 
 table

@@ -72,6 +72,26 @@ p
     margin-bottom: 20px;
 }
 
+.container-filtro-stock
+{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+.btn-buscar
+{
+    background-color: var(--principal);
+    border: none;
+    border-radius: 5px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 .container-aprobar-usuario
 {
     background-color: var(--fondo);
@@ -85,13 +105,14 @@ p
 .container-page-web, .container-page-web-productos-preparados
 {
     background-color: var(--fondo);
-    height: calc(100vh - 70px);
+    height: calc(100vh - 50px);
     box-sizing: border-box;
     padding: 4%;
 }
 
-.container-page-web-productos-preparados
+.container-tabla-page-web-productos-preparados
 {
+    height: calc(100vh - 165px - 8%);
     display: flex;
     gap: 20px;
 }
@@ -120,6 +141,12 @@ p
     display: inline-grid;
     gap: 20px;
     height: 100px
+}
+
+.container-mensaje
+{
+    text-align: center;
+    padding-top: 30px;
 }
 
 @keyframes top 

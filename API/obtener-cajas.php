@@ -6,7 +6,25 @@
     {
         header("HTTP/1.1 200 OK");
 
-        $sql="SELECT * FROM cajas";
+        if(isset($_GET['filtro']))
+        {
+            $filtro = $_GET['filtro'];
+            $cargado = '';
+            if($filtro == 'cerrada')
+            {
+                $cargado = '0';
+            }
+            else
+            {
+                $cargado = '1';
+            }
+            $sql = "SELECT cajas.* FROM cajas 
+            INNER JOIN productos ON productos.cod_caja = cajas.codigo WHERE productos.cargado = '$cargado'";
+        }
+        else
+        {
+            $sql = "SELECT * FROM cajas";
+        }
         $resultado=mysqli_query($conexion,$sql);
         $json = array();
         while($filas_cajas = mysqli_fetch_array($resultado))
