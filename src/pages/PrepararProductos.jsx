@@ -111,6 +111,7 @@ const PrepararProductos = () =>
             Swal.fire('Terminando Pedido');
             Swal.showLoading()
             let res = await fetch(url+'terminar-pedido.php?id_pedido='+id_pedido+'&id_usuario='+autenticacion.id)
+            console.log(url+'terminar-pedido.php?id_pedido='+id_pedido+'&id_usuario='+autenticacion.id)
             let infoPost = await res.json()
             console.log(infoPost[0])
             if(infoPost[0].error == '0')

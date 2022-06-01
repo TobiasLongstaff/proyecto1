@@ -16,12 +16,14 @@
             $id_usuario = $_GET['id_usuario'];
             $resultado_update = '';
             $productos_text = '';
+            $id_pedido_woo = '';
         
-            $sql_cant_prod = "SELECT SUM(productos_pedidos.cantidad) AS cantidad_productos FROM pedidos INNER JOIN productos_pedidos ON pedidos.id = productos_pedidos.id_pedido WHERE pedidos.id = '$id_pedido'";
+            $sql_cant_prod = "SELECT SUM(productos_pedidos.cantidad) AS cantidad_productos, pedidos.id_pedido FROM pedidos INNER JOIN productos_pedidos ON pedidos.id = productos_pedidos.id_pedido WHERE pedidos.id = '$id_pedido'";
             $resultado_cant_prod=mysqli_query($conexion,$sql_cant_prod);
             if($filas_cant_prod = mysqli_fetch_array($resultado_cant_prod))
             {
                 $cantidad_productos = $filas_cant_prod['cantidad_productos'];
+                $id_pedido_woo = $filas_cant_prod['id_pedido'];
             }
 
             $sql_cant_act = "SELECT COUNT(productos.codigo) AS cantidad_productos_activos FROM productos WHERE activo = '1'";
@@ -56,15 +58,62 @@
 
             }
 
-            $sql="SELECT codigo FROM productos WHERE activo = 1 AND cargado = 0";
-            $resultado=mysqli_query($conexion,$sql);
-            while($filas = mysqli_fetch_array($resultado))
+            // UPDATE PRECIO
+            $pedido = $woocommerce->get('orders/'.$id_pedido_woo);
+            $shipping = $pedido->shipping_total;
+            $precio_final = 0;
+            $json_pedido = json_decode(json_encode($pedido), true);
+            foreach($json_pedido['line_items'] as $item)
             {
-                $id = $filas['codigo'];
-    
-                $sql_update="UPDATE productos SET activo = 0, cargado = 1, id_pedido = $id_pedido WHERE codigo = $id";
-                $resultado_update = mysqli_query($conexion, $sql_update);
+                $id_producto_pedido = $item['id'];
+                $id_producto = $item['product_id'];
+                $sku = $item['sku'];
+                $kilos = 0;
+                $precio_por_producto = 0;
+
+                $sql_productos_act="SELECT SUM(kilos) AS kilos FROM productos WHERE activo = 1 AND cargado = 0 AND cod_stock = '$sku'";
+                $resultado_productos_act=mysqli_query($conexion,$sql_productos_act);
+                if($filas_productos_act = mysqli_fetch_array($resultado_productos_act))
+                {
+                    $kilos = round($filas_productos_act['kilos'], 2);
+                }
+        
+                $productos = $woocommerce->get('products/'.$id_producto);
+                $precio_por_kilo = $productos->meta_data[166]->value;
+                $precio_por_producto = $precio_por_kilo * $kilos;
+                $precio_final = $precio_final + $precio_por_producto;
+        
+                $line_items[] = array(                  
+                    'id' => $id_producto_pedido,
+                    'subtotal' => $precio_por_producto,
+                    'total' => $precio_por_producto,
+                    'meta_data' =>
+                    [
+                        [
+                            'key' => 'peso recalculado',
+                            'value' => $kilos,                                  
+                        ],
+                        [
+                            'key' => 'precio recalculado',
+                            'value' => $precio_por_producto,                                  
+                        ]
+                    ]                        
+                );
             }
+
+            echo $shipping + $precio_final;
+
+            $data = [
+                'update' => 
+                [
+                    [
+                        'id' => $id_pedido_woo,
+                        'line_items' => $line_items
+                    ]
+                ]
+            ];
+
+            print_r($woocommerce->post('orders/batch', $data));
 
             if(!$resultado_update)
             {
@@ -75,26 +124,15 @@
             }
             else
             {
-                $data = [
-                    'status' => 'completed',
-                    'quantity' => '2.50'
-                ];
-                
-                // print_r($woocommerce->put('orders/'.$id_pedido, $data));
+                $sql="SELECT codigo FROM productos WHERE activo = 1 AND cargado = 0";
+                $resultado=mysqli_query($conexion,$sql);
+                while($filas = mysqli_fetch_array($resultado))
+                {
+                    $id = $filas['codigo'];
+                    $sql_update="UPDATE productos SET activo = 0, cargado = 1, id_pedido = $id_pedido WHERE codigo = $id";
+                    $resultado_update = mysqli_query($conexion, $sql_update);                    
+                }
 
-                //STOCK
-                // $productos = $woocommerce->get('products');
-                // $prueba = 'S4100001A292231';
-    
-                // $producto = buscar_producto($prueba, $productos);
-                // $id_producto = $producto['id'];
-                // $stock_actual = $producto['stock'];
-                // $data = [
-                //     'stock_quantity' => $stock_actual + 1
-                // ];
-                
-                // print_r($woocommerce->put('products/'.$id_producto, $data));
-    
                 $sql_update="UPDATE pedidos SET preparado = '1' WHERE id = '$id_pedido'";
                 $resultado_update = mysqli_query($conexion, $sql_update);
                 {
