@@ -13,13 +13,11 @@ const BtnControles = ({usuario}) =>
     const navigate = useNavigate()
     const [form, setFrom] = useState(
     {
-        id_recepcion: cookies.get('id_recepcion'),
         cant_pallets: cookies.get('cantidad_pallets'),
     })
 
     const [formPallet, setFormPallet] = useState(
     {
-        id_recepcion: cookies.get('id_recepcion'),
         cant_faltante: '',
         id_usuario: usuario
     })
@@ -144,7 +142,6 @@ const BtnControles = ({usuario}) =>
                     showConfirmButton: false,
                     timer: 1500
                 })
-                cookies.remove('id_recepcion')
                 cookies.remove('id_pallet')
                 cookies.remove('id_caja')
                 cookies.remove('cod_caja')

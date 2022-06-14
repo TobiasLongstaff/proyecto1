@@ -3,7 +3,6 @@ import { BrowserRouter, Route ,Routes } from 'react-router-dom'
 import Login from '../pages/Login'
 import Menu from '../pages/Menu'
 import Registro from '../pages/Registro'
-import Recepcion from '../pages/Recepcion'
 import Cajas from '../pages/Cajas'
 import Productos from '../pages/Productos'
 import SubMenuRecepcion from '../pages/SubMenuRecepcion'
@@ -36,7 +35,6 @@ function Rutas()
                 <Route exact path="registrarse" element={<Registro/>} /> 
                 <Route exact path="menu" element={<Menu/>} /> 
                 {/* Recepcion */}
-                <Route exact path="recepcion" element={<Recepcion/>} />
                 <Route exact path="opciones-recepcion" element={<SubMenuRecepcion/>} />    
                 {/* --Op */}
                 <Route exact path="pallets" element={<Pallets/>} />

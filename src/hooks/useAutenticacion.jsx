@@ -25,11 +25,7 @@ export const useAutenticacion = () =>
             let usuario = await res.json()
             if(typeof usuario !== 'undefined')
             {
-                if(location.pathname == '/opciones-recepcion')
-                {
-                    if(cookie.get('id_recepcion') == null){ navigate('/menu') }
-                }
-                else if(location.pathname == '/aprobar-usuarios' || location.pathname == '/configuracion')
+                if(location.pathname == '/aprobar-usuarios' || location.pathname == '/configuracion')
                 {
                     if(usuario[0].tipo !== 'admin'){ navigate('/menu') }
                 }

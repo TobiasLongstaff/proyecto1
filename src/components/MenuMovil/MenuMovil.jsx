@@ -9,7 +9,7 @@ const MenuMovil = () =>
         <article>
             <NavDektop titulo="Menu"/>
             <main className="container-menu-options">
-                <Link to="/recepcion">
+                <Link to="/opciones-recepcion">
                     <button type="button" className="btn-menu animacion-2">
                         <UilTruckLoading size="50" color="#252A34"/><br/>
                         <label>Recepcion</label>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import url from '../services/Settings'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import Cookies from 'universal-cookie'
@@ -8,7 +7,6 @@ const cookies = new Cookies()
 
 export const useRecepcion = () =>
 {
-    let navigate = useNavigate()
     const [infoPallet, setInfoPallet] = useState(
     {
         cantidad: '',
@@ -28,57 +26,12 @@ export const useRecepcion = () =>
     const [formPallet, setFormPallet] = useState(
     {
         cod_pallet: '', 
-        id_recepcion: cookies.get('id_recepcion') 
     })
 
     const [formCaja, setFormCaja] = useState(
     {
         cod_caja: '', 
-        id_recepcion: cookies.get('id_recepcion') 
     })
-
-    const recepcion = async (form) =>
-    {
-        try
-        {
-            let config =
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-            let res = await fetch(url+'recepcion.php', config)
-            let infoPost = await res.json()
-            console.log(infoPost[0])
-            if(infoPost[0].mensaje == 'Recepcion creada')
-            {
-                cookies.set('id_recepcion', infoPost[0].id_recepcion, {path: '/'})
-                cookies.set('cantidad_pallets', infoPost[0].cantidad_pallets, {path: '/'})
-                navigate('/opciones-recepcion')
-            }
-            else
-            {
-                Swal.fire(
-                    'Error',
-                    infoPost[0].mensaje,
-                    'error'
-                )
-            }
-        }
-        catch(error)
-        {
-            console.error(error)
-            Swal.fire(
-                'Error',
-                'Error al cargar recepcion intentar mas tarde',
-                'error'
-            )
-        }
-    }
 
     useEffect(() =>
     {
@@ -251,7 +204,7 @@ export const useRecepcion = () =>
         })
     }
     
-    return { recepcion, recepcionarPallet, changePallet, changeCaja, infoPallet, infoCaja, formPallet, formCaja }
+    return { recepcionarPallet, changePallet, changeCaja, infoPallet, infoCaja, formPallet, formCaja }
 }
 
 
