@@ -4,10 +4,10 @@ import SvgBox from '../img/box-solid.svg'
 import '../styles/cajas.css'
 import Cookies from 'universal-cookie'
 import Loading from '../components/Loading/Loading'
-import BtnControles from '../components/BtnControles/BtnControles'
 import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
 import { useAutenticacion } from '../hooks/useAutenticacion'
 import { useRecepcion } from '../hooks/useRecepcion'
+import BtnVolver from '../components/BtnVolver/BtnVolver'
 
 const cookies = new Cookies()
 
@@ -47,7 +47,9 @@ const Pallets = () =>
                             </div>
                         </div>
                         <BtnDeshacer codigo={infoPallet.pallet} pantalla="pallet"/>
-                        <BtnControles usuario={autenticacion.id}/>
+                        <footer className="container-controles">
+                            <BtnVolver volver="/opciones-recepcion"/>
+                        </footer>
                     </form>
                 </main>
             </article>

@@ -33,12 +33,6 @@ const MenuMovil = () =>
                         <label>Asociar codigo</label>
                     </button>
                 </Link>
-                <Link to="/cajas-faltantes">
-                    <button type="button" className="btn-menu animacion-3">
-                        <UilBox size="50" color="#252A34"/><br/>
-                        <label>Cargar Cajas faltantes</label>
-                    </button>
-                </Link>
             </main>
         </article>
     )

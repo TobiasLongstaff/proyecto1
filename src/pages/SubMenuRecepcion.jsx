@@ -1,5 +1,5 @@
 import React from 'react'
-import { UilTruckLoading, UilBox } from '@iconscout/react-unicons'
+import { UilTruckLoading, UilBox, UilAngleLeft } from '@iconscout/react-unicons'
 import { Link } from 'react-router-dom'
 import '../styles/menu.css'
 import BtnCerrarSesion from '../components/BtnCerrarSesion/BtnCerrarSesion'
@@ -30,6 +30,12 @@ const SubMenuRecepcion = () =>
                         <button type="button" className="btn-menu animacion-3">
                             <UilBox size="50" color="#252A34"/><br/>
                             <label>Cargar Cajas</label>
+                        </button>
+                    </Link>
+                    <Link to="/menu">
+                        <button type="button" className="btn-menu animacion-3">
+                            <UilAngleLeft size="50" color="#252A34"/><br/>
+                            <label>Volver</label>
                         </button>
                     </Link>
                 </main>

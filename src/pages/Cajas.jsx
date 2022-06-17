@@ -3,10 +3,10 @@ import Nav from '../components/Navegacion/Nav'
 import SvgBox from '../img/box-solid.svg'
 import '../styles/cajas.css'
 import Loading from '../components/Loading/Loading'
-import BtnControles from '../components/BtnControles/BtnControles'
 import BtnDeshacer from '../components/BtnDeshacer/BtnDeshacer'
 import { useAutenticacion } from '../hooks/useAutenticacion'
 import { useRecepcion } from '../hooks/useRecepcion'
+import BtnVolver from '../components/BtnVolver/BtnVolver'
 
 const Cajas = () =>
 {
@@ -49,7 +49,9 @@ const Cajas = () =>
                             </div>
                         </div>
                         <BtnDeshacer pantalla="caja" codigo={infoCaja.cod_caja}/>
-                        <BtnControles usuario={autenticacion.id} />
+                        <footer className="container-controles">
+                            <BtnVolver volver="/opciones-recepcion"/>
+                        </footer>
                     </form>
                 </main>
             </article>

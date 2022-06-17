@@ -11,15 +11,9 @@ const Menu = () =>
 
     if(autenticacion.autenticado)
         if(autenticacion.tipo == 'admin' || autenticacion.tipo == 'estandar')
-            return(
-                <MenuDescktop/>
-            )
-        return(
-            <MenuMovil/>  
-        )     
-    return(
-        <Loading/>
-    )        
+            return(<MenuDescktop/>)
+        return(<MenuMovil/>)     
+    return(<Loading/>)        
 }
 
 export default Menu

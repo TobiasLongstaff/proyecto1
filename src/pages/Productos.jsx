@@ -172,7 +172,7 @@ const Productos = () =>
                         </div>
                         <footer className="container-controles">
                             <BtnVolver volver="/tabla-productos"/>
-                        </footer> 
+                        </footer>
                     </div>
                 </main>
             </article>
