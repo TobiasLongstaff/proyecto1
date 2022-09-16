@@ -23,6 +23,7 @@
                 $sql="SELECT id, mail, nombre_apellido, tipo FROM usuarios";
             }
             $resultado = mysqli_query($conexion, $sql);
+            $json = array();
             while($filas = mysqli_fetch_array($resultado))
             {
                 $json[] = array(

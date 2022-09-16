@@ -111,10 +111,14 @@
 
     // UPDATE
     
-    $productos = $woocommerce->get('orders/'.$id_pedido_woo);
+    // $productos = $woocommerce->get('orders/'.$id_pedido_woo);
 
-    print_r($productos);
-    $json = json_decode(json_encode($productos), true);
+    // print_r($productos);
+    // $json = json_decode(json_encode($productos), true);
+
+    $datos = $woocommerce->get('orders?per_page=30'); 
+    $json = json_decode(json_encode($datos), true);
+    print_r($json)
     //10978
     //10193
 

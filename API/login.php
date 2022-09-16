@@ -34,7 +34,7 @@
                 else
                 {
                     $json[] = array(
-                        'error' => '0',
+                        'error' => '1',
                         'mensaje' => 'Su cuenta está pendiente de aprobación'
                     );
                 }
@@ -42,7 +42,7 @@
             else
             {
                 $json[] = array(
-                    'error' => '0',
+                    'error' => '1',
                     'mensaje' => 'Usuario o Contraseña incorrectos'
                 );
             }     
