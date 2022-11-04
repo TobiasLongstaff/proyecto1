@@ -59,71 +59,72 @@
             }
 
             // UPDATE PRECIO
-            $pedido = $woocommerce->get('orders/'.$id_pedido_woo);
-            $shipping = $pedido->shipping_total;
-            $precio_final = 0;
-            $json_pedido = json_decode(json_encode($pedido), true);
-            foreach($json_pedido['line_items'] as $item)
-            {
-                $id_producto_pedido = $item['id'];
-                $id_producto = $item['product_id'];
-                $sku = $item['sku'];
-                $kilos = 0;
-                $precio_por_producto = 0;
+            // Falta que tome el precio por kilo del producto lo demas esta todo
+            // $pedido = $woocommerce->get('orders/'.$id_pedido_woo);
+            // $shipping = $pedido->shipping_total;
+            // $precio_final = 0;
+            // $json_pedido = json_decode(json_encode($pedido), true);
+            // foreach($json_pedido['line_items'] as $item)
+            // {
+            //     $id_producto_pedido = $item['id'];
+            //     $id_producto = $item['product_id'];
+            //     $sku = $item['sku'];
+            //     $kilos = 0;
+            //     $precio_por_producto = 0;
 
-                $sql_productos_act="SELECT SUM(kilos) AS kilos FROM productos WHERE activo = 1 AND cargado = 0 AND cod_stock = '$sku'";
-                $resultado_productos_act=mysqli_query($conexion,$sql_productos_act);
-                if($filas_productos_act = mysqli_fetch_array($resultado_productos_act))
-                {
-                    $kilos = round($filas_productos_act['kilos'], 2);
-                }
+            //     $sql_productos_act="SELECT SUM(kilos) AS kilos FROM productos WHERE activo = 1 AND cargado = 0 AND cod_stock = '$sku'";
+            //     $resultado_productos_act=mysqli_query($conexion,$sql_productos_act);
+            //     if($filas_productos_act = mysqli_fetch_array($resultado_productos_act))
+            //     {
+            //         $kilos = round($filas_productos_act['kilos'], 2);
+            //     }
         
-                $productos = $woocommerce->get('products/'.$id_producto);
-                $precio_por_kilo = $productos->meta_data[166]->value;
-                $precio_por_producto = $precio_por_kilo * $kilos;
-                $precio_final = $precio_final + $precio_por_producto;
+            //     $productos = $woocommerce->get('products/'.$id_producto);
+            //     $precio_por_kilo = $productos->price;
+            //     $precio_por_producto = $precio_por_kilo * $kilos;
+            //     $precio_final = $precio_final + $precio_por_producto;
         
-                $line_items[] = array(                  
-                    'id' => $id_producto_pedido,
-                    'subtotal' => $precio_por_producto,
-                    'total' => $precio_por_producto,
-                    'meta_data' =>
-                    [
-                        [
-                            'key' => 'peso recalculado',
-                            'value' => $kilos,                                  
-                        ],
-                        [
-                            'key' => 'precio recalculado',
-                            'value' => $precio_por_producto,                                  
-                        ]
-                    ]                        
-                );
-            }
+            //     $line_items[] = array(                  
+            //         'id' => $id_producto_pedido,
+            //         'subtotal' => $precio_por_producto,
+            //         'total' => $precio_por_producto,
+            //         'meta_data' =>
+            //         [
+            //             [
+            //                 'key' => 'peso recalculado',
+            //                 'value' => $kilos,                                  
+            //             ],
+            //             [
+            //                 'key' => 'precio recalculado',
+            //                 'value' => $precio_por_producto,                                  
+            //             ]
+            //         ]                        
+            //     );
+            // }
 
-            echo $shipping + $precio_final;
+            // echo $shipping + $precio_final;
 
-            $data = [
-                'update' => 
-                [
-                    [
-                        'id' => $id_pedido_woo,
-                        'line_items' => $line_items
-                    ]
-                ]
-            ];
+            // $data = [
+            //     'update' => 
+            //     [
+            //         [
+            //             'id' => $id_pedido_woo,
+            //             'line_items' => $line_items
+            //         ]
+            //     ]
+            // ];
 
-            print_r($woocommerce->post('orders/batch', $data));
+            // print_r($woocommerce->post('orders/batch', $data));
 
-            if(!$resultado_update)
-            {
-                $json[] = array(
-                    'error' => '1',
-                    'mensaje' => 'Error inesperado volver a intentar mas tarde'
-                );
-            }
-            else
-            {
+            // if(!$resultado_update)
+            // {
+            //     $json[] = array(
+            //         'error' => '1',
+            //         'mensaje' => 'Error inesperado volver a intentar mas tarde'
+            //     );
+            // }
+            // else
+            // {
                 $sql="SELECT codigo FROM productos WHERE activo = 1 AND cargado = 0";
                 $resultado=mysqli_query($conexion,$sql);
                 while($filas = mysqli_fetch_array($resultado))
@@ -142,7 +143,7 @@
                     );
                 }
             }
-        }
+        // }
 
         $jsonstring = json_encode($json);
         echo $jsonstring;

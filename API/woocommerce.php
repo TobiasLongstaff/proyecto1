@@ -8,8 +8,8 @@
         'https://club.ohrapampa.com/', 
         // 'https://clubtest.ohrapampa.com/',
         // 'ck_919cf97820fe782c1f2cae53f4546fbbae008ffa', 
-        'ck_919cf97820fe782c1f2cae53f4546fbbae008ffa', 
-        'cs_19a3a2daeb86b4e9b79cb53b2a52ed37fd323d14',
+        'ck_c02d04d41d5693afdc829691841d78423a8e11ca', 
+        'cs_484584ca8ae14f56728d9a9e968367c577491d5d',
         [
             'version' => 'wc/v3',
         ]

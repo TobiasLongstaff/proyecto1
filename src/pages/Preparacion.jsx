@@ -86,7 +86,6 @@ const Preparacion = () =>
                                     <thead>
                                         <tr>
                                             <th className="th-num">#</th>
-                                            <th className="th-id">ID</th>
                                             <th className="th-desc">Cliente</th>
                                         </tr>
                                     </thead>
@@ -99,7 +98,6 @@ const Preparacion = () =>
                                         (
                                             <tr key={fila.id}>
                                                 <button type="button" className="btn-table-seleccionar" onClick={() =>handelClick(fila.id)}>
-                                                    <td className="td-id">{fila.num_pedido}</td>
                                                     <td className="td-id">{fila.id_pedido}</td>
                                                     <td className="td-desc">
                                                         <p className="text-btn-tabla">{fila.cliente}</p>

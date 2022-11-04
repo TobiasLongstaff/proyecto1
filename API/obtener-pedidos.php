@@ -26,28 +26,33 @@
             // {
                 $datos = $woocommerce->get('orders?per_page=30'); 
                 $json = json_decode(json_encode($datos), true);
-                
+
                 foreach($json as $item)
                 {
-                    $id_pedido = $item['id'];
-                    $n_pedido = $item['number'];
                     $estado = $item['status'];
-                    $nombre = $item['billing']['first_name'];
-                    $apellido = $item['billing']['last_name'];
-                    $direccion = $item['billing']['address_1'];
-                    $ciudad = $item['billing']['city'];
                     $cod_postal = $item['billing']['postcode'];
-                    $telefono = $item['billing']['phone'];
-                    $cod_pedido = $n_pedido.$id_pedido;
-
+                    $id_pedido = $item['id'];
+                    // print_r($envio = $item['meta_data'][5]['value']);
+                    // if($estado == 'completed' && $envio != 'Delivery Service iFLOW S.A.')
                     if($estado == 'completed')
                     {
+                        $n_pedido = $item['number'];
+                        $nombre = $item['billing']['first_name'];
+                        $apellido = $item['billing']['last_name'];
+                        $direccion = $item['billing']['address_1'];
+                        $ciudad = $item['billing']['city'];
+                        $telefono = $item['billing']['phone'];
+                        $cod_pedido = $n_pedido.$id_pedido;
+    
                         $sql_veri_woo="SELECT id FROM pedidos WHERE id_pedido = '$id_pedido'";
                         $resultado_veri_woo = mysqli_query($conexion, $sql_veri_woo);
                         $numero_fila_veri_woo = mysqli_num_rows($resultado_veri_woo);
                         if($numero_fila_veri_woo != '1')
                         {
-                            $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, direccion, ciudad, preparado, cod_pedido, cod_postal, telefono) VALUE ('$apellido $nombre', '$id_pedido', '$n_pedido', '$direccion', '$ciudad', '0', '$cod_pedido', '$cod_postal', '$telefono')";
+                            $sql_woo = "INSERT INTO pedidos (cliente, id_pedido, numero, direccion, 
+                            ciudad, preparado, cod_pedido, cod_postal, telefono) VALUE ('$apellido 
+                            $nombre', '$id_pedido', '$n_pedido', '$direccion', '$ciudad', '0', 
+                            '$cod_pedido', '$cod_postal', '$telefono')";
                             $resultado_woo = mysqli_query($conexion, $sql_woo);
         
                             $sql_veri_woo_id="SELECT id FROM pedidos WHERE id_pedido = '$id_pedido'";
